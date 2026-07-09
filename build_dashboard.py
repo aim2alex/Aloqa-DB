@@ -1146,6 +1146,11 @@ def main():
             grid-template-columns: repeat(2, 1fr);
             gap: 1.5rem;
         }
+        .charts-row-three {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+        }
         .span-3 {
             grid-column: span 3;
         }
@@ -1156,7 +1161,7 @@ def main():
             grid-column: span 1;
         }
         @media (max-width: 1024px) {
-            .charts-row-two-custom, .charts-row-two {
+            .charts-row-two-custom, .charts-row-two, .charts-row-three {
                 grid-template-columns: 1fr;
             }
             .span-3, .span-2, .span-1 {
@@ -2201,7 +2206,7 @@ def main():
             </section>
 
             <!-- Row 2: Charts -->
-            <section class="charts-row">
+            <section class="charts-row-three">
                 <!-- Card 1: Динамика выпуска карт -->
                 <div class="card chart-card">
                     <div class="chart-card-header">
@@ -2212,13 +2217,23 @@ def main():
                     </div>
                 </div>
 
-                <!-- Card 2: Динамика оборотов и остатков -->
+                <!-- Card 2: Средний остаток на счетах -->
                 <div class="card chart-card">
                     <div class="chart-card-header">
-                        <span class="chart-card-title">Обороты и остатки на счетах</span>
+                        <span class="chart-card-title">Средний остаток на счетах</span>
                     </div>
                     <div class="chart-container-bar" style="height: 380px;">
-                        <canvas id="chart-cards-financials"></canvas>
+                        <canvas id="chart-cards-balance"></canvas>
+                    </div>
+                </div>
+
+                <!-- Card 3: Кредитный оборот -->
+                <div class="card chart-card">
+                    <div class="chart-card-header">
+                        <span class="chart-card-title">Кредитный оборот</span>
+                    </div>
+                    <div class="chart-container-bar" style="height: 380px;">
+                        <canvas id="chart-cards-credit"></canvas>
                     </div>
                 </div>
             </section>
@@ -2832,7 +2847,8 @@ def main():
 
         // Cards Chart instances
         let cardsIssuedChart = null;
-        let cardsFinancialsChart = null;
+        let cardsBalanceChart = null;
+        let cardsCreditChart = null;
 
         // Chart instances
         let typesChart = null;
@@ -3555,41 +3571,28 @@ def main():
                 }
             });
 
-            // 3. Render Financials Chart (Mixed Bar & Line with Double Y Axes)
-            const financialsCtx = document.getElementById('chart-cards-financials').getContext('2d');
+            // 3. Render Balance Chart (Line Chart)
+            const balanceCtx = document.getElementById('chart-cards-balance').getContext('2d');
             
-            if (cardsFinancialsChart) {
-                cardsFinancialsChart.destroy();
+            if (cardsBalanceChart) {
+                cardsBalanceChart.destroy();
             }
 
-            cardsFinancialsChart = new Chart(financialsCtx, {
-                type: 'bar',
+            cardsBalanceChart = new Chart(balanceCtx, {
+                type: 'line',
                 data: {
                     labels: data.months,
-                    datasets: [
-                        {
-                            type: 'bar',
-                            label: 'Кредитовый оборот (сум)',
-                            data: data.credits,
-                            backgroundColor: '#10b981',
-                            borderColor: '#10b981',
-                            yAxisID: 'yCredit',
-                            barPercentage: 0.5,
-                            borderRadius: 4
-                        },
-                        {
-                            type: 'line',
-                            label: 'Средний остаток (сум)',
-                            data: data.balances,
-                            borderColor: '#3b82f6',
-                            backgroundColor: 'transparent',
-                            borderWidth: 3,
-                            tension: 0.3,
-                            pointBackgroundColor: '#3b82f6',
-                            pointRadius: 4,
-                            yAxisID: 'yBalance'
-                        }
-                    ]
+                    datasets: [{
+                        label: 'Средний остаток (сум)',
+                        data: data.balances,
+                        borderColor: '#3b82f6',
+                        backgroundColor: 'rgba(59, 130, 246, 0.1)',
+                        fill: true,
+                        borderWidth: 3,
+                        tension: 0.3,
+                        pointBackgroundColor: '#3b82f6',
+                        pointRadius: 4
+                    }]
                 },
                 options: {
                     responsive: true,
@@ -3599,9 +3602,7 @@ def main():
                             grid: { display: false },
                             ticks: { color: themeColors.textSecondary, font: { size: 15 } }
                         },
-                        yCredit: {
-                            type: 'linear',
-                            position: 'left',
+                        y: {
                             grid: { color: themeColors.gridColor },
                             ticks: { 
                                 color: themeColors.textSecondary, 
@@ -3611,18 +3612,50 @@ def main():
                                     if (value >= 1e6) return (value / 1e6).toFixed(0) + ' млн';
                                     return value;
                                 }
-                            },
-                            title: {
-                                display: true,
-                                text: 'Оборот поступлений',
-                                color: themeColors.textSecondary,
-                                font: { size: 15, weight: 'bold' }
                             }
-                        },
-                        yBalance: {
-                            type: 'linear',
-                            position: 'right',
+                        }
+                    },
+                    plugins: {
+                        legend: { display: false },
+                        tooltip: {
+                            enabled: false,
+                            external: externalTooltipHandler
+                        }
+                    }
+                }
+            });
+
+            // 4. Render Credit Turnover Chart (Bar Chart)
+            const creditCtx = document.getElementById('chart-cards-credit').getContext('2d');
+            
+            if (cardsCreditChart) {
+                cardsCreditChart.destroy();
+            }
+
+            cardsCreditChart = new Chart(creditCtx, {
+                type: 'bar',
+                data: {
+                    labels: data.months,
+                    datasets: [{
+                        label: 'Кредитовый оборот (сум)',
+                        data: data.credits,
+                        backgroundColor: '#10b981',
+                        borderColor: '#10b981',
+                        borderWidth: 1,
+                        borderRadius: 4,
+                        barPercentage: 0.5
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        x: {
                             grid: { display: false },
+                            ticks: { color: themeColors.textSecondary, font: { size: 15 } }
+                        },
+                        y: {
+                            grid: { color: themeColors.gridColor },
                             ticks: { 
                                 color: themeColors.textSecondary, 
                                 font: { size: 15 },
@@ -3631,25 +3664,11 @@ def main():
                                     if (value >= 1e6) return (value / 1e6).toFixed(0) + ' млн';
                                     return value;
                                 }
-                            },
-                            title: {
-                                display: true,
-                                text: 'Средний остаток',
-                                color: themeColors.textSecondary,
-                                font: { size: 15, weight: 'bold' }
                             }
                         }
                     },
                     plugins: {
-                        legend: {
-                            display: true,
-                            position: 'top',
-                            labels: {
-                                color: themeColors.textPrimary,
-                                font: { size: 15 },
-                                padding: 20
-                            }
-                        },
+                        legend: { display: false },
                         tooltip: {
                             enabled: false,
                             external: externalTooltipHandler
