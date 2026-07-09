@@ -2721,7 +2721,7 @@ def main():
                                 color: colors.textSecondary,
                                 padding: 15,
                                 font: {
-                                    size: 14,
+                                    size: 15,
                                     family: 'Inter'
                                 },
                                 boxWidth: 12,
@@ -2797,7 +2797,7 @@ def main():
                                 color: colors.textSecondary,
                                 padding: 15,
                                 font: {
-                                    size: 14,
+                                    size: 15,
                                     family: 'Inter'
                                 },
                                 boxWidth: 12,
@@ -2873,7 +2873,7 @@ def main():
                                 color: colors.textSecondary,
                                 font: {
                                     family: 'Inter',
-                                    size: 10
+                                    size: 15
                                 }
                             }
                         },
@@ -2886,7 +2886,7 @@ def main():
                                 font: {
                                     family: 'Inter',
                                     weight: '500',
-                                    size: 14
+                                    size: 15
                                 }
                             }
                         }
@@ -2960,7 +2960,7 @@ def main():
                                 color: colors.textSecondary,
                                 font: {
                                     family: 'Inter',
-                                    size: 10
+                                    size: 15
                                 }
                             }
                         },
@@ -2973,7 +2973,7 @@ def main():
                                 font: {
                                     family: 'Inter',
                                     weight: '500',
-                                    size: 14
+                                    size: 15
                                 }
                             }
                         }
@@ -3056,7 +3056,7 @@ def main():
                                 font: {
                                     family: 'Inter',
                                     weight: '500',
-                                    size: 14
+                                    size: 15
                                 }
                             }
                         },
@@ -3069,7 +3069,7 @@ def main():
                                 color: colors.textSecondary,
                                 font: {
                                     family: 'Inter',
-                                    size: 10
+                                    size: 15
                                 }
                             }
                         }
@@ -3082,7 +3082,7 @@ def main():
                                 color: colors.textSecondary,
                                 font: {
                                     family: 'Inter',
-                                    size: 14
+                                    size: 15
                                 },
                                 boxWidth: 12,
                                 usePointStyle: true,
@@ -3354,7 +3354,7 @@ def main():
                             labels: {
                                 color: colors.textSecondary,
                                 padding: 15,
-                                font: { size: 10, family: 'Inter' },
+                                font: { size: 15, family: 'Inter' },
                                 boxWidth: 10,
                                 usePointStyle: true,
                                 pointStyle: 'circle',
@@ -3449,7 +3449,7 @@ def main():
                             labels: {
                                 color: colors.textSecondary,
                                 padding: 15,
-                                font: { size: 10, family: 'Inter' },
+                                font: { size: 15, family: 'Inter' },
                                 boxWidth: 10,
                                 usePointStyle: true,
                                 pointStyle: 'circle',
@@ -3535,14 +3535,14 @@ def main():
                             },
                             ticks: {
                                 color: colors.textSecondary,
-                                font: { family: 'Inter', size: 10 }
+                                font: { family: 'Inter', size: 15 }
                             }
                         },
                         y: {
                             grid: { display: false },
                             ticks: {
                                 color: colors.textPrimary,
-                                font: { family: 'Inter', weight: '500', size: 14 }
+                                font: { family: 'Inter', weight: '500', size: 15 }
                             }
                         }
                     },
@@ -3596,7 +3596,7 @@ def main():
                             position: 'bottom',
                             labels: {
                                 color: colors.textSecondary,
-                                font: { size: 10, family: 'Inter' },
+                                font: { size: 15, family: 'Inter' },
                                 boxWidth: 10,
                                 usePointStyle: true,
                                 pointStyle: 'circle'
@@ -3654,7 +3654,7 @@ def main():
                             position: 'bottom',
                             labels: {
                                 color: colors.textSecondary,
-                                font: { size: 10, family: 'Inter' },
+                                font: { size: 15, family: 'Inter' },
                                 boxWidth: 10,
                                 usePointStyle: true,
                                 pointStyle: 'circle'
@@ -3884,7 +3884,7 @@ def main():
                 legendContainer.innerHTML = productsData.map((item, idx) => {
                     const color = chartColors[idx % chartColors.length];
                     return `
-                    <div style="display: flex; align-items: center; gap: 6px; cursor: pointer; transition: opacity 0.2s; font-size: 14px;" onclick="toggleChartSlice('loansProductsChart', ${idx}, this)" title="${item.name}">
+                    <div style="display: flex; align-items: center; gap: 6px; cursor: pointer; transition: opacity 0.2s; font-size: 15px;" onclick="toggleChartSlice('loansProductsChart', ${idx}, this)" title="${item.name}">
                         <span style="display: inline-block; width: 6px; height: 6px; border-radius: 50%; background-color: ${color}; flex-shrink: 0;"></span>
                         <span style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 160px; color: var(--text-secondary);">${item.name}</span>
                     </div>`;
@@ -3917,14 +3917,14 @@ def main():
                             grid: { display: false },
                             ticks: {
                                 color: colors.textSecondary,
-                                font: { size: 10, family: 'Inter' }
+                                font: { size: 15, family: 'Inter' }
                             }
                         },
                         y: {
                             grid: { color: colors.gridColor },
                             ticks: {
                                 color: colors.textSecondary,
-                                font: { size: 10, family: 'Inter' },
+                                font: { size: 15, family: 'Inter' },
                                 callback: function(value) {
                                     if (value >= 1e6) return (value / 1e6).toFixed(1) + ' млн';
                                     if (value >= 1e3) return (value / 1e3).toFixed(0) + ' тыс';
@@ -4075,14 +4075,14 @@ def main():
                             grid: { color: colors.gridColor },
                             ticks: {
                                 color: colors.textSecondary,
-                                font: { size: 10, family: 'Inter' }
+                                font: { size: 15, family: 'Inter' }
                             }
                         },
                         y: {
                             grid: { display: false },
                             ticks: {
                                 color: colors.textSecondary,
-                                font: { size: 14, family: 'Inter', weight: '500' }
+                                font: { size: 15, family: 'Inter', weight: '500' }
                             }
                         }
                     },
@@ -4091,7 +4091,7 @@ def main():
                             position: 'top',
                             labels: {
                                 color: colors.textSecondary,
-                                font: { size: 10, family: 'Inter' }
+                                font: { size: 15, family: 'Inter' }
                             }
                         },
                         tooltip: {
@@ -4142,7 +4142,7 @@ def main():
                             grid: { color: colors.gridColor },
                             ticks: {
                                 color: colors.textSecondary,
-                                font: { size: 10, family: 'Inter' },
+                                font: { size: 15, family: 'Inter' },
                                 callback: function(value) {
                                     if (value >= 1e12) return (value / 1e12).toFixed(1) + ' трлн';
                                     if (value >= 1e9) return (value / 1e9).toFixed(1) + ' млрд';
@@ -4155,7 +4155,7 @@ def main():
                             grid: { display: false },
                             ticks: {
                                 color: colors.textSecondary,
-                                font: { size: 14, family: 'Inter', weight: '500' }
+                                font: { size: 15, family: 'Inter', weight: '500' }
                             }
                         }
                     },
@@ -4272,7 +4272,7 @@ def main():
                         legendContainer.innerHTML = categoriesData.map((item, idx) => {
                             const color = chartColors[idx % chartColors.length];
                             return `
-                            <div style="display: flex; align-items: center; gap: 6px; cursor: pointer; transition: opacity 0.2s; font-size: 14px;" onclick="toggleChartSlice('jiraCategoriesChart', ${idx}, this)" title="${item.name}">
+                            <div style="display: flex; align-items: center; gap: 6px; cursor: pointer; transition: opacity 0.2s; font-size: 15px;" onclick="toggleChartSlice('jiraCategoriesChart', ${idx}, this)" title="${item.name}">
                                 <span style="display: inline-block; width: 6px; height: 6px; border-radius: 50%; background-color: ${color}; flex-shrink: 0;"></span>
                                 <span style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 160px; color: var(--text-secondary);">${item.name}</span>
                             </div>`;
@@ -4315,7 +4315,7 @@ def main():
                             const color = chartColors[(idx + 5) % chartColors.length];
                             const valPct = item.value.toFixed(1);
                             return `
-                            <div style="display: flex; align-items: center; gap: 6px; cursor: pointer; transition: opacity 0.2s; font-size: 14px;" onclick="toggleChartSlice('jiraHoursChart', ${idx}, this)" title="${item.name}">
+                            <div style="display: flex; align-items: center; gap: 6px; cursor: pointer; transition: opacity 0.2s; font-size: 15px;" onclick="toggleChartSlice('jiraHoursChart', ${idx}, this)" title="${item.name}">
                                 <span style="display: inline-block; width: 6px; height: 6px; border-radius: 50%; background-color: ${color}; flex-shrink: 0;"></span>
                                 <span style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 160px; color: var(--text-secondary);">${item.name}: ${valPct}%</span>
                             </div>`;
@@ -4604,12 +4604,12 @@ def main():
                             x: {
                                 stacked: true,
                                 grid: { color: axisColors.gridColor },
-                                ticks: { color: axisColors.textSecondary, font: { size: 10 } }
+                                ticks: { color: axisColors.textSecondary, font: { size: 15 } }
                             },
                             y: {
                                 stacked: true,
                                 grid: { display: false },
-                                ticks: { color: axisColors.textSecondary, font: { size: 14 } }
+                                ticks: { color: axisColors.textSecondary, font: { size: 15 } }
                             }
                         },
                         plugins: {
@@ -4696,7 +4696,7 @@ def main():
                 legendContainer.innerHTML = categoriesData.map((item, idx) => {
                     const color = chartColors[idx % chartColors.length];
                     return `
-                    <div style="display: flex; align-items: center; gap: 6px; cursor: pointer; transition: opacity 0.2s; font-size: 14px;" onclick="toggleChartSlice('jiraCategoriesChart', ${idx}, this)" title="${item.name}">
+                    <div style="display: flex; align-items: center; gap: 6px; cursor: pointer; transition: opacity 0.2s; font-size: 15px;" onclick="toggleChartSlice('jiraCategoriesChart', ${idx}, this)" title="${item.name}">
                         <span style="display: inline-block; width: 6px; height: 6px; border-radius: 50%; background-color: ${color}; flex-shrink: 0;"></span>
                         <span style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 160px; color: var(--text-secondary);">${item.name}</span>
                     </div>`;
@@ -4778,7 +4778,7 @@ def main():
                     const color = chartColors[(idx + 5) % chartColors.length];
                     const valPct = item.value.toFixed(1);
                     return `
-                    <div style="display: flex; align-items: center; gap: 6px; cursor: pointer; transition: opacity 0.2s; font-size: 14px;" onclick="toggleChartSlice('jiraHoursChart', ${idx}, this)" title="${item.name}">
+                    <div style="display: flex; align-items: center; gap: 6px; cursor: pointer; transition: opacity 0.2s; font-size: 15px;" onclick="toggleChartSlice('jiraHoursChart', ${idx}, this)" title="${item.name}">
                         <span style="display: inline-block; width: 6px; height: 6px; border-radius: 50%; background-color: ${color}; flex-shrink: 0;"></span>
                         <span style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 160px; color: var(--text-secondary);">${item.name}: ${valPct}%</span>
                     </div>`;
@@ -4813,11 +4813,11 @@ def main():
                     scales: {
                         x: {
                             grid: { display: false },
-                            ticks: { color: colors.textSecondary, font: { size: 10, family: 'Inter' } }
+                            ticks: { color: colors.textSecondary, font: { size: 15, family: 'Inter' } }
                         },
                         y: {
                             grid: { color: colors.gridColor },
-                            ticks: { color: colors.textSecondary, font: { size: 10, family: 'Inter' } }
+                            ticks: { color: colors.textSecondary, font: { size: 15, family: 'Inter' } }
                         }
                     },
                     plugins: {
@@ -4825,7 +4825,7 @@ def main():
                             position: 'bottom',
                             labels: {
                                 color: colors.textSecondary,
-                                font: { size: 10, family: 'Inter' },
+                                font: { size: 15, family: 'Inter' },
                                 boxWidth: 10,
                                 padding: 12,
                                 usePointStyle: true,
