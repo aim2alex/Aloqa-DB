@@ -2248,209 +2248,99 @@ def main():
                 </div>
             </section>
 
-            <!-- Row 1.7: Completed Tasks by Quarters -->
+            <!-- Row 1.7: Completed Tasks (Quarterly filterable) -->
             <section style="display: flex; flex-direction: column; gap: 1rem; margin-top: 1.5rem;">
-                <div class="quarters-grid">
-                    <!-- Card 1: 1-3 Month (1st Quarter) -->
-                    <div class="card" style="padding: 1.5rem 2rem; position: relative;">
-                        <!-- Header -->
-                        <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0.5rem;">
-                            <div>
-                                <div style="font-family: 'Outfit', sans-serif; font-size: 1.3rem; font-weight: 700; color: var(--text-primary);">Выполнено (1-3 месяц)</div>
-                                <div style="font-size: 0.8rem; color: var(--text-secondary); margin-top: 2px;">Всего задач, шт.</div>
-                            </div>
-                            <svg class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width: 20px; height: 20px; color: var(--text-secondary); opacity: 0.7;">
-                                <line x1="7" y1="17" x2="17" y2="7"></line>
-                                <polyline points="7 7 17 7 17 17"></polyline>
-                            </svg>
+                <div class="card" style="padding: 1.5rem 2rem; position: relative; width: 100%;">
+                    <!-- Header -->
+                    <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0.5rem;">
+                        <div>
+                            <div style="font-family: 'Outfit', sans-serif; font-size: 1.3rem; font-weight: 700; color: var(--text-primary);">Выполнено</div>
+                            <div style="font-size: 0.8rem; color: var(--text-secondary); margin-top: 2px;">Всего задач, шт.</div>
                         </div>
-                        
-                        <!-- Content Grid -->
-                        <div style="display: grid; grid-template-columns: 1.2fr 1fr 1.5fr; gap: 1.5rem; align-items: center; margin-top: 1rem;">
-                            <!-- Column 1: Teams 1-4 -->
-                            <div style="display: flex; flex-direction: column; gap: 10px;">
-                                <div style="display: flex; align-items: center; justify-content: space-between; font-size: 0.85rem;">
-                                    <div style="display: flex; align-items: center; gap: 8px;">
-                                        <span style="display: inline-block; width: 8px; height: 8px; border-radius: 50%; background-color: #3b82f6;"></span>
-                                        <span style="color: var(--text-secondary);">Camunda</span>
-                                    </div>
-                                    <span style="font-weight: 700; color: var(--text-primary);">76</span>
-                                </div>
-                                <div style="display: flex; align-items: center; justify-content: space-between; font-size: 0.85rem;">
-                                    <div style="display: flex; align-items: center; gap: 8px;">
-                                        <span style="display: inline-block; width: 8px; height: 8px; border-radius: 50%; background-color: #10b981;"></span>
-                                        <span style="color: var(--text-secondary);">Devops</span>
-                                    </div>
-                                    <span style="font-weight: 700; color: var(--text-primary);">60</span>
-                                </div>
-                                <div style="display: flex; align-items: center; justify-content: space-between; font-size: 0.85rem;">
-                                    <div style="display: flex; align-items: center; gap: 8px;">
-                                        <span style="display: inline-block; width: 8px; height: 8px; border-radius: 50%; background-color: #f59e0b;"></span>
-                                        <span style="color: var(--text-secondary);">Front</span>
-                                    </div>
-                                    <span style="font-weight: 700; color: var(--text-primary);">46</span>
-                                </div>
-                                <div style="display: flex; align-items: center; justify-content: space-between; font-size: 0.85rem;">
-                                    <div style="display: flex; align-items: center; gap: 8px;">
-                                        <span style="display: inline-block; width: 8px; height: 8px; border-radius: 50%; background-color: #ef4444;"></span>
-                                        <span style="color: var(--text-secondary);">Абс</span>
-                                    </div>
-                                    <span style="font-weight: 700; color: var(--text-primary);">176</span>
-                                </div>
-                            </div>
-                            
-                            <!-- Column 2: Center Big Value & Trend -->
-                            <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center;">
-                                <div style="display: flex; align-items: center; gap: 4px; color: #10b981; font-weight: 700; font-size: 0.95rem; margin-bottom: 4px;">
-                                    <svg class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" style="width: 14px; height: 14px; color: #10b981;">
-                                        <polyline points="18 15 12 9 6 15"></polyline>
-                                    </svg>
-                                    <span>+50%</span>
-                                </div>
-                                <div style="font-family: 'Outfit', sans-serif; font-size: 3.2rem; font-weight: 700; color: var(--text-primary); line-height: 1;">451</div>
-                            </div>
-                            
-                            <!-- Column 3: Teams 5-8 & Sparkline -->
-                            <div style="display: flex; flex-direction: column; gap: 10px; position: relative;">
-                                <!-- Sparkline -->
-                                <div style="position: absolute; right: 0; top: -35px; display: flex; align-items: flex-end; gap: 3px; height: 28px;">
-                                    <div style="width: 3px; height: 12px; background-color: #10b981; border-radius: 1px; opacity: 0.8;"></div>
-                                    <div style="width: 3px; height: 18px; background-color: #10b981; border-radius: 1px; opacity: 0.8;"></div>
-                                    <div style="width: 3px; height: 15px; background-color: #10b981; border-radius: 1px; opacity: 0.8;"></div>
-                                    <div style="width: 3px; height: 22px; background-color: #10b981; border-radius: 1px; opacity: 0.8;"></div>
-                                    <div style="width: 3px; height: 20px; background-color: #10b981; border-radius: 1px; opacity: 0.8;"></div>
-                                    <div style="width: 3px; height: 26px; background-color: #10b981; border-radius: 1px;"></div>
-                                </div>
-                                <div style="display: flex; align-items: center; justify-content: space-between; font-size: 0.85rem;">
-                                    <div style="display: flex; align-items: center; gap: 8px;">
-                                        <span style="display: inline-block; width: 8px; height: 8px; border-radius: 50%; background-color: #8b5cf6;"></span>
-                                        <span style="color: var(--text-secondary); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 140px;" title="Колл-центр / Амл / Риски">Колл-центр / Амл...</span>
-                                    </div>
-                                    <span style="font-weight: 700; color: var(--text-primary);">38</span>
-                                </div>
-                                <div style="display: flex; align-items: center; justify-content: space-between; font-size: 0.85rem;">
-                                    <div style="display: flex; align-items: center; gap: 8px;">
-                                        <span style="display: inline-block; width: 8px; height: 8px; border-radius: 50%; background-color: #06b6d4;"></span>
-                                        <span style="color: var(--text-secondary); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 140px;" title="Кфо / Залоги / Проблемные Кредиты">Кфо / Залоги / Кред...</span>
-                                    </div>
-                                    <span style="font-weight: 700; color: var(--text-primary);">62</span>
-                                </div>
-                                <div style="display: flex; align-items: center; justify-content: space-between; font-size: 0.85rem;">
-                                    <div style="display: flex; align-items: center; gap: 8px;">
-                                        <span style="display: inline-block; width: 8px; height: 8px; border-radius: 50%; background-color: #ec4899;"></span>
-                                        <span style="color: var(--text-secondary); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 140px;" title="Пластиковые Карты">Пластиковые Карты</span>
-                                    </div>
-                                    <span style="font-weight: 700; color: var(--text-primary);">18</span>
-                                </div>
-                                <div style="display: flex; align-items: center; justify-content: space-between; font-size: 0.85rem;">
-                                    <div style="display: flex; align-items: center; gap: 8px;">
-                                        <span style="display: inline-block; width: 8px; height: 8px; border-radius: 50%; background-color: #f97316;"></span>
-                                        <span style="color: var(--text-secondary);">Скоринг</span>
-                                    </div>
-                                    <span style="font-weight: 700; color: var(--text-primary);">51</span>
-                                </div>
-                            </div>
-                        </div>
+                        <svg class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width: 20px; height: 20px; color: var(--text-secondary); opacity: 0.7;">
+                            <line x1="7" y1="17" x2="17" y2="7"></line>
+                            <polyline points="7 7 17 7 17 17"></polyline>
+                        </svg>
                     </div>
                     
-                    <!-- Card 2: 4-6 Month (2nd Quarter) -->
-                    <div class="card" style="padding: 1.5rem 2rem; position: relative;">
-                        <!-- Header -->
-                        <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0.5rem;">
-                            <div>
-                                <div style="font-family: 'Outfit', sans-serif; font-size: 1.3rem; font-weight: 700; color: var(--text-primary);">Выполнено (4-6 месяц)</div>
-                                <div style="font-size: 0.8rem; color: var(--text-secondary); margin-top: 2px;">Всего задач, шт.</div>
+                    <!-- Content Grid -->
+                    <div style="display: grid; grid-template-columns: 1.2fr 1fr 1.5fr; gap: 1.5rem; align-items: center; margin-top: 1rem;">
+                        <!-- Column 1: Teams 1-4 -->
+                        <div style="display: flex; flex-direction: column; gap: 10px;">
+                            <div style="display: flex; align-items: center; justify-content: space-between; font-size: 0.85rem;">
+                                <div style="display: flex; align-items: center; gap: 8px;">
+                                    <span style="display: inline-block; width: 8px; height: 8px; border-radius: 50%; background-color: #3b82f6;"></span>
+                                    <span style="color: var(--text-secondary);">Camunda</span>
+                                </div>
+                                <span id="jira-completed-camunda" style="font-weight: 700; color: var(--text-primary);">0</span>
                             </div>
-                            <svg class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width: 20px; height: 20px; color: var(--text-secondary); opacity: 0.7;">
-                                <line x1="7" y1="17" x2="17" y2="7"></line>
-                                <polyline points="7 7 17 7 17 17"></polyline>
-                            </svg>
+                            <div style="display: flex; align-items: center; justify-content: space-between; font-size: 0.85rem;">
+                                <div style="display: flex; align-items: center; gap: 8px;">
+                                    <span style="display: inline-block; width: 8px; height: 8px; border-radius: 50%; background-color: #10b981;"></span>
+                                    <span style="color: var(--text-secondary);">Devops</span>
+                                </div>
+                                <span id="jira-completed-devops" style="font-weight: 700; color: var(--text-primary);">0</span>
+                            </div>
+                            <div style="display: flex; align-items: center; justify-content: space-between; font-size: 0.85rem;">
+                                <div style="display: flex; align-items: center; gap: 8px;">
+                                    <span style="display: inline-block; width: 8px; height: 8px; border-radius: 50%; background-color: #f59e0b;"></span>
+                                    <span style="color: var(--text-secondary);">Front</span>
+                                </div>
+                                <span id="jira-completed-front" style="font-weight: 700; color: var(--text-primary);">0</span>
+                            </div>
+                            <div style="display: flex; align-items: center; justify-content: space-between; font-size: 0.85rem;">
+                                <div style="display: flex; align-items: center; gap: 8px;">
+                                    <span style="display: inline-block; width: 8px; height: 8px; border-radius: 50%; background-color: #ef4444;"></span>
+                                    <span style="color: var(--text-secondary);">Абс</span>
+                                </div>
+                                <span id="jira-completed-abs" style="font-weight: 700; color: var(--text-primary);">0</span>
+                            </div>
                         </div>
                         
-                        <!-- Content Grid -->
-                        <div style="display: grid; grid-template-columns: 1.2fr 1fr 1.5fr; gap: 1.5rem; align-items: center; margin-top: 1rem;">
-                            <!-- Column 1: Teams 1-4 -->
-                            <div style="display: flex; flex-direction: column; gap: 10px;">
-                                <div style="display: flex; align-items: center; justify-content: space-between; font-size: 0.85rem;">
-                                    <div style="display: flex; align-items: center; gap: 8px;">
-                                        <span style="display: inline-block; width: 8px; height: 8px; border-radius: 50%; background-color: #3b82f6;"></span>
-                                        <span style="color: var(--text-secondary);">Camunda</span>
-                                    </div>
-                                    <span style="font-weight: 700; color: var(--text-primary);">57</span>
-                                </div>
-                                <div style="display: flex; align-items: center; justify-content: space-between; font-size: 0.85rem;">
-                                    <div style="display: flex; align-items: center; gap: 8px;">
-                                        <span style="display: inline-block; width: 8px; height: 8px; border-radius: 50%; background-color: #10b981;"></span>
-                                        <span style="color: var(--text-secondary);">Devops</span>
-                                    </div>
-                                    <span style="font-weight: 700; color: var(--text-primary);">55</span>
-                                </div>
-                                <div style="display: flex; align-items: center; justify-content: space-between; font-size: 0.85rem;">
-                                    <div style="display: flex; align-items: center; gap: 8px;">
-                                        <span style="display: inline-block; width: 8px; height: 8px; border-radius: 50%; background-color: #f59e0b;"></span>
-                                        <span style="color: var(--text-secondary);">Front</span>
-                                    </div>
-                                    <span style="font-weight: 700; color: var(--text-primary);">50</span>
-                                </div>
-                                <div style="display: flex; align-items: center; justify-content: space-between; font-size: 0.85rem;">
-                                    <div style="display: flex; align-items: center; gap: 8px;">
-                                        <span style="display: inline-block; width: 8px; height: 8px; border-radius: 50%; background-color: #ef4444;"></span>
-                                        <span style="color: var(--text-secondary);">Абс</span>
-                                    </div>
-                                    <span style="font-weight: 700; color: var(--text-primary);">187</span>
-                                </div>
+                        <!-- Column 2: Center Big Value & Trend -->
+                        <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center;">
+                            <div id="jira-completed-trend-wrapper" style="display: flex; align-items: center; gap: 4px; font-weight: 700; font-size: 0.95rem; margin-bottom: 4px;">
+                                <svg id="jira-completed-trend-icon" class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" style="width: 14px; height: 14px;">
+                                    <polyline points="18 15 12 9 6 15"></polyline>
+                                </svg>
+                                <span id="jira-completed-trend-val">+50%</span>
                             </div>
-                            
-                            <!-- Column 2: Center Big Value & Trend -->
-                            <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center;">
-                                <div style="display: flex; align-items: center; gap: 4px; color: #ef4444; font-weight: 700; font-size: 0.95rem; margin-bottom: 4px;">
-                                    <svg class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" style="width: 14px; height: 14px; color: #ef4444;">
-                                        <polyline points="6 9 12 15 18 9"></polyline>
-                                    </svg>
-                                    <span>-14.9%</span>
-                                </div>
-                                <div style="font-family: 'Outfit', sans-serif; font-size: 3.2rem; font-weight: 700; color: var(--text-primary); line-height: 1;">516</div>
+                            <div id="jira-completed-total" style="font-family: 'Outfit', sans-serif; font-size: 3.5rem; font-weight: 700; color: var(--text-primary); line-height: 1;">0</div>
+                        </div>
+                        
+                        <!-- Column 3: Teams 5-8 & Sparkline -->
+                        <div style="display: flex; flex-direction: column; gap: 10px; position: relative;">
+                            <!-- Sparkline -->
+                            <div id="jira-completed-sparkline" style="position: absolute; right: 0; top: -35px; display: flex; align-items: flex-end; gap: 3px; height: 28px;">
+                                <!-- Dynamic sparkline bars -->
                             </div>
-                            
-                            <!-- Column 3: Teams 5-8 & Sparkline -->
-                            <div style="display: flex; flex-direction: column; gap: 10px; position: relative;">
-                                <!-- Sparkline -->
-                                <div style="position: absolute; right: 0; top: -35px; display: flex; align-items: flex-end; gap: 3px; height: 28px;">
-                                    <div style="width: 3px; height: 24px; background-color: #10b981; border-radius: 1px; opacity: 0.8;"></div>
-                                    <div style="width: 3px; height: 18px; background-color: #10b981; border-radius: 1px; opacity: 0.8;"></div>
-                                    <div style="width: 3px; height: 26px; background-color: #10b981; border-radius: 1px; opacity: 0.8;"></div>
-                                    <div style="width: 3px; height: 20px; background-color: #10b981; border-radius: 1px; opacity: 0.8;"></div>
-                                    <div style="width: 3px; height: 25px; background-color: #10b981; border-radius: 1px; opacity: 0.8;"></div>
-                                    <div style="width: 3px; height: 22px; background-color: #10b981; border-radius: 1px;"></div>
+                            <div style="display: flex; align-items: center; justify-content: space-between; font-size: 0.85rem;">
+                                <div style="display: flex; align-items: center; gap: 8px;">
+                                    <span style="display: inline-block; width: 8px; height: 8px; border-radius: 50%; background-color: #8b5cf6;"></span>
+                                    <span style="color: var(--text-secondary); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 140px;" title="Колл-центр / Амл / Риски">Колл-центр / Амл...</span>
                                 </div>
-                                <div style="display: flex; align-items: center; justify-content: space-between; font-size: 0.85rem;">
-                                    <div style="display: flex; align-items: center; gap: 8px;">
-                                        <span style="display: inline-block; width: 8px; height: 8px; border-radius: 50%; background-color: #8b5cf6;"></span>
-                                        <span style="color: var(--text-secondary); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 140px;" title="Колл-центр / Амл / Риски">Колл-центр / Амл...</span>
-                                    </div>
-                                    <span style="font-weight: 700; color: var(--text-primary);">36</span>
+                                <span id="jira-completed-callcenter" style="font-weight: 700; color: var(--text-primary);">0</span>
+                            </div>
+                            <div style="display: flex; align-items: center; justify-content: space-between; font-size: 0.85rem;">
+                                <div style="display: flex; align-items: center; gap: 8px;">
+                                    <span style="display: inline-block; width: 8px; height: 8px; border-radius: 50%; background-color: #06b6d4;"></span>
+                                    <span style="color: var(--text-secondary); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 140px;" title="Кфо / Залоги / Проблемные Кредиты">Кфо / Залоги / Кред...</span>
                                 </div>
-                                <div style="display: flex; align-items: center; justify-content: space-between; font-size: 0.85rem;">
-                                    <div style="display: flex; align-items: center; gap: 8px;">
-                                        <span style="display: inline-block; width: 8px; height: 8px; border-radius: 50%; background-color: #06b6d4;"></span>
-                                        <span style="color: var(--text-secondary); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 140px;" title="Кфо / Залоги / Проблемные Кредиты">Кфо / Залоги / Кред...</span>
-                                    </div>
-                                    <span style="font-weight: 700; color: var(--text-primary);">105</span>
+                                <span id="jira-completed-kfo" style="font-weight: 700; color: var(--text-primary);">0</span>
+                            </div>
+                            <div style="display: flex; align-items: center; justify-content: space-between; font-size: 0.85rem;">
+                                <div style="display: flex; align-items: center; gap: 8px;">
+                                    <span style="display: inline-block; width: 8px; height: 8px; border-radius: 50%; background-color: #ec4899;"></span>
+                                    <span style="color: var(--text-secondary); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 140px;" title="Пластиковые Карты">Пластиковые Карты</span>
                                 </div>
-                                <div style="display: flex; align-items: center; justify-content: space-between; font-size: 0.85rem;">
-                                    <div style="display: flex; align-items: center; gap: 8px;">
-                                        <span style="display: inline-block; width: 8px; height: 8px; border-radius: 50%; background-color: #ec4899;"></span>
-                                        <span style="color: var(--text-secondary); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 140px;" title="Пластиковые Карты">Пластиковые Карты</span>
-                                    </div>
-                                    <span style="font-weight: 700; color: var(--text-primary);">33</span>
+                                <span id="jira-completed-cards" style="font-weight: 700; color: var(--text-primary);">0</span>
+                            </div>
+                            <div style="display: flex; align-items: center; justify-content: space-between; font-size: 0.85rem;">
+                                <div style="display: flex; align-items: center; gap: 8px;">
+                                    <span style="display: inline-block; width: 8px; height: 8px; border-radius: 50%; background-color: #f97316;"></span>
+                                    <span style="color: var(--text-secondary);">Скоринг</span>
                                 </div>
-                                <div style="display: flex; align-items: center; justify-content: space-between; font-size: 0.85rem;">
-                                    <div style="display: flex; align-items: center; gap: 8px;">
-                                        <span style="display: inline-block; width: 8px; height: 8px; border-radius: 50%; background-color: #f97316;"></span>
-                                        <span style="color: var(--text-secondary);">Скоринг</span>
-                                    </div>
-                                    <span style="font-weight: 700; color: var(--text-primary);">78</span>
-                                </div>
+                                <span id="jira-completed-scoring" style="font-weight: 700; color: var(--text-primary);">0</span>
                             </div>
                         </div>
                     </div>
@@ -4332,6 +4222,97 @@ def main():
                     });
                     jiraSystemsChart.update();
                 }
+            }
+            
+            // Update Jira Completed Section
+            const jiraCompletedData = {
+                q1: {
+                    total: 451,
+                    trend: '+50%',
+                    isPositive: true,
+                    sparkline: [12, 18, 15, 22, 20, 26],
+                    teams: {
+                        camunda: 76,
+                        devops: 60,
+                        front: 46,
+                        abs: 176,
+                        callcenter: 38,
+                        kfo: 62,
+                        cards: 18,
+                        scoring: 51
+                    }
+                },
+                q2: {
+                    total: 516,
+                    trend: '-14.9%',
+                    isPositive: false,
+                    sparkline: [24, 18, 26, 20, 25, 22],
+                    teams: {
+                        camunda: 57,
+                        devops: 55,
+                        front: 50,
+                        abs: 187,
+                        callcenter: 36,
+                        kfo: 105,
+                        cards: 33,
+                        scoring: 78
+                    }
+                },
+                all: {
+                    total: 967,
+                    trend: '+14.4%',
+                    isPositive: true,
+                    sparkline: [12, 18, 15, 22, 20, 26, 24, 18, 26, 20, 25, 22],
+                    teams: {
+                        camunda: 133,
+                        devops: 115,
+                        front: 96,
+                        abs: 363,
+                        callcenter: 74,
+                        kfo: 167,
+                        cards: 51,
+                        scoring: 129
+                    }
+                }
+            };
+            
+            const completedInfo = jiraCompletedData[activePeriod];
+            animateValue('jira-completed-total', 0, completedInfo.total, 800);
+            
+            const trendWrapper = document.getElementById('jira-completed-trend-wrapper');
+            const trendVal = document.getElementById('jira-completed-trend-val');
+            const trendIcon = document.getElementById('jira-completed-trend-icon');
+            
+            trendVal.innerText = completedInfo.trend;
+            if (completedInfo.isPositive) {
+                trendWrapper.style.color = '#10b981';
+                trendIcon.style.color = '#10b981';
+                trendIcon.style.transform = 'none';
+                trendIcon.innerHTML = '<polyline points="18 15 12 9 6 15"></polyline>';
+            } else {
+                trendWrapper.style.color = '#ef4444';
+                trendIcon.style.color = '#ef4444';
+                trendIcon.style.transform = 'none';
+                trendIcon.innerHTML = '<polyline points="6 9 12 15 18 9"></polyline>';
+            }
+            
+            document.getElementById('jira-completed-camunda').innerText = formatNumber(completedInfo.teams.camunda);
+            document.getElementById('jira-completed-devops').innerText = formatNumber(completedInfo.teams.devops);
+            document.getElementById('jira-completed-front').innerText = formatNumber(completedInfo.teams.front);
+            document.getElementById('jira-completed-abs').innerText = formatNumber(completedInfo.teams.abs);
+            document.getElementById('jira-completed-callcenter').innerText = formatNumber(completedInfo.teams.callcenter);
+            document.getElementById('jira-completed-kfo').innerText = formatNumber(completedInfo.teams.kfo);
+            document.getElementById('jira-completed-cards').innerText = formatNumber(completedInfo.teams.cards);
+            document.getElementById('jira-completed-scoring').innerText = formatNumber(completedInfo.teams.scoring);
+            
+            const sparklineDiv = document.getElementById('jira-completed-sparkline');
+            if (sparklineDiv) {
+                const maxVal = Math.max(...completedInfo.sparkline);
+                sparklineDiv.innerHTML = completedInfo.sparkline.map(val => {
+                    const heightPct = maxVal > 0 ? (val / maxVal) * 100 : 0;
+                    const heightPx = Math.round((heightPct * 26) / 100) + 2;
+                    return `<div style="width: 3px; height: ${heightPx}px; background-color: #10b981; border-radius: 1px; opacity: 0.85;"></div>`;
+                }).join('');
             }
         }
 
