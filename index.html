@@ -1831,37 +1831,60 @@
                 </div>
             </section>
             
-            <!-- Row 1.8: Time Spent on Completed Tasks (Quarterly filterable) -->
+            <!-- Row 1.8: Time Spent & Tasks by Categories (Quarterly filterable) -->
             <section style="display: flex; flex-direction: column; gap: 1rem; margin-top: 1.5rem;">
-                <!-- Right Card: Время выполненных задач -->
-                <div class="card" style="padding: 1.5rem 2rem; position: relative; width: 100%;">
-                    <!-- Header -->
-                    <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0.5rem;">
-                        <div>
-                            <div style="font-family: 'Outfit', sans-serif; font-size: 1.3rem; font-weight: 700; color: var(--text-primary);">Время выполненных задач</div>
-                            <div style="font-size: 0.8rem; color: var(--text-secondary); margin-top: 2px;">Потрачено времени, ч/дни</div>
-                        </div>
-                        <svg class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width: 20px; height: 20px; color: var(--text-secondary); opacity: 0.7;">
-                            <circle cx="12" cy="12" r="1"></circle>
-                            <circle cx="12" cy="5" r="1"></circle>
-                            <circle cx="12" cy="19" r="1"></circle>
-                        </svg>
-                    </div>
-                    
-                    <!-- Content: Grid of 2 columns -->
-                    <div style="display: grid; grid-template-columns: 1.4fr 1fr; gap: 2rem; align-items: center; margin-top: 1.25rem; min-height: 220px;">
-                        <!-- Column 1: Table -->
-                        <div style="display: flex; flex-direction: column; gap: 10px;" id="jira-time-table-body">
-                            <!-- Dynamic rows -->
+                <div class="quarters-grid" style="grid-template-columns: 1fr 1.1fr;">
+                    <!-- Left Card: Время выполненных задач -->
+                    <div class="card" style="padding: 1.5rem 2rem; position: relative;">
+                        <!-- Header -->
+                        <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0.5rem;">
+                            <div>
+                                <div style="font-family: 'Outfit', sans-serif; font-size: 1.3rem; font-weight: 700; color: var(--text-primary);">Время выполненных задач</div>
+                                <div style="font-size: 0.8rem; color: var(--text-secondary); margin-top: 2px;">Потрачено времени, ч/дни</div>
+                            </div>
+                            <svg class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width: 20px; height: 20px; color: var(--text-secondary); opacity: 0.7;">
+                                <circle cx="12" cy="12" r="1"></circle>
+                                <circle cx="12" cy="5" r="1"></circle>
+                                <circle cx="12" cy="19" r="1"></circle>
+                            </svg>
                         </div>
                         
-                        <!-- Column 2: Doughnut Chart -->
-                        <div style="position: relative; width: 170px; height: 170px; margin: 0 auto;">
-                            <canvas id="chart-jira-time-spent"></canvas>
-                            <div class="doughnut-center-card" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); background: var(--card-bg); border: 1px solid var(--card-border); box-shadow: 0 8px 24px rgba(0,0,0,0.08); width: 95px; height: 95px; border-radius: 50%; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; pointer-events: none; z-index: 5;">
-                                <span style="font-size: 0.65rem; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.05em; font-weight: 600;">Всего</span>
-                                <span id="doughnut-jira-time-center-value" style="font-size: 1.2rem; font-weight: 700; color: var(--text-primary); margin-top: 1px; line-height: 1;">0</span>
+                        <!-- Content: Grid of 2 columns -->
+                        <div style="display: grid; grid-template-columns: 1.2fr 1fr; gap: 1.25rem; align-items: center; margin-top: 1rem; min-height: 220px;">
+                            <!-- Column 1: Table -->
+                            <div style="display: flex; flex-direction: column; gap: 10px;" id="jira-time-table-body">
+                                <!-- Dynamic rows -->
                             </div>
+                            
+                            <!-- Column 2: Doughnut Chart -->
+                            <div style="position: relative; width: 150px; height: 150px; margin: 0 auto;">
+                                <canvas id="chart-jira-time-spent"></canvas>
+                                <div class="doughnut-center-card" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); background: var(--card-bg); border: 1px solid var(--card-border); box-shadow: 0 8px 24px rgba(0,0,0,0.08); width: 85px; height: 85px; border-radius: 50%; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; pointer-events: none; z-index: 5;">
+                                    <span style="font-size: 0.6rem; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.05em; font-weight: 600;">Всего</span>
+                                    <span id="doughnut-jira-time-center-value" style="font-size: 1.1rem; font-weight: 700; color: var(--text-primary); margin-top: 1px; line-height: 1;">0</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Right Card: Выполнено задач по категориям -->
+                    <div class="card" style="padding: 1.5rem 2rem; position: relative; display: flex; flex-direction: column; justify-content: space-between;">
+                        <!-- Header -->
+                        <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0.5rem;">
+                            <div>
+                                <div style="font-family: 'Outfit', sans-serif; font-size: 1.3rem; font-weight: 700; color: var(--text-primary);">Выполнено задач по категориям</div>
+                                <div id="jira-categories-img-subtitle" style="font-size: 0.8rem; color: var(--text-secondary); margin-top: 2px;">Анализ распределения задач по типам</div>
+                            </div>
+                            <svg class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width: 20px; height: 20px; color: var(--text-secondary); opacity: 0.7;">
+                                <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                                <circle cx="8.5" cy="8.5" r="1.5"></circle>
+                                <polyline points="21 15 16 10 5 21"></polyline>
+                            </svg>
+                        </div>
+                        
+                        <!-- Content: Images -->
+                        <div id="jira-categories-images-container" style="display: flex; gap: 12px; align-items: center; justify-content: center; margin-top: 1rem; width: 100%; min-height: 220px;">
+                            <!-- Dynamic images -->
                         </div>
                     </div>
                 </div>
@@ -8379,6 +8402,25 @@
                     }
                 }
             });
+
+            // Update Jira Categories Images Block
+            const imgContainer = document.getElementById('jira-categories-images-container');
+            const imgSubtitle = document.getElementById('jira-categories-img-subtitle');
+            if (imgContainer) {
+                if (activePeriod === 'q1') {
+                    imgSubtitle.innerText = '1 квартал (1-3 месяц)';
+                    imgContainer.innerHTML = '<img src="Выполнено задач по категориям Q1.png" style="max-width: 100%; max-height: 220px; object-fit: contain; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.12);">';
+                } else if (activePeriod === 'q2') {
+                    imgSubtitle.innerText = '2 квартал (4-6 месяц)';
+                    imgContainer.innerHTML = '<img src="Выполнено задач по категориям Q2.png" style="max-width: 100%; max-height: 220px; object-fit: contain; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.12);">';
+                } else {
+                    imgSubtitle.innerText = 'Все периоды (1 и 2 квартал)';
+                    imgContainer.innerHTML = `
+                        <img src="Выполнено задач по категориям Q1.png" style="width: 48%; max-height: 220px; object-fit: contain; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.12);" title="1 квартал">
+                        <img src="Выполнено задач по категориям Q2.png" style="width: 48%; max-height: 220px; object-fit: contain; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.12);" title="2 квартал">
+                    `;
+                }
+            }
         }
 
         function renderJiraCategoriesChart(months, monthlyCategories) {
