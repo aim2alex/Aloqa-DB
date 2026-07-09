@@ -2248,140 +2248,141 @@ def main():
                 </div>
             </section>
 
-            <!-- Row 1.7: Completed Tasks & Time Spent (Quarterly filterable) -->
+            <!-- Row 1.7: Completed Tasks (Quarterly filterable) -->
             <section style="display: flex; flex-direction: column; gap: 1rem; margin-top: 1.5rem;">
-                <div class="quarters-grid">
-                    <!-- Left Card: Выполнено (Команды) -->
-                    <div class="card" style="padding: 1.5rem 2rem; position: relative; display: flex; flex-direction: column; justify-content: space-between;">
-                        <!-- Header & Sparkline -->
-                        <div>
-                            <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0.5rem; position: relative;">
-                                <div>
-                                    <div style="font-family: 'Outfit', sans-serif; font-size: 1.3rem; font-weight: 700; color: var(--text-primary);">Выполнено</div>
-                                    <div style="font-size: 0.8rem; color: var(--text-secondary); margin-top: 2px;">Всего задач, шт.</div>
-                                </div>
-                                <div style="display: flex; align-items: center; gap: 15px;">
-                                    <!-- Sparkline -->
-                                    <div id="jira-completed-sparkline" style="display: flex; align-items: flex-end; gap: 3px; height: 28px; margin-top: 2px;">
-                                        <!-- Dynamic sparkline bars -->
-                                    </div>
-                                    <svg class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width: 20px; height: 20px; color: var(--text-secondary); opacity: 0.7;">
-                                        <line x1="7" y1="17" x2="17" y2="7"></line>
-                                        <polyline points="7 7 17 7 17 17"></polyline>
-                                    </svg>
-                                </div>
+                <!-- Left Card: Выполнено (Команды) -->
+                <div class="card" style="padding: 1.5rem 2rem; position: relative; display: flex; flex-direction: column; justify-content: space-between; width: 100%;">
+                    <!-- Header & Sparkline -->
+                    <div>
+                        <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0.5rem; position: relative;">
+                            <div>
+                                <div style="font-family: 'Outfit', sans-serif; font-size: 1.3rem; font-weight: 700; color: var(--text-primary);">Выполнено</div>
+                                <div style="font-size: 0.8rem; color: var(--text-secondary); margin-top: 2px;">Всего задач, шт.</div>
                             </div>
-                            
-                            <!-- Centered Big Total & Trend -->
-                            <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; margin: 1rem 0 1.5rem 0; text-align: center;">
-                                <div id="jira-completed-trend-wrapper" style="display: flex; align-items: center; gap: 4px; font-weight: 700; font-size: 0.95rem; margin-bottom: 4px;">
-                                    <svg id="jira-completed-trend-icon" class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" style="width: 14px; height: 14px;">
-                                        <polyline points="18 15 12 9 6 15"></polyline>
-                                    </svg>
-                                    <span id="jira-completed-trend-val">+50%</span>
+                            <div style="display: flex; align-items: center; gap: 15px;">
+                                <!-- Sparkline -->
+                                <div id="jira-completed-sparkline" style="display: flex; align-items: flex-end; gap: 3px; height: 28px; margin-top: 2px;">
+                                    <!-- Dynamic sparkline bars -->
                                 </div>
-                                <div id="jira-completed-total" style="font-family: 'Outfit', sans-serif; font-size: 3.8rem; font-weight: 700; color: var(--text-primary); line-height: 1;">0</div>
+                                <svg class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width: 20px; height: 20px; color: var(--text-secondary); opacity: 0.7;">
+                                    <line x1="7" y1="17" x2="17" y2="7"></line>
+                                    <polyline points="7 7 17 7 17 17"></polyline>
+                                </svg>
                             </div>
                         </div>
                         
-                        <!-- Teams Grid (Below) -->
-                        <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; border-top: 1px solid var(--card-border); padding-top: 1.25rem; margin-top: auto;">
-                            <!-- Team 1 -->
-                            <div style="display: flex; flex-direction: column; gap: 4px;">
-                                <div style="display: flex; align-items: center; gap: 6px; font-size: 0.8rem; color: var(--text-secondary);">
-                                    <span style="display: inline-block; width: 6px; height: 6px; border-radius: 50%; background-color: #3b82f6; flex-shrink: 0;"></span>
-                                    <span>Camunda</span>
-                                </div>
-                                <span id="jira-completed-camunda" style="font-size: 1.1rem; font-weight: 700; color: var(--text-primary); margin-left: 12px;">0</span>
+                        <!-- Centered Big Total & Trend -->
+                        <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; margin: 1rem 0 1.5rem 0; text-align: center;">
+                            <div id="jira-completed-trend-wrapper" style="display: flex; align-items: center; gap: 4px; font-weight: 700; font-size: 0.95rem; margin-bottom: 4px;">
+                                <svg id="jira-completed-trend-icon" class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" style="width: 14px; height: 14px;">
+                                    <polyline points="18 15 12 9 6 15"></polyline>
+                                </svg>
+                                <span id="jira-completed-trend-val">+50%</span>
                             </div>
-                            <!-- Team 2 -->
-                            <div style="display: flex; flex-direction: column; gap: 4px;">
-                                <div style="display: flex; align-items: center; gap: 6px; font-size: 0.8rem; color: var(--text-secondary);">
-                                    <span style="display: inline-block; width: 6px; height: 6px; border-radius: 50%; background-color: #10b981; flex-shrink: 0;"></span>
-                                    <span>Devops</span>
-                                </div>
-                                <span id="jira-completed-devops" style="font-size: 1.1rem; font-weight: 700; color: var(--text-primary); margin-left: 12px;">0</span>
-                            </div>
-                            <!-- Team 3 -->
-                            <div style="display: flex; flex-direction: column; gap: 4px;">
-                                <div style="display: flex; align-items: center; gap: 6px; font-size: 0.8rem; color: var(--text-secondary);">
-                                    <span style="display: inline-block; width: 6px; height: 6px; border-radius: 50%; background-color: #f59e0b; flex-shrink: 0;"></span>
-                                    <span>Front</span>
-                                </div>
-                                <span id="jira-completed-front" style="font-size: 1.1rem; font-weight: 700; color: var(--text-primary); margin-left: 12px;">0</span>
-                            </div>
-                            <!-- Team 4 -->
-                            <div style="display: flex; flex-direction: column; gap: 4px;">
-                                <div style="display: flex; align-items: center; gap: 6px; font-size: 0.8rem; color: var(--text-secondary);">
-                                    <span style="display: inline-block; width: 6px; height: 6px; border-radius: 50%; background-color: #ef4444; flex-shrink: 0;"></span>
-                                    <span>Абс</span>
-                                </div>
-                                <span id="jira-completed-abs" style="font-size: 1.1rem; font-weight: 700; color: var(--text-primary); margin-left: 12px;">0</span>
-                            </div>
-                            <!-- Team 5 -->
-                            <div style="display: flex; flex-direction: column; gap: 4px;">
-                                <div style="display: flex; align-items: center; gap: 6px; font-size: 0.8rem; color: var(--text-secondary);" title="Колл-центр / Амл / Риски">
-                                    <span style="display: inline-block; width: 6px; height: 6px; border-radius: 50%; background-color: #8b5cf6; flex-shrink: 0;"></span>
-                                    <span style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100px;">Колл-центр...</span>
-                                </div>
-                                <span id="jira-completed-callcenter" style="font-size: 1.1rem; font-weight: 700; color: var(--text-primary); margin-left: 12px;">0</span>
-                            </div>
-                            <!-- Team 6 -->
-                            <div style="display: flex; flex-direction: column; gap: 4px;">
-                                <div style="display: flex; align-items: center; gap: 6px; font-size: 0.8rem; color: var(--text-secondary);" title="Кфо / Залоги / Проблемные Кредиты">
-                                    <span style="display: inline-block; width: 6px; height: 6px; border-radius: 50%; background-color: #06b6d4; flex-shrink: 0;"></span>
-                                    <span style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100px;">Кфо / Залоги...</span>
-                                </div>
-                                <span id="jira-completed-kfo" style="font-size: 1.1rem; font-weight: 700; color: var(--text-primary); margin-left: 12px;">0</span>
-                            </div>
-                            <!-- Team 7 -->
-                            <div style="display: flex; flex-direction: column; gap: 4px;">
-                                <div style="display: flex; align-items: center; gap: 6px; font-size: 0.8rem; color: var(--text-secondary);" title="Пластиковые Карты">
-                                    <span style="display: inline-block; width: 6px; height: 6px; border-radius: 50%; background-color: #ec4899; flex-shrink: 0;"></span>
-                                    <span style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100px;">Пластиковые...</span>
-                                </div>
-                                <span id="jira-completed-cards" style="font-size: 1.1rem; font-weight: 700; color: var(--text-primary); margin-left: 12px;">0</span>
-                            </div>
-                            <!-- Team 8 -->
-                            <div style="display: flex; flex-direction: column; gap: 4px;">
-                                <div style="display: flex; align-items: center; gap: 6px; font-size: 0.8rem; color: var(--text-secondary);">
-                                    <span style="display: inline-block; width: 6px; height: 6px; border-radius: 50%; background-color: #f97316; flex-shrink: 0;"></span>
-                                    <span>Скоринг</span>
-                                </div>
-                                <span id="jira-completed-scoring" style="font-size: 1.1rem; font-weight: 700; color: var(--text-primary); margin-left: 12px;">0</span>
-                            </div>
+                            <div id="jira-completed-total" style="font-family: 'Outfit', sans-serif; font-size: 3.8rem; font-weight: 700; color: var(--text-primary); line-height: 1;">0</div>
                         </div>
                     </div>
                     
-                    <!-- Right Card: Время выполненных задач -->
-                    <div class="card" style="padding: 1.5rem; position: relative;">
-                        <!-- Header -->
-                        <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0.5rem;">
-                            <div>
-                                <div style="font-family: 'Outfit', sans-serif; font-size: 1.3rem; font-weight: 700; color: var(--text-primary);">Время выполненных задач</div>
-                                <div style="font-size: 0.8rem; color: var(--text-secondary); margin-top: 2px;">Потрачено времени, ч/дни</div>
+                    <!-- Teams Grid (Below) -->
+                    <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; border-top: 1px solid var(--card-border); padding-top: 1.25rem; margin-top: auto;">
+                        <!-- Team 1 -->
+                        <div style="display: flex; flex-direction: column; gap: 4px;">
+                            <div style="display: flex; align-items: center; gap: 6px; font-size: 0.8rem; color: var(--text-secondary);">
+                                <span style="display: inline-block; width: 6px; height: 6px; border-radius: 50%; background-color: #3b82f6; flex-shrink: 0;"></span>
+                                <span>Camunda</span>
                             </div>
-                            <svg class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width: 20px; height: 20px; color: var(--text-secondary); opacity: 0.7;">
-                                <circle cx="12" cy="12" r="1"></circle>
-                                <circle cx="12" cy="5" r="1"></circle>
-                                <circle cx="12" cy="19" r="1"></circle>
-                            </svg>
+                            <span id="jira-completed-camunda" style="font-size: 1.1rem; font-weight: 700; color: var(--text-primary); margin-left: 12px;">0</span>
+                        </div>
+                        <!-- Team 2 -->
+                        <div style="display: flex; flex-direction: column; gap: 4px;">
+                            <div style="display: flex; align-items: center; gap: 6px; font-size: 0.8rem; color: var(--text-secondary);">
+                                <span style="display: inline-block; width: 6px; height: 6px; border-radius: 50%; background-color: #10b981; flex-shrink: 0;"></span>
+                                <span>Devops</span>
+                            </div>
+                            <span id="jira-completed-devops" style="font-size: 1.1rem; font-weight: 700; color: var(--text-primary); margin-left: 12px;">0</span>
+                        </div>
+                        <!-- Team 3 -->
+                        <div style="display: flex; flex-direction: column; gap: 4px;">
+                            <div style="display: flex; align-items: center; gap: 6px; font-size: 0.8rem; color: var(--text-secondary);">
+                                <span style="display: inline-block; width: 6px; height: 6px; border-radius: 50%; background-color: #f59e0b; flex-shrink: 0;"></span>
+                                <span>Front</span>
+                            </div>
+                            <span id="jira-completed-front" style="font-size: 1.1rem; font-weight: 700; color: var(--text-primary); margin-left: 12px;">0</span>
+                        </div>
+                        <!-- Team 4 -->
+                        <div style="display: flex; flex-direction: column; gap: 4px;">
+                            <div style="display: flex; align-items: center; gap: 6px; font-size: 0.8rem; color: var(--text-secondary);">
+                                <span style="display: inline-block; width: 6px; height: 6px; border-radius: 50%; background-color: #ef4444; flex-shrink: 0;"></span>
+                                <span>Абс</span>
+                            </div>
+                            <span id="jira-completed-abs" style="font-size: 1.1rem; font-weight: 700; color: var(--text-primary); margin-left: 12px;">0</span>
+                        </div>
+                        <!-- Team 5 -->
+                        <div style="display: flex; flex-direction: column; gap: 4px;">
+                            <div style="display: flex; align-items: center; gap: 6px; font-size: 0.8rem; color: var(--text-secondary);" title="Колл-центр / Амл / Риски">
+                                <span style="display: inline-block; width: 6px; height: 6px; border-radius: 50%; background-color: #8b5cf6; flex-shrink: 0;"></span>
+                                <span style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100px;">Колл-центр...</span>
+                            </div>
+                            <span id="jira-completed-callcenter" style="font-size: 1.1rem; font-weight: 700; color: var(--text-primary); margin-left: 12px;">0</span>
+                        </div>
+                        <!-- Team 6 -->
+                        <div style="display: flex; flex-direction: column; gap: 4px;">
+                            <div style="display: flex; align-items: center; gap: 6px; font-size: 0.8rem; color: var(--text-secondary);" title="Кфо / Залоги / Проблемные Кредиты">
+                                <span style="display: inline-block; width: 6px; height: 6px; border-radius: 50%; background-color: #06b6d4; flex-shrink: 0;"></span>
+                                <span style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100px;">Кфо / Залоги...</span>
+                            </div>
+                            <span id="jira-completed-kfo" style="font-size: 1.1rem; font-weight: 700; color: var(--text-primary); margin-left: 12px;">0</span>
+                        </div>
+                        <!-- Team 7 -->
+                        <div style="display: flex; flex-direction: column; gap: 4px;">
+                            <div style="display: flex; align-items: center; gap: 6px; font-size: 0.8rem; color: var(--text-secondary);" title="Пластиковые Карты">
+                                <span style="display: inline-block; width: 6px; height: 6px; border-radius: 50%; background-color: #ec4899; flex-shrink: 0;"></span>
+                                <span style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100px;">Пластиковые...</span>
+                            </div>
+                            <span id="jira-completed-cards" style="font-size: 1.1rem; font-weight: 700; color: var(--text-primary); margin-left: 12px;">0</span>
+                        </div>
+                        <!-- Team 8 -->
+                        <div style="display: flex; flex-direction: column; gap: 4px;">
+                            <div style="display: flex; align-items: center; gap: 6px; font-size: 0.8rem; color: var(--text-secondary);">
+                                <span style="display: inline-block; width: 6px; height: 6px; border-radius: 50%; background-color: #f97316; flex-shrink: 0;"></span>
+                                <span>Скоринг</span>
+                            </div>
+                            <span id="jira-completed-scoring" style="font-size: 1.1rem; font-weight: 700; color: var(--text-primary); margin-left: 12px;">0</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- Row 1.8: Time Spent on Completed Tasks (Quarterly filterable) -->
+            <section style="display: flex; flex-direction: column; gap: 1rem; margin-top: 1.5rem;">
+                <!-- Right Card: Время выполненных задач -->
+                <div class="card" style="padding: 1.5rem 2rem; position: relative; width: 100%;">
+                    <!-- Header -->
+                    <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0.5rem;">
+                        <div>
+                            <div style="font-family: 'Outfit', sans-serif; font-size: 1.3rem; font-weight: 700; color: var(--text-primary);">Время выполненных задач</div>
+                            <div style="font-size: 0.8rem; color: var(--text-secondary); margin-top: 2px;">Потрачено времени, ч/дни</div>
+                        </div>
+                        <svg class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width: 20px; height: 20px; color: var(--text-secondary); opacity: 0.7;">
+                            <circle cx="12" cy="12" r="1"></circle>
+                            <circle cx="12" cy="5" r="1"></circle>
+                            <circle cx="12" cy="19" r="1"></circle>
+                        </svg>
+                    </div>
+                    
+                    <!-- Content: Grid of 2 columns -->
+                    <div style="display: grid; grid-template-columns: 1.4fr 1fr; gap: 2rem; align-items: center; margin-top: 1.25rem; min-height: 220px;">
+                        <!-- Column 1: Table -->
+                        <div style="display: flex; flex-direction: column; gap: 10px;" id="jira-time-table-body">
+                            <!-- Dynamic rows -->
                         </div>
                         
-                        <!-- Content: Grid of 2 columns -->
-                        <div style="display: grid; grid-template-columns: 1.2fr 1fr; gap: 1rem; align-items: center; margin-top: 1rem; min-height: 220px;">
-                            <!-- Column 1: Table -->
-                            <div style="display: flex; flex-direction: column; gap: 10px;" id="jira-time-table-body">
-                                <!-- Dynamic rows -->
-                            </div>
-                            
-                            <!-- Column 2: Doughnut Chart -->
-                            <div style="position: relative; width: 170px; height: 170px; margin: 0 auto;">
-                                <canvas id="chart-jira-time-spent"></canvas>
-                                <div class="doughnut-center-card" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); background: var(--card-bg); border: 1px solid var(--card-border); box-shadow: 0 8px 24px rgba(0,0,0,0.08); width: 95px; height: 95px; border-radius: 50%; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; pointer-events: none; z-index: 5;">
-                                    <span style="font-size: 0.65rem; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.05em; font-weight: 600;">Всего</span>
-                                    <span id="doughnut-jira-time-center-value" style="font-size: 1.2rem; font-weight: 700; color: var(--text-primary); margin-top: 1px; line-height: 1;">0</span>
-                                </div>
+                        <!-- Column 2: Doughnut Chart -->
+                        <div style="position: relative; width: 170px; height: 170px; margin: 0 auto;">
+                            <canvas id="chart-jira-time-spent"></canvas>
+                            <div class="doughnut-center-card" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); background: var(--card-bg); border: 1px solid var(--card-border); box-shadow: 0 8px 24px rgba(0,0,0,0.08); width: 95px; height: 95px; border-radius: 50%; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; pointer-events: none; z-index: 5;">
+                                <span style="font-size: 0.65rem; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.05em; font-weight: 600;">Всего</span>
+                                <span id="doughnut-jira-time-center-value" style="font-size: 1.2rem; font-weight: 700; color: var(--text-primary); margin-top: 1px; line-height: 1;">0</span>
                             </div>
                         </div>
                     </div>
