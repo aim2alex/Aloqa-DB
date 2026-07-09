@@ -2095,6 +2095,27 @@ def main():
                         </div>
                     </div>
                 </div>
+
+                <!-- Total Employees -->
+                <div class="card card-mc-completed">
+                    <div class="card-header">
+                        <span class="card-title">Всего сотрудников</span>
+                        <div class="card-icon" style="background: rgba(16, 185, 129, 0.15); color: #10b981;">
+                            <svg class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                                <circle cx="9" cy="7" r="4"></circle>
+                                <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                                <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                            </svg>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <span class="card-value">32</span>
+                        <div class="card-meta">
+                            <span>Штат задействованных специалистов</span>
+                        </div>
+                    </div>
+                </div>
             </section>
 
             <!-- Row 1.5: Teams Section -->
