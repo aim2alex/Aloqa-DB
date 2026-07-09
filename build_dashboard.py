@@ -1256,11 +1256,11 @@ def main():
         /* Quarters Grid */
         .quarters-grid {
             display: grid;
-            grid-template-columns: repeat(2, 1fr);
+            grid-template-columns: 1.35fr 1fr;
             gap: 1.5rem;
             margin-top: 0.5rem;
         }
-        @media (max-width: 1024px) {
+        @media (max-width: 1200px) {
             .quarters-grid {
                 grid-template-columns: 1fr;
             }
@@ -2248,99 +2248,135 @@ def main():
                 </div>
             </section>
 
-            <!-- Row 1.7: Completed Tasks (Quarterly filterable) -->
+            <!-- Row 1.7: Completed Tasks & Time Spent (Quarterly filterable) -->
             <section style="display: flex; flex-direction: column; gap: 1rem; margin-top: 1.5rem;">
-                <div class="card" style="padding: 1.5rem 2rem; position: relative; width: 100%;">
-                    <!-- Header -->
-                    <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0.5rem;">
-                        <div>
-                            <div style="font-family: 'Outfit', sans-serif; font-size: 1.3rem; font-weight: 700; color: var(--text-primary);">Выполнено</div>
-                            <div style="font-size: 0.8rem; color: var(--text-secondary); margin-top: 2px;">Всего задач, шт.</div>
+                <div class="quarters-grid">
+                    <!-- Left Card: Выполнено (Команды) -->
+                    <div class="card" style="padding: 1.5rem 2rem; position: relative;">
+                        <!-- Header -->
+                        <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0.5rem;">
+                            <div>
+                                <div style="font-family: 'Outfit', sans-serif; font-size: 1.3rem; font-weight: 700; color: var(--text-primary);">Выполнено</div>
+                                <div style="font-size: 0.8rem; color: var(--text-secondary); margin-top: 2px;">Всего задач, шт.</div>
+                            </div>
+                            <svg class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width: 20px; height: 20px; color: var(--text-secondary); opacity: 0.7;">
+                                <line x1="7" y1="17" x2="17" y2="7"></line>
+                                <polyline points="7 7 17 7 17 17"></polyline>
+                            </svg>
                         </div>
-                        <svg class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width: 20px; height: 20px; color: var(--text-secondary); opacity: 0.7;">
-                            <line x1="7" y1="17" x2="17" y2="7"></line>
-                            <polyline points="7 7 17 7 17 17"></polyline>
-                        </svg>
+                        
+                        <!-- Content Grid -->
+                        <div style="display: grid; grid-template-columns: 1.2fr 1fr 1.5fr; gap: 1.5rem; align-items: center; margin-top: 1rem;">
+                            <!-- Column 1: Teams 1-4 -->
+                            <div style="display: flex; flex-direction: column; gap: 10px;">
+                                <div style="display: flex; align-items: center; justify-content: space-between; font-size: 0.85rem;">
+                                    <div style="display: flex; align-items: center; gap: 8px;">
+                                        <span style="display: inline-block; width: 8px; height: 8px; border-radius: 50%; background-color: #3b82f6;"></span>
+                                        <span style="color: var(--text-secondary);">Camunda</span>
+                                    </div>
+                                    <span id="jira-completed-camunda" style="font-weight: 700; color: var(--text-primary);">0</span>
+                                </div>
+                                <div style="display: flex; align-items: center; justify-content: space-between; font-size: 0.85rem;">
+                                    <div style="display: flex; align-items: center; gap: 8px;">
+                                        <span style="display: inline-block; width: 8px; height: 8px; border-radius: 50%; background-color: #10b981;"></span>
+                                        <span style="color: var(--text-secondary);">Devops</span>
+                                    </div>
+                                    <span id="jira-completed-devops" style="font-weight: 700; color: var(--text-primary);">0</span>
+                                </div>
+                                <div style="display: flex; align-items: center; justify-content: space-between; font-size: 0.85rem;">
+                                    <div style="display: flex; align-items: center; gap: 8px;">
+                                        <span style="display: inline-block; width: 8px; height: 8px; border-radius: 50%; background-color: #f59e0b;"></span>
+                                        <span style="color: var(--text-secondary);">Front</span>
+                                    </div>
+                                    <span id="jira-completed-front" style="font-weight: 700; color: var(--text-primary);">0</span>
+                                </div>
+                                <div style="display: flex; align-items: center; justify-content: space-between; font-size: 0.85rem;">
+                                    <div style="display: flex; align-items: center; gap: 8px;">
+                                        <span style="display: inline-block; width: 8px; height: 8px; border-radius: 50%; background-color: #ef4444;"></span>
+                                        <span style="color: var(--text-secondary);">Абс</span>
+                                    </div>
+                                    <span id="jira-completed-abs" style="font-weight: 700; color: var(--text-primary);">0</span>
+                                </div>
+                            </div>
+                            
+                            <!-- Column 2: Center Big Value & Trend -->
+                            <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center;">
+                                <div id="jira-completed-trend-wrapper" style="display: flex; align-items: center; gap: 4px; font-weight: 700; font-size: 0.95rem; margin-bottom: 4px;">
+                                    <svg id="jira-completed-trend-icon" class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" style="width: 14px; height: 14px;">
+                                        <polyline points="18 15 12 9 6 15"></polyline>
+                                    </svg>
+                                    <span id="jira-completed-trend-val">+50%</span>
+                                </div>
+                                <div id="jira-completed-total" style="font-family: 'Outfit', sans-serif; font-size: 3.5rem; font-weight: 700; color: var(--text-primary); line-height: 1;">0</div>
+                            </div>
+                            
+                            <!-- Column 3: Teams 5-8 & Sparkline -->
+                            <div style="display: flex; flex-direction: column; gap: 10px; position: relative;">
+                                <!-- Sparkline -->
+                                <div id="jira-completed-sparkline" style="position: absolute; right: 0; top: -35px; display: flex; align-items: flex-end; gap: 3px; height: 28px;">
+                                    <!-- Dynamic sparkline bars -->
+                                </div>
+                                <div style="display: flex; align-items: center; justify-content: space-between; font-size: 0.85rem;">
+                                    <div style="display: flex; align-items: center; gap: 8px;">
+                                        <span style="display: inline-block; width: 8px; height: 8px; border-radius: 50%; background-color: #8b5cf6;"></span>
+                                        <span style="color: var(--text-secondary); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 140px;" title="Колл-центр / Амл / Риски">Колл-центр / Амл...</span>
+                                    </div>
+                                    <span id="jira-completed-callcenter" style="font-weight: 700; color: var(--text-primary);">0</span>
+                                </div>
+                                <div style="display: flex; align-items: center; justify-content: space-between; font-size: 0.85rem;">
+                                    <div style="display: flex; align-items: center; gap: 8px;">
+                                        <span style="display: inline-block; width: 8px; height: 8px; border-radius: 50%; background-color: #06b6d4;"></span>
+                                        <span style="color: var(--text-secondary); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 140px;" title="Кфо / Залоги / Проблемные Кредиты">Кфо / Залоги / Кред...</span>
+                                    </div>
+                                    <span id="jira-completed-kfo" style="font-weight: 700; color: var(--text-primary);">0</span>
+                                </div>
+                                <div style="display: flex; align-items: center; justify-content: space-between; font-size: 0.85rem;">
+                                    <div style="display: flex; align-items: center; gap: 8px;">
+                                        <span style="display: inline-block; width: 8px; height: 8px; border-radius: 50%; background-color: #ec4899;"></span>
+                                        <span style="color: var(--text-secondary); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 140px;" title="Пластиковые Карты">Пластиковые Карты</span>
+                                    </div>
+                                    <span id="jira-completed-cards" style="font-weight: 700; color: var(--text-primary);">0</span>
+                                </div>
+                                <div style="display: flex; align-items: center; justify-content: space-between; font-size: 0.85rem;">
+                                    <div style="display: flex; align-items: center; gap: 8px;">
+                                        <span style="display: inline-block; width: 8px; height: 8px; border-radius: 50%; background-color: #f97316;"></span>
+                                        <span style="color: var(--text-secondary);">Скоринг</span>
+                                    </div>
+                                    <span id="jira-completed-scoring" style="font-weight: 700; color: var(--text-primary);">0</span>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                     
-                    <!-- Content Grid -->
-                    <div style="display: grid; grid-template-columns: 1.2fr 1fr 1.5fr; gap: 1.5rem; align-items: center; margin-top: 1rem;">
-                        <!-- Column 1: Teams 1-4 -->
-                        <div style="display: flex; flex-direction: column; gap: 10px;">
-                            <div style="display: flex; align-items: center; justify-content: space-between; font-size: 0.85rem;">
-                                <div style="display: flex; align-items: center; gap: 8px;">
-                                    <span style="display: inline-block; width: 8px; height: 8px; border-radius: 50%; background-color: #3b82f6;"></span>
-                                    <span style="color: var(--text-secondary);">Camunda</span>
-                                </div>
-                                <span id="jira-completed-camunda" style="font-weight: 700; color: var(--text-primary);">0</span>
+                    <!-- Right Card: Время выполненных задач -->
+                    <div class="card" style="padding: 1.5rem; position: relative;">
+                        <!-- Header -->
+                        <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0.5rem;">
+                            <div>
+                                <div style="font-family: 'Outfit', sans-serif; font-size: 1.3rem; font-weight: 700; color: var(--text-primary);">Время выполненных задач</div>
+                                <div style="font-size: 0.8rem; color: var(--text-secondary); margin-top: 2px;">Потрачено времени, ч/дни</div>
                             </div>
-                            <div style="display: flex; align-items: center; justify-content: space-between; font-size: 0.85rem;">
-                                <div style="display: flex; align-items: center; gap: 8px;">
-                                    <span style="display: inline-block; width: 8px; height: 8px; border-radius: 50%; background-color: #10b981;"></span>
-                                    <span style="color: var(--text-secondary);">Devops</span>
-                                </div>
-                                <span id="jira-completed-devops" style="font-weight: 700; color: var(--text-primary);">0</span>
-                            </div>
-                            <div style="display: flex; align-items: center; justify-content: space-between; font-size: 0.85rem;">
-                                <div style="display: flex; align-items: center; gap: 8px;">
-                                    <span style="display: inline-block; width: 8px; height: 8px; border-radius: 50%; background-color: #f59e0b;"></span>
-                                    <span style="color: var(--text-secondary);">Front</span>
-                                </div>
-                                <span id="jira-completed-front" style="font-weight: 700; color: var(--text-primary);">0</span>
-                            </div>
-                            <div style="display: flex; align-items: center; justify-content: space-between; font-size: 0.85rem;">
-                                <div style="display: flex; align-items: center; gap: 8px;">
-                                    <span style="display: inline-block; width: 8px; height: 8px; border-radius: 50%; background-color: #ef4444;"></span>
-                                    <span style="color: var(--text-secondary);">Абс</span>
-                                </div>
-                                <span id="jira-completed-abs" style="font-weight: 700; color: var(--text-primary);">0</span>
-                            </div>
+                            <svg class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width: 20px; height: 20px; color: var(--text-secondary); opacity: 0.7;">
+                                <circle cx="12" cy="12" r="1"></circle>
+                                <circle cx="12" cy="5" r="1"></circle>
+                                <circle cx="12" cy="19" r="1"></circle>
+                            </svg>
                         </div>
                         
-                        <!-- Column 2: Center Big Value & Trend -->
-                        <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center;">
-                            <div id="jira-completed-trend-wrapper" style="display: flex; align-items: center; gap: 4px; font-weight: 700; font-size: 0.95rem; margin-bottom: 4px;">
-                                <svg id="jira-completed-trend-icon" class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" style="width: 14px; height: 14px;">
-                                    <polyline points="18 15 12 9 6 15"></polyline>
-                                </svg>
-                                <span id="jira-completed-trend-val">+50%</span>
+                        <!-- Content: Grid of 2 columns -->
+                        <div style="display: grid; grid-template-columns: 1.2fr 1fr; gap: 1rem; align-items: center; margin-top: 1rem; min-height: 220px;">
+                            <!-- Column 1: Table -->
+                            <div style="display: flex; flex-direction: column; gap: 10px;" id="jira-time-table-body">
+                                <!-- Dynamic rows -->
                             </div>
-                            <div id="jira-completed-total" style="font-family: 'Outfit', sans-serif; font-size: 3.5rem; font-weight: 700; color: var(--text-primary); line-height: 1;">0</div>
-                        </div>
-                        
-                        <!-- Column 3: Teams 5-8 & Sparkline -->
-                        <div style="display: flex; flex-direction: column; gap: 10px; position: relative;">
-                            <!-- Sparkline -->
-                            <div id="jira-completed-sparkline" style="position: absolute; right: 0; top: -35px; display: flex; align-items: flex-end; gap: 3px; height: 28px;">
-                                <!-- Dynamic sparkline bars -->
-                            </div>
-                            <div style="display: flex; align-items: center; justify-content: space-between; font-size: 0.85rem;">
-                                <div style="display: flex; align-items: center; gap: 8px;">
-                                    <span style="display: inline-block; width: 8px; height: 8px; border-radius: 50%; background-color: #8b5cf6;"></span>
-                                    <span style="color: var(--text-secondary); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 140px;" title="Колл-центр / Амл / Риски">Колл-центр / Амл...</span>
+                            
+                            <!-- Column 2: Doughnut Chart -->
+                            <div style="position: relative; width: 170px; height: 170px; margin: 0 auto;">
+                                <canvas id="chart-jira-time-spent"></canvas>
+                                <div class="doughnut-center-card" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); background: var(--card-bg); border: 1px solid var(--card-border); box-shadow: 0 8px 24px rgba(0,0,0,0.08); width: 95px; height: 95px; border-radius: 50%; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; pointer-events: none; z-index: 5;">
+                                    <span style="font-size: 0.65rem; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.05em; font-weight: 600;">Всего</span>
+                                    <span id="doughnut-jira-time-center-value" style="font-size: 1.2rem; font-weight: 700; color: var(--text-primary); margin-top: 1px; line-height: 1;">0</span>
                                 </div>
-                                <span id="jira-completed-callcenter" style="font-weight: 700; color: var(--text-primary);">0</span>
-                            </div>
-                            <div style="display: flex; align-items: center; justify-content: space-between; font-size: 0.85rem;">
-                                <div style="display: flex; align-items: center; gap: 8px;">
-                                    <span style="display: inline-block; width: 8px; height: 8px; border-radius: 50%; background-color: #06b6d4;"></span>
-                                    <span style="color: var(--text-secondary); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 140px;" title="Кфо / Залоги / Проблемные Кредиты">Кфо / Залоги / Кред...</span>
-                                </div>
-                                <span id="jira-completed-kfo" style="font-weight: 700; color: var(--text-primary);">0</span>
-                            </div>
-                            <div style="display: flex; align-items: center; justify-content: space-between; font-size: 0.85rem;">
-                                <div style="display: flex; align-items: center; gap: 8px;">
-                                    <span style="display: inline-block; width: 8px; height: 8px; border-radius: 50%; background-color: #ec4899;"></span>
-                                    <span style="color: var(--text-secondary); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 140px;" title="Пластиковые Карты">Пластиковые Карты</span>
-                                </div>
-                                <span id="jira-completed-cards" style="font-weight: 700; color: var(--text-primary);">0</span>
-                            </div>
-                            <div style="display: flex; align-items: center; justify-content: space-between; font-size: 0.85rem;">
-                                <div style="display: flex; align-items: center; gap: 8px;">
-                                    <span style="display: inline-block; width: 8px; height: 8px; border-radius: 50%; background-color: #f97316;"></span>
-                                    <span style="color: var(--text-secondary);">Скоринг</span>
-                                </div>
-                                <span id="jira-completed-scoring" style="font-weight: 700; color: var(--text-primary);">0</span>
                             </div>
                         </div>
                     </div>
@@ -2431,6 +2467,7 @@ def main():
         let jiraCategoriesChart = null;
         let jiraHoursChart = null;
         let jiraSystemsChart = null;
+        let jiraTimeSpentChart = null;
         let jiraChartsInitialized = false;
 
         // Chart instances
@@ -4314,6 +4351,105 @@ def main():
                     return `<div style="width: 3px; height: ${heightPx}px; background-color: #10b981; border-radius: 1px; opacity: 0.85;"></div>`;
                 }).join('');
             }
+
+            // Update Jira Time Spent Section (Category percentages & Doughnut Chart)
+            const jiraTimeSpentData = {
+                q1: {
+                    total: 713.9,
+                    categories: [
+                        { name: "Внутренняя автоматизация", value: 37.01, color: "#8b5cf6" },
+                        { name: "Поддержка и инциденты", value: 13.13, color: "#ef4444" },
+                        { name: "Новые продукты для клиентов", value: 34.29, color: "#10b981" },
+                        { name: "Требования регулятора", value: 15.52, color: "#06b6d4" },
+                        { name: "KPI-цели (KPI план бизнеса)", value: 0.04, color: "#f97316" },
+                        { name: "Без категории", value: 0.02, color: "#64748b" }
+                    ]
+                },
+                q2: {
+                    total: 925.5,
+                    categories: [
+                        { name: "Поддержка и инциденты", value: 14.15, color: "#ef4444" },
+                        { name: "Внутренняя автоматизация", value: 25.75, color: "#8b5cf6" },
+                        { name: "Требования регулятора", value: 17.01, color: "#06b6d4" },
+                        { name: "Новые продукты для клиентов", value: 41.34, color: "#10b981" },
+                        { name: "KPI-цели (KPI план бизнеса)", value: 1.74, color: "#f97316" },
+                        { name: "Без категории", value: 0.01, color: "#64748b" }
+                    ]
+                },
+                all: {
+                    total: 1639.4,
+                    categories: [
+                        { name: "Новые продукты для клиентов", value: 38.27, color: "#10b981" },
+                        { name: "Внутренняя автоматизация", value: 30.66, color: "#8b5cf6" },
+                        { name: "Требования регулятора", value: 16.36, color: "#06b6d4" },
+                        { name: "Поддержка и инциденты", value: 13.71, color: "#ef4444" },
+                        { name: "KPI-цели (KPI план бизнеса)", value: 1.00, color: "#f97316" },
+                        { name: "Без категории", value: 0.01, color: "#64748b" }
+                    ]
+                }
+            };
+            
+            const timeInfo = jiraTimeSpentData[activePeriod];
+            
+            // Update center text of timespent chart
+            document.getElementById('doughnut-jira-time-center-value').innerText = timeInfo.total.toFixed(1);
+            
+            // Build Time Spent Table
+            const timeTableBody = document.getElementById('jira-time-table-body');
+            if (timeTableBody) {
+                timeTableBody.innerHTML = timeInfo.categories.map(cat => {
+                    return `
+                    <div style="display: flex; align-items: center; justify-content: space-between; font-size: 0.85rem;">
+                        <div style="display: flex; align-items: center; gap: 8px;">
+                            <span style="display: inline-block; width: 8px; height: 8px; border-radius: 50%; background-color: ${cat.color}; flex-shrink: 0;"></span>
+                            <span style="color: var(--text-secondary); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 170px;" title="${cat.name}">${cat.name}</span>
+                        </div>
+                        <span style="font-weight: 700; color: var(--text-primary);">${cat.value.toFixed(2)}%</span>
+                    </div>`;
+                }).join('');
+            }
+            
+            // Update Time spent doughnut chart
+            const timeCtx = document.getElementById('chart-jira-time-spent').getContext('2d');
+            const themeColors = getThemeColors();
+            
+            if (jiraTimeSpentChart) {
+                jiraTimeSpentChart.destroy();
+            }
+            
+            jiraTimeSpentChart = new Chart(timeCtx, {
+                type: 'doughnut',
+                data: {
+                    labels: timeInfo.categories.map(c => c.name),
+                    datasets: [{
+                        data: timeInfo.categories.map(c => c.value),
+                        backgroundColor: timeInfo.categories.map(c => c.color),
+                        borderColor: themeColors.cardBorder,
+                        borderWidth: 2
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    cutout: '70%',
+                    plugins: {
+                        legend: { display: false },
+                        tooltip: {
+                            backgroundColor: '#0f172a',
+                            titleColor: '#fff',
+                            bodyColor: '#e2e8f0',
+                            borderColor: 'rgba(255,255,255,0.1)',
+                            borderWidth: 1,
+                            padding: 10,
+                            callbacks: {
+                                label: function(context) {
+                                    return ` ${context.label}: ${context.raw.toFixed(2)}%`;
+                                }
+                            }
+                        }
+                    }
+                }
+            });
         }
 
         function renderJiraCategoriesChart(months, monthlyCategories) {
@@ -4579,6 +4715,12 @@ def main():
                 jiraSystemsChart.options.scales.y.grid.color = colors.gridColor;
                 jiraSystemsChart.options.plugins.legend.labels.color = colors.textSecondary;
                 jiraSystemsChart.update();
+            }
+            if (jiraTimeSpentChart) {
+                if (jiraTimeSpentChart.data.datasets[0]) {
+                    jiraTimeSpentChart.data.datasets[0].borderColor = colors.cardBorder;
+                }
+                jiraTimeSpentChart.update();
             }
         }
 
