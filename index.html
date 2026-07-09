@@ -1868,23 +1868,39 @@
                     </div>
                     
                     <!-- Right Card: Выполнено задач по категориям -->
-                    <div class="card" style="padding: 1.5rem 2rem; position: relative; display: flex; flex-direction: column; justify-content: space-between;">
+                    <div class="card" style="padding: 1.5rem 2rem; position: relative;">
                         <!-- Header -->
                         <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0.5rem;">
                             <div>
                                 <div style="font-family: 'Outfit', sans-serif; font-size: 1.3rem; font-weight: 700; color: var(--text-primary);">Выполнено задач по категориям</div>
-                                <div id="jira-categories-img-subtitle" style="font-size: 0.8rem; color: var(--text-secondary); margin-top: 2px;">Анализ распределения задач по типам</div>
+                                <div style="font-size: 0.8rem; color: var(--text-secondary); margin-top: 2px;">Кол-во задач по категориям, шт</div>
                             </div>
                             <svg class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width: 20px; height: 20px; color: var(--text-secondary); opacity: 0.7;">
-                                <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
-                                <circle cx="8.5" cy="8.5" r="1.5"></circle>
-                                <polyline points="21 15 16 10 5 21"></polyline>
+                                <line x1="18" y1="20" x2="18" y2="10"></line>
+                                <line x1="12" y1="20" x2="12" y2="4"></line>
+                                <line x1="6" y1="20" x2="6" y2="14"></line>
                             </svg>
                         </div>
                         
-                        <!-- Content: Images -->
-                        <div id="jira-categories-images-container" style="display: flex; gap: 12px; align-items: center; justify-content: center; margin-top: 1rem; width: 100%; min-height: 220px;">
-                            <!-- Dynamic images -->
+                        <!-- Legend -->
+                        <div style="display: flex; gap: 15px; margin-top: 5px; margin-bottom: 5px; font-size: 0.8rem;">
+                            <div style="display: flex; align-items: center; gap: 6px;">
+                                <span style="display: inline-block; width: 8px; height: 8px; border-radius: 50%; background-color: #06b6d4;"></span>
+                                <span style="color: var(--text-secondary);">Ранее</span>
+                            </div>
+                            <div style="display: flex; align-items: center; gap: 6px;">
+                                <span style="display: inline-block; width: 8px; height: 8px; border-radius: 50%; background-color: #eab308;"></span>
+                                <span style="color: var(--text-secondary);">Прошлый месяц</span>
+                            </div>
+                            <div style="display: flex; align-items: center; gap: 6px;">
+                                <span style="display: inline-block; width: 8px; height: 8px; border-radius: 50%; background-color: #10b981;"></span>
+                                <span style="color: var(--text-secondary);">Текущий месяц</span>
+                            </div>
+                        </div>
+                        
+                        <!-- Content: Chart -->
+                        <div style="position: relative; width: 100%; height: 190px; margin-top: 0.5rem;">
+                            <canvas id="chart-jira-categories-stacked"></canvas>
                         </div>
                     </div>
                 </div>
@@ -6420,6 +6436,7 @@
         let jiraHoursChart = null;
         let jiraSystemsChart = null;
         let jiraTimeSpentChart = null;
+        let jiraCategoriesStackedChart = null;
         let jiraChartsInitialized = false;
 
         // Chart instances
@@ -8403,23 +8420,106 @@
                 }
             });
 
-            // Update Jira Categories Images Block
-            const imgContainer = document.getElementById('jira-categories-images-container');
-            const imgSubtitle = document.getElementById('jira-categories-img-subtitle');
-            if (imgContainer) {
-                if (activePeriod === 'q1') {
-                    imgSubtitle.innerText = '1 квартал (1-3 месяц)';
-                    imgContainer.innerHTML = '<img src="Выполнено задач по категориям Q1.png" style="max-width: 100%; max-height: 220px; object-fit: contain; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.12);">';
-                } else if (activePeriod === 'q2') {
-                    imgSubtitle.innerText = '2 квартал (4-6 месяц)';
-                    imgContainer.innerHTML = '<img src="Выполнено задач по категориям Q2.png" style="max-width: 100%; max-height: 220px; object-fit: contain; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.12);">';
-                } else {
-                    imgSubtitle.innerText = 'Все периоды (1 и 2 квартал)';
-                    imgContainer.innerHTML = `
-                        <img src="Выполнено задач по категориям Q1.png" style="width: 48%; max-height: 220px; object-fit: contain; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.12);" title="1 квартал">
-                        <img src="Выполнено задач по категориям Q2.png" style="width: 48%; max-height: 220px; object-fit: contain; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.12);" title="2 квартал">
-                    `;
+            // Update Jira Categories Stacked Chart
+            const jiraCategoriesStackedData = {
+                q1: {
+                    labels: [
+                        "Требования регулятора",
+                        "Новые продукты для клиентов",
+                        "KPI-цели (KPI план бизнеса)",
+                        "Поддержка и инциденты",
+                        "Внутренняя автоматизация",
+                        "Без категории"
+                    ],
+                    datasets: [
+                        { label: "Ранее", data: [68, 114, 5, 227, 101, 2], backgroundColor: "#06b6d4" },
+                        { label: "Прошлый месяц", data: [0, 0, 0, 0, 0, 0], backgroundColor: "#eab308" },
+                        { label: "Текущий месяц", data: [0, 0, 0, 0, 0, 0], backgroundColor: "#10b981" }
+                    ]
+                },
+                q2: {
+                    labels: [
+                        "Требования регулятора",
+                        "Новые продукты для клиентов",
+                        "KPI-цели (KPI план бизнеса)",
+                        "Поддержка и инциденты",
+                        "Внутренняя автоматизация",
+                        "Без категории"
+                    ],
+                    datasets: [
+                        { label: "Ранее", data: [35, 58, 1, 146, 68, 1], backgroundColor: "#06b6d4" },
+                        { label: "Прошлый месяц", data: [15, 26, 0, 45, 54, 0], backgroundColor: "#eab308" },
+                        { label: "Текущий месяц", data: [0, 0, 0, 0, 0, 0], backgroundColor: "#10b981" }
+                    ]
+                },
+                all: {
+                    labels: [
+                        "Требования регулятора",
+                        "Новые продукты для клиентов",
+                        "KPI-цели (KPI план бизнеса)",
+                        "Поддержка и инциденты",
+                        "Внутренняя автоматизация",
+                        "Без категории"
+                    ],
+                    datasets: [
+                        { label: "Ранее", data: [103, 172, 6, 373, 169, 3], backgroundColor: "#06b6d4" },
+                        { label: "Прошлый месяц", data: [15, 26, 0, 45, 54, 0], backgroundColor: "#eab308" },
+                        { label: "Текущий месяц", data: [0, 0, 0, 0, 0, 0], backgroundColor: "#10b981" }
+                    ]
                 }
+            };
+            
+            const stackedCanvas = document.getElementById('chart-jira-categories-stacked');
+            if (stackedCanvas) {
+                const stackedCtx = stackedCanvas.getContext('2d');
+                const axisColors = getThemeColors();
+                
+                if (jiraCategoriesStackedChart) {
+                    jiraCategoriesStackedChart.destroy();
+                }
+                
+                const stackedInfo = jiraCategoriesStackedData[activePeriod];
+                
+                jiraCategoriesStackedChart = new Chart(stackedCtx, {
+                    type: 'bar',
+                    data: {
+                        labels: stackedInfo.labels,
+                        datasets: stackedInfo.datasets.map(ds => Object.assign({}, ds, {
+                            borderRadius: 4,
+                            borderSkipped: false,
+                            barPercentage: 0.6,
+                            categoryPercentage: 0.7
+                        }))
+                    },
+                    options: {
+                        indexAxis: 'y',
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        scales: {
+                            x: {
+                                stacked: true,
+                                grid: { color: axisColors.gridColor },
+                                ticks: { color: axisColors.textSecondary, font: { size: 10 } }
+                            },
+                            y: {
+                                stacked: true,
+                                grid: { display: false },
+                                ticks: { color: axisColors.textSecondary, font: { size: 11 } }
+                            }
+                        },
+                        plugins: {
+                            legend: { display: false },
+                            tooltip: {
+                                backgroundColor: '#0f172a',
+                                titleColor: '#fff',
+                                bodyColor: '#e2e8f0',
+                                borderColor: 'rgba(255,255,255,0.1)',
+                                borderWidth: 1,
+                                padding: 10
+                            }
+                        }
+                    }
+                });
             }
         }
 
@@ -8692,6 +8792,20 @@
                     jiraTimeSpentChart.data.datasets[0].borderColor = colors.cardBorder;
                 }
                 jiraTimeSpentChart.update();
+            }
+            if (jiraCategoriesStackedChart && jiraCategoriesStackedChart.options && jiraCategoriesStackedChart.options.scales) {
+                if (jiraCategoriesStackedChart.options.scales.x) {
+                    if (jiraCategoriesStackedChart.options.scales.x.grid) {
+                        jiraCategoriesStackedChart.options.scales.x.grid.color = colors.gridColor;
+                    }
+                    if (jiraCategoriesStackedChart.options.scales.x.ticks) {
+                        jiraCategoriesStackedChart.options.scales.x.ticks.color = colors.textSecondary;
+                    }
+                }
+                if (jiraCategoriesStackedChart.options.scales.y && jiraCategoriesStackedChart.options.scales.y.ticks) {
+                    jiraCategoriesStackedChart.options.scales.y.ticks.color = colors.textSecondary;
+                }
+                jiraCategoriesStackedChart.update();
             }
         }
 
