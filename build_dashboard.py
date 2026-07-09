@@ -623,6 +623,16 @@ def main():
             background: rgba(0, 0, 0, 0.3);
         }
 
+        html {
+            font-size: 16px;
+        }
+
+        @media (min-width: 1800px) {
+            html {
+                font-size: 19.5px;
+            }
+        }
+
         /* Container Layout */
         .container {
             max-width: 1400px;
@@ -631,6 +641,13 @@ def main():
             flex-direction: column;
             gap: 2.25rem;
             padding: 0 1.5rem;
+            transition: max-width var(--transition-speed) ease;
+        }
+
+        @media (min-width: 1800px) {
+            .container {
+                max-width: 1840px;
+            }
         }
 
         /* App Header Layout */
