@@ -2609,13 +2609,9 @@ def main():
                                 <!-- Dynamic rows -->
                             </div>
                             
-                            <!-- Column 2: Doughnut Chart -->
-                            <div style="position: relative; width: 250px; height: 250px; margin: 0 auto;">
+                            <!-- Column 2: Line Chart -->
+                            <div style="position: relative; width: 100%; height: 250px;">
                                 <canvas id="chart-jira-time-spent"></canvas>
-                                <div class="doughnut-center-card" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); background: var(--card-bg); border: 1px solid var(--card-border); box-shadow: 0 8px 24px rgba(0,0,0,0.08); width: 120px; height: 120px; border-radius: 50%; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; pointer-events: none; z-index: 5;">
-                                    <span style="font-size: 0.65rem; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.05em; font-weight: 600;">Всего</span>
-                                    <span id="doughnut-jira-time-center-value" style="font-size: 1.25rem; font-weight: 700; color: var(--text-primary); margin-top: 1px; line-height: 1;">0</span>
-                                </div>
                             </div>
                         </div>
                     </div>
@@ -4754,7 +4750,10 @@ def main():
             const timeInfo = jiraTimeSpentData[activePeriod];
             
             // Update center text of timespent chart
-            document.getElementById('doughnut-jira-time-center-value').innerText = timeInfo.total.toFixed(1);
+            const centerVal = document.getElementById('doughnut-jira-time-center-value');
+            if (centerVal) {
+                centerVal.innerText = timeInfo.total.toFixed(1);
+            }
             
             // Build Time Spent Table
             const timeTableBody = document.getElementById('jira-time-table-body');
@@ -4771,7 +4770,7 @@ def main():
                 }).join('');
             }
             
-            // Update Time spent doughnut chart
+            // Update Time spent line chart
             const timeCtx = document.getElementById('chart-jira-time-spent').getContext('2d');
             const themeColors = getThemeColors();
             
@@ -4780,20 +4779,34 @@ def main():
             }
             
             jiraTimeSpentChart = new Chart(timeCtx, {
-                type: 'doughnut',
+                type: 'line',
                 data: {
                     labels: timeInfo.categories.map(c => c.name),
                     datasets: [{
+                        label: 'Потрачено времени',
                         data: timeInfo.categories.map(c => c.value),
-                        backgroundColor: timeInfo.categories.map(c => c.color),
-                        borderColor: themeColors.cardBorder,
-                        borderWidth: 2
+                        borderColor: '#8b5cf6',
+                        backgroundColor: 'rgba(139, 92, 246, 0.1)',
+                        fill: true,
+                        borderWidth: 3,
+                        tension: 0.3,
+                        pointBackgroundColor: '#8b5cf6',
+                        pointRadius: 4
                     }]
                 },
                 options: {
                     responsive: true,
                     maintainAspectRatio: false,
-                    cutout: '70%',
+                    scales: {
+                        x: {
+                            grid: { display: false },
+                            ticks: { color: themeColors.textSecondary, font: { size: 15 } }
+                        },
+                        y: {
+                            grid: { color: themeColors.gridColor },
+                            ticks: { color: themeColors.textSecondary, font: { size: 15 } }
+                        }
+                    },
                     plugins: {
                         legend: { display: false },
                         tooltip: {
@@ -4865,38 +4878,42 @@ def main():
                 const stackedInfo = jiraCategoriesStackedData[activePeriod];
                 
                 jiraCategoriesStackedChart = new Chart(stackedCtx, {
-                    type: 'bar',
+                    type: 'line',
                     data: {
                         labels: stackedInfo.labels,
-                        datasets: stackedInfo.datasets.map(ds => Object.assign({}, ds, {
-                            borderRadius: 4,
-                            borderSkipped: false,
-                            barPercentage: 0.6,
-                            categoryPercentage: 0.7
-                        }))
+                        datasets: stackedInfo.datasets.map((ds, index) => {
+                            const colors = ['#06b6d4', '#eab308', '#10b981'];
+                            return {
+                                label: ds.label,
+                                data: ds.data,
+                                borderColor: colors[index],
+                                backgroundColor: 'transparent',
+                                borderWidth: 3,
+                                tension: 0.3,
+                                pointBackgroundColor: colors[index],
+                                pointRadius: 4
+                            };
+                        })
                     },
                     options: {
-                        indexAxis: 'y',
                         responsive: true,
                         maintainAspectRatio: false,
                         scales: {
                             x: {
-                                stacked: true,
-                                grid: { color: axisColors.gridColor },
+                                grid: { display: false },
                                 ticks: { color: axisColors.textSecondary, font: { size: 15 } }
                             },
                             y: {
-                                stacked: true,
-                                grid: { display: false },
+                                grid: { color: axisColors.gridColor },
                                 ticks: { color: axisColors.textSecondary, font: { size: 15 } }
                             }
                         },
                         plugins: {
                             legend: { display: false },
                             tooltip: {
-                            enabled: false,
-                            external: externalTooltipHandler
-                        }
+                                enabled: false,
+                                external: externalTooltipHandler
+                            }
                         }
                     }
                 });
