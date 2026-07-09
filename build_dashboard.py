@@ -2719,7 +2719,7 @@ def main():
                             position: 'bottom',
                             labels: {
                                 color: colors.textSecondary,
-                                padding: 15,
+                                padding: 20,
                                 font: {
                                     size: 15,
                                     family: 'Inter'
@@ -2795,7 +2795,7 @@ def main():
                             position: 'bottom',
                             labels: {
                                 color: colors.textSecondary,
-                                padding: 15,
+                                padding: 20,
                                 font: {
                                     size: 15,
                                     family: 'Inter'
@@ -3353,7 +3353,7 @@ def main():
                             position: 'bottom',
                             labels: {
                                 color: colors.textSecondary,
-                                padding: 15,
+                                padding: 20,
                                 font: { size: 15, family: 'Inter' },
                                 boxWidth: 10,
                                 usePointStyle: true,
@@ -3448,7 +3448,7 @@ def main():
                             position: 'bottom',
                             labels: {
                                 color: colors.textSecondary,
-                                padding: 15,
+                                padding: 20,
                                 font: { size: 15, family: 'Inter' },
                                 boxWidth: 10,
                                 usePointStyle: true,
@@ -4827,7 +4827,7 @@ def main():
                                 color: colors.textSecondary,
                                 font: { size: 15, family: 'Inter' },
                                 boxWidth: 10,
-                                padding: 12,
+                                padding: 20,
                                 usePointStyle: true,
                                 pointStyle: 'circle'
                             }
