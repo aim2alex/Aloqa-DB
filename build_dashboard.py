@@ -2397,110 +2397,6 @@ def main():
                 </div>
             </section>
 
-            <!-- Row 1.7: Completed Tasks (Quarterly filterable) -->
-            <section style="display: flex; flex-direction: column; gap: 1rem;">
-                <!-- Left Card: Выполнено (Команды) -->
-                <div class="card" style="padding: 1.5rem 2rem; position: relative; display: flex; flex-direction: column; justify-content: space-between; width: 100%;">
-                    <!-- Header & Sparkline -->
-                    <div>
-                        <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0.5rem; position: relative;">
-                            <div>
-                                <div style="font-family: 'Outfit', sans-serif; font-size: 1.3rem; font-weight: 700; color: var(--text-primary);">Выполнено задач</div>
-                                <div style="font-size: 0.8rem; color: var(--text-secondary); margin-top: 2px;">Всего задач, шт.</div>
-                            </div>
-                            <div style="display: flex; align-items: center; gap: 15px;">
-                                <!-- Sparkline -->
-                                <div id="jira-completed-sparkline" style="display: flex; align-items: flex-end; gap: 3px; height: 28px; margin-top: 2px;">
-                                    <!-- Dynamic sparkline bars -->
-                                </div>
-                                <svg class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width: 20px; height: 20px; color: var(--text-secondary); opacity: 0.7;">
-                                    <line x1="7" y1="17" x2="17" y2="7"></line>
-                                    <polyline points="7 7 17 7 17 17"></polyline>
-                                </svg>
-                            </div>
-                        </div>
-                        
-                        <!-- Centered Big Total & Trend -->
-                        <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; margin: 1rem 0 1.5rem 0; text-align: center;">
-                            <div id="jira-completed-trend-wrapper" style="display: flex; align-items: center; gap: 4px; font-weight: 700; font-size: 0.95rem; margin-bottom: 4px;">
-                                <svg id="jira-completed-trend-icon" class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" style="width: 14px; height: 14px;">
-                                    <polyline points="18 15 12 9 6 15"></polyline>
-                                </svg>
-                                <span id="jira-completed-trend-val">+50%</span>
-                            </div>
-                            <div id="jira-completed-total" style="font-family: 'Outfit', sans-serif; font-size: 3.8rem; font-weight: 700; color: var(--text-primary); line-height: 1;">0</div>
-                        </div>
-                    </div>
-                    
-                    <!-- Teams Grid (Below) -->
-                    <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; border-top: 1px solid var(--card-border); padding-top: 1.25rem; margin-top: auto;">
-                        <!-- Team 1 -->
-                        <div style="display: flex; flex-direction: column; gap: 4px;">
-                            <div style="display: flex; align-items: center; gap: 6px; font-size: 0.8rem; color: var(--text-secondary);">
-                                <span style="display: inline-block; width: 6px; height: 6px; border-radius: 50%; background-color: #3b82f6; flex-shrink: 0;"></span>
-                                <span>Camunda</span>
-                            </div>
-                            <span id="jira-completed-camunda" style="font-size: 1.1rem; font-weight: 700; color: var(--text-primary); margin-left: 12px;">0</span>
-                        </div>
-                        <!-- Team 2 -->
-                        <div style="display: flex; flex-direction: column; gap: 4px;">
-                            <div style="display: flex; align-items: center; gap: 6px; font-size: 0.8rem; color: var(--text-secondary);">
-                                <span style="display: inline-block; width: 6px; height: 6px; border-radius: 50%; background-color: #10b981; flex-shrink: 0;"></span>
-                                <span>Devops</span>
-                            </div>
-                            <span id="jira-completed-devops" style="font-size: 1.1rem; font-weight: 700; color: var(--text-primary); margin-left: 12px;">0</span>
-                        </div>
-                        <!-- Team 3 -->
-                        <div style="display: flex; flex-direction: column; gap: 4px;">
-                            <div style="display: flex; align-items: center; gap: 6px; font-size: 0.8rem; color: var(--text-secondary);">
-                                <span style="display: inline-block; width: 6px; height: 6px; border-radius: 50%; background-color: #f59e0b; flex-shrink: 0;"></span>
-                                <span>Front</span>
-                            </div>
-                            <span id="jira-completed-front" style="font-size: 1.1rem; font-weight: 700; color: var(--text-primary); margin-left: 12px;">0</span>
-                        </div>
-                        <!-- Team 4 -->
-                        <div style="display: flex; flex-direction: column; gap: 4px;">
-                            <div style="display: flex; align-items: center; gap: 6px; font-size: 0.8rem; color: var(--text-secondary);">
-                                <span style="display: inline-block; width: 6px; height: 6px; border-radius: 50%; background-color: #ef4444; flex-shrink: 0;"></span>
-                                <span>Абс</span>
-                            </div>
-                            <span id="jira-completed-abs" style="font-size: 1.1rem; font-weight: 700; color: var(--text-primary); margin-left: 12px;">0</span>
-                        </div>
-                        <!-- Team 5 -->
-                        <div style="display: flex; flex-direction: column; gap: 4px;">
-                            <div style="display: flex; align-items: center; gap: 6px; font-size: 0.8rem; color: var(--text-secondary);">
-                                <span style="display: inline-block; width: 6px; height: 6px; border-radius: 50%; background-color: #8b5cf6; flex-shrink: 0;"></span>
-                                <span>Колл-центр / Амл / Риски</span>
-                            </div>
-                            <span id="jira-completed-callcenter" style="font-size: 1.1rem; font-weight: 700; color: var(--text-primary); margin-left: 12px;">0</span>
-                        </div>
-                        <!-- Team 6 -->
-                        <div style="display: flex; flex-direction: column; gap: 4px;">
-                            <div style="display: flex; align-items: center; gap: 6px; font-size: 0.8rem; color: var(--text-secondary);">
-                                <span style="display: inline-block; width: 6px; height: 6px; border-radius: 50%; background-color: #06b6d4; flex-shrink: 0;"></span>
-                                <span>Кфо / Залоги / Проблемные Кредиты</span>
-                            </div>
-                            <span id="jira-completed-kfo" style="font-size: 1.1rem; font-weight: 700; color: var(--text-primary); margin-left: 12px;">0</span>
-                        </div>
-                        <!-- Team 7 -->
-                        <div style="display: flex; flex-direction: column; gap: 4px;">
-                            <div style="display: flex; align-items: center; gap: 6px; font-size: 0.8rem; color: var(--text-secondary);">
-                                <span style="display: inline-block; width: 6px; height: 6px; border-radius: 50%; background-color: #ec4899; flex-shrink: 0;"></span>
-                                <span>Пластиковые Карты</span>
-                            </div>
-                            <span id="jira-completed-cards" style="font-size: 1.1rem; font-weight: 700; color: var(--text-primary); margin-left: 12px;">0</span>
-                        </div>
-                        <!-- Team 8 -->
-                        <div style="display: flex; flex-direction: column; gap: 4px;">
-                            <div style="display: flex; align-items: center; gap: 6px; font-size: 0.8rem; color: var(--text-secondary);">
-                                <span style="display: inline-block; width: 6px; height: 6px; border-radius: 50%; background-color: #f97316; flex-shrink: 0;"></span>
-                                <span>Скоринг</span>
-                            </div>
-                            <span id="jira-completed-scoring" style="font-size: 1.1rem; font-weight: 700; color: var(--text-primary); margin-left: 12px;">0</span>
-                        </div>
-                    </div>
-                </div>
-            </section>
             
             <!-- Row 1.8: Time Spent & Tasks by Categories (Quarterly filterable) -->
             <section style="display: flex; flex-direction: column; gap: 1rem;">
@@ -4394,34 +4290,6 @@ def main():
             };
             
             const completedInfo = jiraCompletedData[activePeriod];
-            animateValue('jira-completed-total', 0, completedInfo.total, 800);
-            
-            const trendWrapper = document.getElementById('jira-completed-trend-wrapper');
-            const trendVal = document.getElementById('jira-completed-trend-val');
-            const trendIcon = document.getElementById('jira-completed-trend-icon');
-            
-            trendVal.innerText = completedInfo.trend;
-            if (completedInfo.isPositive) {
-                trendWrapper.style.color = '#10b981';
-                trendIcon.style.color = '#10b981';
-                trendIcon.style.transform = 'none';
-                trendIcon.innerHTML = '<polyline points="18 15 12 9 6 15"></polyline>';
-            } else {
-                trendWrapper.style.color = '#ef4444';
-                trendIcon.style.color = '#ef4444';
-                trendIcon.style.transform = 'none';
-                trendIcon.innerHTML = '<polyline points="6 9 12 15 18 9"></polyline>';
-            }
-            
-            document.getElementById('jira-completed-camunda').innerText = formatNumber(completedInfo.teams.camunda);
-            document.getElementById('jira-completed-devops').innerText = formatNumber(completedInfo.teams.devops);
-            document.getElementById('jira-completed-front').innerText = formatNumber(completedInfo.teams.front);
-            document.getElementById('jira-completed-abs').innerText = formatNumber(completedInfo.teams.abs);
-            document.getElementById('jira-completed-callcenter').innerText = formatNumber(completedInfo.teams.callcenter);
-            document.getElementById('jira-completed-kfo').innerText = formatNumber(completedInfo.teams.kfo);
-            document.getElementById('jira-completed-cards').innerText = formatNumber(completedInfo.teams.cards);
-            document.getElementById('jira-completed-scoring').innerText = formatNumber(completedInfo.teams.scoring);
-            
             document.getElementById('jira-team-tasks-camunda').innerText = formatNumber(completedInfo.teams.camunda);
             document.getElementById('jira-team-tasks-devops').innerText = formatNumber(completedInfo.teams.devops);
             document.getElementById('jira-team-tasks-front').innerText = formatNumber(completedInfo.teams.front);
@@ -4430,16 +4298,6 @@ def main():
             document.getElementById('jira-team-tasks-kfo').innerText = formatNumber(completedInfo.teams.kfo);
             document.getElementById('jira-team-tasks-cards').innerText = formatNumber(completedInfo.teams.cards);
             document.getElementById('jira-team-tasks-scoring').innerText = formatNumber(completedInfo.teams.scoring);
-            
-            const sparklineDiv = document.getElementById('jira-completed-sparkline');
-            if (sparklineDiv) {
-                const maxVal = Math.max(...completedInfo.sparkline);
-                sparklineDiv.innerHTML = completedInfo.sparkline.map(val => {
-                    const heightPct = maxVal > 0 ? (val / maxVal) * 100 : 0;
-                    const heightPx = Math.round((heightPct * 26) / 100) + 2;
-                    return `<div style="width: 3px; height: ${heightPx}px; background-color: #10b981; border-radius: 1px; opacity: 0.85;"></div>`;
-                }).join('');
-            }
 
             // Update Jira Time Spent Section (Category percentages & Doughnut Chart)
             const jiraTimeSpentData = {
