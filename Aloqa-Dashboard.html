@@ -841,6 +841,70 @@
         body.light-theme .glow-2 {
             opacity: 0.2;
         }
+
+        /* Cards V2 Custom Legend Grid */
+        .cardsv2-legend-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 1rem;
+            margin-bottom: 0.5rem;
+            margin-top: 0.5rem;
+        }
+        @media (max-width: 1024px) {
+            .cardsv2-legend-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+        @media (max-width: 600px) {
+            .cardsv2-legend-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        .cardsv2-legend-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--card-border);
+            border-radius: 12px;
+            padding: 0.65rem 0.85rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.2rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            user-select: none;
+            border-left: 4px solid var(--product-color);
+        }
+        body.light-theme .cardsv2-legend-card {
+            background: rgba(0, 0, 0, 0.02);
+        }
+        .cardsv2-legend-card:hover {
+            background: rgba(255, 255, 255, 0.06);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+        body.light-theme .cardsv2-legend-card:hover {
+            background: rgba(0, 0, 0, 0.04);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+        }
+        .cardsv2-legend-card.hidden-dataset {
+            opacity: 0.35;
+            border-left-color: #64748b !important;
+        }
+        .cardsv2-legend-card.hidden-dataset .legend-value {
+            text-decoration: line-through;
+        }
+        .legend-label {
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.03em;
+        }
+        .legend-value {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.15rem;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
     </style>
 </head>
 <body>
@@ -1667,7 +1731,8 @@
                     <div class="chart-card-header">
                         <span class="chart-card-title">Кол-во открытых карт</span>
                     </div>
-                    <div class="chart-container-bar" style="height: 380px; position: relative;">
+                    <div class="cardsv2-legend-grid" id="cardsv2-open-legend-grid"></div>
+                    <div class="chart-container-bar" style="height: 380px; position: relative; margin-top: 1rem;">
                         <canvas id="chart-cardsv2-open"></canvas>
                     </div>
                 </div>
@@ -1677,7 +1742,8 @@
                     <div class="chart-card-header">
                         <span class="chart-card-title">Дневной остаток</span>
                     </div>
-                    <div class="chart-container-bar" style="height: 380px; position: relative;">
+                    <div class="cardsv2-legend-grid" id="cardsv2-balance-legend-grid"></div>
+                    <div class="chart-container-bar" style="height: 380px; position: relative; margin-top: 1rem;">
                         <canvas id="chart-cardsv2-balance"></canvas>
                     </div>
                 </div>
@@ -1687,7 +1753,8 @@
                     <div class="chart-card-header">
                         <span class="chart-card-title">Пополнения</span>
                     </div>
-                    <div class="chart-container-bar" style="height: 380px; position: relative;">
+                    <div class="cardsv2-legend-grid" id="cardsv2-topups-legend-grid"></div>
+                    <div class="chart-container-bar" style="height: 380px; position: relative; margin-top: 1rem;">
                         <canvas id="chart-cardsv2-topups"></canvas>
                     </div>
                 </div>
@@ -7777,33 +7844,9 @@
                     },
                     plugins: {
                         legend: {
-                            position: 'bottom',
+                            display: false,
                             labels: {
-                                color: themeColors.textSecondary,
-                                padding: 20,
-                                font: { size: 15, family: 'Inter' },
-                                boxWidth: 10,
-                                usePointStyle: true,
-                                pointStyle: 'circle',
-                                generateLabels: function(chart) {
-                                    const datasets = chart.data.datasets;
-                                    return datasets.map((dataset, i) => {
-                                        const values = dataset.data;
-                                        const sum = values.reduce((a, b) => a + b, 0);
-                                        const formattedVal = formatV2Value(sum, true);
-                                        return {
-                                            text: '  ' + dataset.label + ': ' + formattedVal,
-                                            fillStyle: dataset.borderColor,
-                                            strokeStyle: dataset.borderColor,
-                                            lineWidth: 0,
-                                            hidden: !chart.isDatasetVisible(i),
-                                            index: i,
-                                            datasetIndex: i,
-                                            fontColor: chart.options.plugins.legend.labels.color,
-                                            pointStyle: 'circle'
-                                        };
-                                    });
-                                }
+                                color: themeColors.textSecondary
                             }
                         },
                         tooltip: {
@@ -7848,34 +7891,9 @@
                     },
                     plugins: {
                         legend: {
-                            position: 'bottom',
+                            display: false,
                             labels: {
-                                color: themeColors.textSecondary,
-                                padding: 20,
-                                font: { size: 15, family: 'Inter' },
-                                boxWidth: 10,
-                                usePointStyle: true,
-                                pointStyle: 'circle',
-                                generateLabels: function(chart) {
-                                    const datasets = chart.data.datasets;
-                                    return datasets.map((dataset, i) => {
-                                        const values = dataset.data;
-                                        const sum = values.reduce((a, b) => a + b, 0);
-                                        const avg = values.length > 0 ? (sum / values.length) : 0;
-                                        const formattedVal = formatV2Value(avg, false);
-                                        return {
-                                            text: '  ' + dataset.label + ': ' + formattedVal,
-                                            fillStyle: dataset.borderColor,
-                                            strokeStyle: dataset.borderColor,
-                                            lineWidth: 0,
-                                            hidden: !chart.isDatasetVisible(i),
-                                            index: i,
-                                            datasetIndex: i,
-                                            fontColor: chart.options.plugins.legend.labels.color,
-                                            pointStyle: 'circle'
-                                        };
-                                    });
-                                }
+                                color: themeColors.textSecondary
                             }
                         },
                         tooltip: {
@@ -7920,33 +7938,9 @@
                     },
                     plugins: {
                         legend: {
-                            position: 'bottom',
+                            display: false,
                             labels: {
-                                color: themeColors.textSecondary,
-                                padding: 20,
-                                font: { size: 15, family: 'Inter' },
-                                boxWidth: 10,
-                                usePointStyle: true,
-                                pointStyle: 'circle',
-                                generateLabels: function(chart) {
-                                    const datasets = chart.data.datasets;
-                                    return datasets.map((dataset, i) => {
-                                        const values = dataset.data;
-                                        const sum = values.reduce((a, b) => a + b, 0);
-                                        const formattedVal = formatV2Value(sum, false);
-                                        return {
-                                            text: '  ' + dataset.label + ': ' + formattedVal,
-                                            fillStyle: dataset.borderColor,
-                                            strokeStyle: dataset.borderColor,
-                                            lineWidth: 0,
-                                            hidden: !chart.isDatasetVisible(i),
-                                            index: i,
-                                            datasetIndex: i,
-                                            fontColor: chart.options.plugins.legend.labels.color,
-                                            pointStyle: 'circle'
-                                        };
-                                    });
-                                }
+                                color: themeColors.textSecondary
                             }
                         },
                         tooltip: {
@@ -7956,6 +7950,82 @@
                     }
                 }
             });
+
+            // Populate custom HTML legends above the charts
+            populateCardsV2Legends(data);
+        }
+
+        function populateCardsV2Legends(data) {
+            const productColors = {
+                "DIDOX": "#8b5cf6",
+                "Sello": "#3b82f6",
+                "Алименты": "#ef4444",
+                "Социальные карты": "#10b981",
+                "Депозиты сиротам": "#f59e0b"
+            };
+
+            function formatV2ValueLocal(value, isCount) {
+                if (isCount) {
+                    return formatNumber(Math.round(value)) + ' шт.';
+                }
+                if (value === 0) return '0 сум';
+                if (value >= 1e9) return (value / 1e9).toFixed(1) + ' млрд сум';
+                if (value >= 1e6) return (value / 1e6).toFixed(1) + ' млн сум';
+                if (value >= 1e3) return (value / 1e3).toFixed(1) + ' тыс. сум';
+                return value.toFixed(0) + ' сум';
+            }
+
+            function updateGrid(containerId, chartObjName, chartData, isCount, isAverage) {
+                const container = document.getElementById(containerId);
+                if (!container) return;
+
+                container.innerHTML = Object.keys(chartData).map((productName, idx) => {
+                    const values = chartData[productName] || [];
+                    const sum = values.reduce((a, b) => a + b, 0);
+                    const val = isAverage ? (values.length > 0 ? sum / values.length : 0) : sum;
+                    const formattedVal = formatV2ValueLocal(val, isCount);
+                    const color = productColors[productName] || "#ffffff";
+                    
+                    let chart = null;
+                    if (chartObjName === 'cardsV2OpenChart') chart = cardsV2OpenChart;
+                    else if (chartObjName === 'cardsV2BalanceChart') chart = cardsV2BalanceChart;
+                    else if (chartObjName === 'cardsV2TopupsChart') chart = cardsV2TopupsChart;
+
+                    const isHidden = chart ? !chart.isDatasetVisible(idx) : false;
+                    const hiddenClass = isHidden ? ' hidden-dataset' : '';
+
+                    return `
+                        <div class="cardsv2-legend-card${hiddenClass}" 
+                             style="--product-color: ${color};" 
+                             onclick="toggleCardsV2Dataset('${chartObjName}', ${idx}, this)">
+                            <span class="legend-label">${productName}</span>
+                            <span class="legend-value">${formattedVal}</span>
+                        </div>
+                    `;
+                }).join('');
+            }
+
+            updateGrid('cardsv2-open-legend-grid', 'cardsV2OpenChart', data.openCards, true, false);
+            updateGrid('cardsv2-balance-legend-grid', 'cardsV2BalanceChart', data.dailyBalance, false, true);
+            updateGrid('cardsv2-topups-legend-grid', 'cardsV2TopupsChart', data.topups, false, false);
+        }
+
+        function toggleCardsV2Dataset(chartName, datasetIdx, element) {
+            let chart = null;
+            if (chartName === 'cardsV2OpenChart') chart = cardsV2OpenChart;
+            else if (chartName === 'cardsV2BalanceChart') chart = cardsV2BalanceChart;
+            else if (chartName === 'cardsV2TopupsChart') chart = cardsV2TopupsChart;
+            
+            if (!chart) return;
+
+            const isVisible = chart.isDatasetVisible(datasetIdx);
+            if (isVisible) {
+                chart.hide(datasetIdx);
+                element.classList.add('hidden-dataset');
+            } else {
+                chart.show(datasetIdx);
+                element.classList.remove('hidden-dataset');
+            }
         }
 
         function updateCardsV2ChartsTheme() {
