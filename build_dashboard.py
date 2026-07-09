@@ -2412,7 +2412,7 @@ def main():
                             </div>
                             
                             <!-- Column 2: Doughnut Chart -->
-                            <div style="position: relative; width: 180px; height: 180px; margin: 0 auto;">
+                            <div style="position: relative; width: 240px; height: 180px; margin: 0 auto;">
                                 <canvas id="chart-jira-time-spent"></canvas>
                                 <div class="doughnut-center-card" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); background: var(--card-bg); border: 1px solid var(--card-border); box-shadow: 0 8px 24px rgba(0,0,0,0.08); width: 100px; height: 100px; border-radius: 50%; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; pointer-events: none; z-index: 5;">
                                     <span style="font-size: 0.65rem; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.05em; font-weight: 600;">Всего</span>
@@ -2730,8 +2730,8 @@ def main():
                             }
                         },
                         tooltip: {
-                            titleFont: { size: 16, family: 'Inter' },
-                            bodyFont: { size: 16, family: 'Inter' },
+                            titleFont: { size: 15, family: 'Inter' },
+                            bodyFont: { size: 15, family: 'Inter' },
                             backgroundColor: '#0f172a',
                             titleColor: '#fff',
                             bodyColor: '#e2e8f0',
@@ -2808,8 +2808,8 @@ def main():
                             }
                         },
                         tooltip: {
-                            titleFont: { size: 16, family: 'Inter' },
-                            bodyFont: { size: 16, family: 'Inter' },
+                            titleFont: { size: 15, family: 'Inter' },
+                            bodyFont: { size: 15, family: 'Inter' },
                             backgroundColor: '#0f172a',
                             titleColor: '#fff',
                             bodyColor: '#e2e8f0',
@@ -2900,8 +2900,8 @@ def main():
                             display: false
                         },
                         tooltip: {
-                            titleFont: { size: 16, family: 'Inter' },
-                            bodyFont: { size: 16, family: 'Inter' },
+                            titleFont: { size: 15, family: 'Inter' },
+                            bodyFont: { size: 15, family: 'Inter' },
                             backgroundColor: '#0f172a',
                             titleColor: '#fff',
                             bodyColor: '#e2e8f0',
@@ -2989,8 +2989,8 @@ def main():
                             display: false
                         },
                         tooltip: {
-                            titleFont: { size: 16, family: 'Inter' },
-                            bodyFont: { size: 16, family: 'Inter' },
+                            titleFont: { size: 15, family: 'Inter' },
+                            bodyFont: { size: 15, family: 'Inter' },
                             backgroundColor: '#0f172a',
                             titleColor: '#fff',
                             bodyColor: '#e2e8f0',
@@ -3098,8 +3098,8 @@ def main():
                             }
                         },
                         tooltip: {
-                            titleFont: { size: 16, family: 'Inter' },
-                            bodyFont: { size: 16, family: 'Inter' },
+                            titleFont: { size: 15, family: 'Inter' },
+                            bodyFont: { size: 15, family: 'Inter' },
                             backgroundColor: '#0f172a',
                             titleColor: '#fff',
                             bodyColor: '#e2e8f0',
@@ -3393,8 +3393,8 @@ def main():
                             }
                         },
                         tooltip: {
-                            titleFont: { size: 16, family: 'Inter' },
-                            bodyFont: { size: 16, family: 'Inter' },
+                            titleFont: { size: 15, family: 'Inter' },
+                            bodyFont: { size: 15, family: 'Inter' },
                             backgroundColor: '#0f172a',
                             titleColor: '#fff',
                             bodyColor: '#e2e8f0',
@@ -3490,8 +3490,8 @@ def main():
                             }
                         },
                         tooltip: {
-                            titleFont: { size: 16, family: 'Inter' },
-                            bodyFont: { size: 16, family: 'Inter' },
+                            titleFont: { size: 15, family: 'Inter' },
+                            bodyFont: { size: 15, family: 'Inter' },
                             backgroundColor: '#0f172a',
                             titleColor: '#fff',
                             bodyColor: '#e2e8f0',
@@ -3563,8 +3563,8 @@ def main():
                     plugins: {
                         legend: { display: false },
                         tooltip: {
-                            titleFont: { size: 16, family: 'Inter' },
-                            bodyFont: { size: 16, family: 'Inter' },
+                            titleFont: { size: 15, family: 'Inter' },
+                            bodyFont: { size: 15, family: 'Inter' },
                             backgroundColor: '#0f172a',
                             titleColor: '#fff',
                             bodyColor: '#e2e8f0',
@@ -3619,8 +3619,8 @@ def main():
                             }
                         },
                         tooltip: {
-                            titleFont: { size: 16, family: 'Inter' },
-                            bodyFont: { size: 16, family: 'Inter' },
+                            titleFont: { size: 15, family: 'Inter' },
+                            bodyFont: { size: 15, family: 'Inter' },
                             backgroundColor: '#0f172a',
                             titleColor: '#fff',
                             bodyColor: '#e2e8f0',
@@ -3679,8 +3679,8 @@ def main():
                             }
                         },
                         tooltip: {
-                            titleFont: { size: 16, family: 'Inter' },
-                            bodyFont: { size: 16, family: 'Inter' },
+                            titleFont: { size: 15, family: 'Inter' },
+                            bodyFont: { size: 15, family: 'Inter' },
                             backgroundColor: '#0f172a',
                             titleColor: '#fff',
                             bodyColor: '#e2e8f0',
@@ -3879,8 +3879,8 @@ def main():
                             display: false
                         },
                         tooltip: {
-                            titleFont: { size: 16, family: 'Inter' },
-                            bodyFont: { size: 16, family: 'Inter' },
+                            titleFont: { size: 15, family: 'Inter' },
+                            bodyFont: { size: 15, family: 'Inter' },
                             backgroundColor: '#0f172a',
                             titleColor: '#fff',
                             bodyColor: '#e2e8f0',
@@ -3968,8 +3968,8 @@ def main():
                             }
                         },
                         tooltip: {
-                            titleFont: { size: 16, family: 'Inter' },
-                            bodyFont: { size: 16, family: 'Inter' },
+                            titleFont: { size: 15, family: 'Inter' },
+                            bodyFont: { size: 15, family: 'Inter' },
                             backgroundColor: '#0f172a',
                             titleColor: '#fff',
                             bodyColor: '#e2e8f0',
@@ -4022,8 +4022,8 @@ def main():
                             display: false
                         },
                         tooltip: {
-                            titleFont: { size: 16, family: 'Inter' },
-                            bodyFont: { size: 16, family: 'Inter' },
+                            titleFont: { size: 15, family: 'Inter' },
+                            bodyFont: { size: 15, family: 'Inter' },
                             backgroundColor: '#0f172a',
                             titleColor: '#fff',
                             bodyColor: '#e2e8f0',
@@ -4121,8 +4121,8 @@ def main():
                             }
                         },
                         tooltip: {
-                            titleFont: { size: 16, family: 'Inter' },
-                            bodyFont: { size: 16, family: 'Inter' },
+                            titleFont: { size: 15, family: 'Inter' },
+                            bodyFont: { size: 15, family: 'Inter' },
                             backgroundColor: '#0f172a',
                             titleColor: '#fff',
                             bodyColor: '#e2e8f0',
@@ -4192,8 +4192,8 @@ def main():
                             display: false
                         },
                         tooltip: {
-                            titleFont: { size: 16, family: 'Inter' },
-                            bodyFont: { size: 16, family: 'Inter' },
+                            titleFont: { size: 15, family: 'Inter' },
+                            bodyFont: { size: 15, family: 'Inter' },
                             backgroundColor: '#0f172a',
                             titleColor: '#fff',
                             bodyColor: '#e2e8f0',
@@ -4539,8 +4539,8 @@ def main():
                     plugins: {
                         legend: { display: false },
                         tooltip: {
-                            titleFont: { size: 16, family: 'Inter' },
-                            bodyFont: { size: 16, family: 'Inter' },
+                            titleFont: { size: 15, family: 'Inter' },
+                            bodyFont: { size: 15, family: 'Inter' },
                             backgroundColor: '#0f172a',
                             titleColor: '#fff',
                             bodyColor: '#e2e8f0',
@@ -4647,8 +4647,8 @@ def main():
                         plugins: {
                             legend: { display: false },
                             tooltip: {
-                            titleFont: { size: 16, family: 'Inter' },
-                            bodyFont: { size: 16, family: 'Inter' },
+                            titleFont: { size: 15, family: 'Inter' },
+                            bodyFont: { size: 15, family: 'Inter' },
                                 backgroundColor: '#0f172a',
                                 titleColor: '#fff',
                                 bodyColor: '#e2e8f0',
@@ -4705,8 +4705,8 @@ def main():
                             display: false
                         },
                         tooltip: {
-                            titleFont: { size: 16, family: 'Inter' },
-                            bodyFont: { size: 16, family: 'Inter' },
+                            titleFont: { size: 15, family: 'Inter' },
+                            bodyFont: { size: 15, family: 'Inter' },
                             backgroundColor: '#0f172a',
                             titleColor: '#fff',
                             bodyColor: '#e2e8f0',
@@ -4790,8 +4790,8 @@ def main():
                             display: false
                         },
                         tooltip: {
-                            titleFont: { size: 16, family: 'Inter' },
-                            bodyFont: { size: 16, family: 'Inter' },
+                            titleFont: { size: 15, family: 'Inter' },
+                            bodyFont: { size: 15, family: 'Inter' },
                             backgroundColor: '#0f172a',
                             titleColor: '#fff',
                             bodyColor: '#e2e8f0',
@@ -4871,8 +4871,8 @@ def main():
                             }
                         },
                         tooltip: {
-                            titleFont: { size: 16, family: 'Inter' },
-                            bodyFont: { size: 16, family: 'Inter' },
+                            titleFont: { size: 15, family: 'Inter' },
+                            bodyFont: { size: 15, family: 'Inter' },
                             backgroundColor: '#0f172a',
                             titleColor: '#fff',
                             bodyColor: '#e2e8f0',
