@@ -67,6 +67,7 @@
             line-height: 1.5;
             padding: 2rem 1.5rem;
             overflow-x: hidden;
+            overflow-anchor: none;
             transition: background-color var(--transition-speed) ease, color var(--transition-speed) ease;
         }
 
@@ -119,6 +120,7 @@
             flex-direction: column;
             gap: 2.25rem;
             padding: 0 1.5rem;
+            min-height: calc(100vh - 4rem);
             transition: max-width var(--transition-speed) ease;
         }
 
@@ -238,6 +240,7 @@
             display: flex;
             flex-direction: column;
             gap: 2.25rem;
+            flex: 1;
         }
 
         .header-title h1 {
@@ -7604,6 +7607,13 @@
             } else {
                 updateDashboard();
             }
+
+            // Scroll to the top of the page after DOM layout has settled
+            setTimeout(() => {
+                window.scrollTo(0, 0);
+                document.documentElement.scrollTop = 0;
+                document.body.scrollTop = 0;
+            }, 50);
         }
 
         function renderCardsDashboard() {
