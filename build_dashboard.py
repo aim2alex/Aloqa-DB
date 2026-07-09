@@ -13,7 +13,7 @@ def main():
     jira_file = "Jira показатели.xlsx"
     
     # Check that all files exist
-    files = [q1_file, q2_file, q1_mc_file, q2_mc_file, jira_file]
+    files = [q1_file, q2_file, q1_mc_file, q2_mc_file, jira_file, "Cards.xlsx"]
     for f in files:
         if not os.path.exists(f):
             print(f"Error: Missing file in the workspace: {f}")
@@ -427,6 +427,69 @@ def main():
         'q2': get_loans_stats(df_loans[df_loans['month'] >= 4])
     }
     
+    print("Reading and aggregating Cards data...")
+    try:
+        cards_file = "Cards.xlsx"
+        df_cards = pd.read_excel(cards_file, sheet_name="SQL Results")
+        
+        def get_card_val(col_name):
+            if col_name not in df_cards.columns:
+                return 0.0
+            val = df_cards.iloc[0][col_name]
+            if pd.isna(val):
+                return 0.0
+            return float(val)
+            
+        months_keys = ["012026", "022026", "032026", "042026", "052026", "062026"]
+        monthly_counts = [get_card_val(f"COUNT_{m}") for m in months_keys]
+        monthly_balances = [get_card_val(f"AVERAGE_ACCOUNT_BALANCE_{m}") for m in months_keys]
+        monthly_credits = [get_card_val(f"ACCOUNT_CREDIT_{m}") for m in months_keys]
+        
+        q1_balances = monthly_balances[:3]
+        q1_avg_balance = sum(q1_balances) / len(q1_balances) if len(q1_balances) > 0 else 0.0
+        
+        q2_balances = monthly_balances[3:]
+        q2_avg_balance = sum(q2_balances) / len(q2_balances) if len(q2_balances) > 0 else 0.0
+        
+        all_avg_balance = sum(monthly_balances) / len(monthly_balances) if len(monthly_balances) > 0 else 0.0
+        
+        cards_stats = {
+            'all': {
+                'total_issued': int(sum(monthly_counts)),
+                'avg_balance': round(all_avg_balance, 2),
+                'total_credit': round(sum(monthly_credits), 2),
+                'months': ['Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь'],
+                'counts': [int(x) for x in monthly_counts],
+                'balances': [round(x, 2) for x in monthly_balances],
+                'credits': [round(x, 2) for x in monthly_credits]
+            },
+            'q1': {
+                'total_issued': int(sum(monthly_counts[:3])),
+                'avg_balance': round(q1_avg_balance, 2),
+                'total_credit': round(sum(monthly_credits[:3]), 2),
+                'months': ['Январь', 'Февраль', 'Март'],
+                'counts': [int(x) for x in monthly_counts[:3]],
+                'balances': [round(x, 2) for x in monthly_balances[:3]],
+                'credits': [round(x, 2) for x in monthly_credits[:3]]
+            },
+            'q2': {
+                'total_issued': int(sum(monthly_counts[3:])),
+                'avg_balance': round(q2_avg_balance, 2),
+                'total_credit': round(sum(monthly_credits[3:])),
+                'months': ['Апрель', 'Май', 'Июнь'],
+                'counts': [int(x) for x in monthly_counts[3:]],
+                'balances': [round(x, 2) for x in monthly_balances[3:]],
+                'credits': [round(x, 2) for x in monthly_credits[3:]]
+            }
+        }
+    except Exception as e:
+        print(f"Error reading Cards.xlsx: {e}")
+        cards_stats = {
+            'all': {'total_issued': 0, 'avg_balance': 0.0, 'total_credit': 0.0, 'counts': [], 'balances': [], 'credits': [], 'months': []},
+            'q1': {'total_issued': 0, 'avg_balance': 0.0, 'total_credit': 0.0, 'counts': [], 'balances': [], 'credits': [], 'months': []},
+            'q2': {'total_issued': 0, 'avg_balance': 0.0, 'total_credit': 0.0, 'counts': [], 'balances': [], 'credits': [], 'months': []}
+        }
+
     print("Reading and aggregating Jira data...")
     df_jira = pd.read_excel(jira_file, header=None)
 
@@ -523,7 +586,8 @@ def main():
         'q2': q2_stats,
         'risks': risk_stats,
         'loans': loans_stats,
-        'jira': jira_stats
+        'jira': jira_stats,
+        'cards': cards_stats
     }
     
     print("Generating HTML dashboard Aloqa-Dashboard.html...")
@@ -1405,6 +1469,7 @@ def main():
                     <button class="main-tab-btn" id="main-tab-loans" onclick="switchMainTab('loans')">Кредиты</button>
                     <button class="main-tab-btn" id="main-tab-callcenter" onclick="switchMainTab('callcenter')">Call-центр</button>
                     <button class="main-tab-btn" id="main-tab-risks" onclick="switchMainTab('risks')">События операционных рисков</button>
+                    <button class="main-tab-btn" id="main-tab-cards" onclick="switchMainTab('cards')">Карты</button>
                 </div>
             </div>
             
@@ -2060,6 +2125,105 @@ def main():
             </section>
         </div><!-- Closing #panel-risks -->
 
+        <!-- Panel Cards -->
+        <div id="panel-cards" class="main-panel" style="display: none;">
+            <div class="panel-header">
+                <div class="header-title">
+                    <h1 class="title-cards" style="background: linear-gradient(135deg, var(--text-primary) 30%, #eab308 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Карты</h1>
+                    <p>Анализ выпуска и активности карт • Январь - Июнь 2026 г.</p>
+                </div>
+                
+                <div class="tabs-container">
+                    <button class="tab-btn active" onclick="switchTab('all', this)">Все</button>
+                    <button class="tab-btn" onclick="switchTab('q1', this)">1 Квартал</button>
+                    <button class="tab-btn" onclick="switchTab('q2', this)">2 Квартал</button>
+                </div>
+            </div>
+
+            <!-- Row 1: KPI Cards -->
+            <section class="kpi-grid">
+                <!-- Total Issued -->
+                <div class="card kpi-card card-hover-effect">
+                    <div style="display: flex; justify-content: space-between; align-items: flex-start; width: 100%;">
+                        <div>
+                            <div class="kpi-label">Выпущено карт</div>
+                            <div class="kpi-value" id="kpi-cards-issued">0</div>
+                        </div>
+                        <div class="kpi-icon-wrapper" style="background: rgba(234, 179, 8, 0.1); color: #eab308;">
+                            <svg class="svg-icon" viewBox="0 0 24 24" style="width: 24px; height: 24px;">
+                                <rect x="1" y="4" width="22" height="16" rx="2" ry="2"></rect>
+                                <line x1="1" y1="10" x2="23" y2="10"></line>
+                            </svg>
+                        </div>
+                    </div>
+                    <div class="kpi-trend" style="margin-top: 10px;">
+                        <span style="color: var(--text-secondary); font-size: 0.8rem;">Всего выпущенных карт за период</span>
+                    </div>
+                </div>
+
+                <!-- Average Balance -->
+                <div class="card kpi-card card-hover-effect">
+                    <div style="display: flex; justify-content: space-between; align-items: flex-start; width: 100%;">
+                        <div>
+                            <div class="kpi-label">Средний остаток на счетах</div>
+                            <div class="kpi-value" id="kpi-cards-balance">0</div>
+                        </div>
+                        <div class="kpi-icon-wrapper" style="background: rgba(59, 130, 246, 0.1); color: #3b82f6;">
+                            <svg class="svg-icon" viewBox="0 0 24 24" style="width: 24px; height: 24px;">
+                                <line x1="12" y1="1" x2="12" y2="23"></line>
+                                <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+                            </svg>
+                        </div>
+                    </div>
+                    <div class="kpi-trend" style="margin-top: 10px;">
+                        <span style="color: var(--text-secondary); font-size: 0.8rem;">Среднее значение остатков на картах</span>
+                    </div>
+                </div>
+
+                <!-- Credit Turnover -->
+                <div class="card kpi-card card-hover-effect">
+                    <div style="display: flex; justify-content: space-between; align-items: flex-start; width: 100%;">
+                        <div>
+                            <div class="kpi-label">Кредитовый оборот</div>
+                            <div class="kpi-value" id="kpi-cards-credit">0</div>
+                        </div>
+                        <div class="kpi-icon-wrapper" style="background: rgba(16, 185, 129, 0.1); color: #10b981;">
+                            <svg class="svg-icon" viewBox="0 0 24 24" style="width: 24px; height: 24px;">
+                                <polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline>
+                                <polyline points="17 6 23 6 23 12"></polyline>
+                            </svg>
+                        </div>
+                    </div>
+                    <div class="kpi-trend" style="margin-top: 10px;">
+                        <span style="color: var(--text-secondary); font-size: 0.8rem;">Сумма поступлений за период</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Row 2: Charts -->
+            <section class="charts-row">
+                <!-- Card 1: Динамика выпуска карт -->
+                <div class="card chart-card">
+                    <div class="chart-card-header">
+                        <span class="chart-card-title">Динамика выпуска карт</span>
+                    </div>
+                    <div class="chart-container-bar" style="height: 380px;">
+                        <canvas id="chart-cards-issued"></canvas>
+                    </div>
+                </div>
+
+                <!-- Card 2: Динамика оборотов и остатков -->
+                <div class="card chart-card">
+                    <div class="chart-card-header">
+                        <span class="chart-card-title">Обороты и остатки на счетах</span>
+                    </div>
+                    <div class="chart-container-bar" style="height: 380px;">
+                        <canvas id="chart-cards-financials"></canvas>
+                    </div>
+                </div>
+            </section>
+        </div><!-- Closing #panel-cards -->
+
         <!-- Panel Jira -->
         <div id="panel-jira" class="main-panel">
             <div class="panel-header">
@@ -2666,6 +2830,10 @@ def main():
         let jiraCategoriesStackedChart = null;
         let jiraChartsInitialized = false;
 
+        // Cards Chart instances
+        let cardsIssuedChart = null;
+        let cardsFinancialsChart = null;
+
         // Chart instances
         let typesChart = null;
         let themesChart = null;
@@ -2808,6 +2976,8 @@ def main():
                 renderLoansDashboard();
             } else if (activeMainTab === 'jira') {
                 renderJiraDashboard();
+            } else if (activeMainTab === 'cards') {
+                renderCardsDashboard();
             }
         }
 
@@ -3302,6 +3472,7 @@ def main():
             document.getElementById('main-tab-loans').classList.toggle('active', tabName === 'loans');
             document.getElementById('main-tab-callcenter').classList.toggle('active', tabName === 'callcenter');
             document.getElementById('main-tab-risks').classList.toggle('active', tabName === 'risks');
+            document.getElementById('main-tab-cards').classList.toggle('active', tabName === 'cards');
             const jiraTabBtn = document.getElementById('main-tab-jira');
             if (jiraTabBtn) jiraTabBtn.classList.toggle('active', tabName === 'jira');
 
@@ -3309,6 +3480,7 @@ def main():
             document.getElementById('panel-loans').style.display = tabName === 'loans' ? 'flex' : 'none';
             document.getElementById('panel-callcenter').style.display = tabName === 'callcenter' ? 'flex' : 'none';
             document.getElementById('panel-risks').style.display = tabName === 'risks' ? 'flex' : 'none';
+            document.getElementById('panel-cards').style.display = tabName === 'cards' ? 'flex' : 'none';
             const jiraPanel = document.getElementById('panel-jira');
             if (jiraPanel) jiraPanel.style.display = tabName === 'jira' ? 'flex' : 'none';
 
@@ -3318,9 +3490,173 @@ def main():
                 renderLoansDashboard();
             } else if (tabName === 'jira') {
                 renderJiraDashboard();
+            } else if (tabName === 'cards') {
+                renderCardsDashboard();
             } else {
                 updateDashboard();
             }
+        }
+
+        function renderCardsDashboard() {
+            const data = dashboardData.cards[activePeriod];
+            if (!data) return;
+
+            // 1. Update KPI Values with animation
+            const prevIssued = parseInt(document.getElementById('kpi-cards-issued').innerText.replace(/\s/g, '')) || 0;
+            const prevBalance = parseInt(document.getElementById('kpi-cards-balance').innerText.replace(/\s/g, '').replace(' сум', '')) || 0;
+            const prevCredit = parseInt(document.getElementById('kpi-cards-credit').innerText.replace(/\s/g, '').replace(' сум', '')) || 0;
+
+            animateValue('kpi-cards-issued', prevIssued, data.total_issued, 800);
+            animateValue('kpi-cards-balance', prevBalance, Math.round(data.avg_balance), 800, ' сум');
+            animateValue('kpi-cards-credit', prevCredit, Math.round(data.total_credit), 800, ' сум');
+
+            // 2. Render Issued Cards Chart (Bar)
+            const issuedCtx = document.getElementById('chart-cards-issued').getContext('2d');
+            const themeColors = getThemeColors();
+            
+            if (cardsIssuedChart) {
+                cardsIssuedChart.destroy();
+            }
+
+            cardsIssuedChart = new Chart(issuedCtx, {
+                type: 'bar',
+                data: {
+                    labels: data.months,
+                    datasets: [{
+                        label: 'Выпущено карт (шт.)',
+                        data: data.counts,
+                        backgroundColor: '#eab308',
+                        borderColor: '#eab308',
+                        borderWidth: 1,
+                        borderRadius: 4,
+                        barPercentage: 0.6
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        x: {
+                            grid: { display: false },
+                            ticks: { color: themeColors.textSecondary, font: { size: 15 } }
+                        },
+                        y: {
+                            grid: { color: themeColors.gridColor },
+                            ticks: { color: themeColors.textSecondary, font: { size: 15 } }
+                        }
+                    },
+                    plugins: {
+                        legend: { display: false },
+                        tooltip: {
+                            enabled: false,
+                            external: externalTooltipHandler
+                        }
+                    }
+                }
+            });
+
+            // 3. Render Financials Chart (Mixed Bar & Line with Double Y Axes)
+            const financialsCtx = document.getElementById('chart-cards-financials').getContext('2d');
+            
+            if (cardsFinancialsChart) {
+                cardsFinancialsChart.destroy();
+            }
+
+            cardsFinancialsChart = new Chart(financialsCtx, {
+                type: 'bar',
+                data: {
+                    labels: data.months,
+                    datasets: [
+                        {
+                            type: 'bar',
+                            label: 'Кредитовый оборот (сум)',
+                            data: data.credits,
+                            backgroundColor: '#10b981',
+                            borderColor: '#10b981',
+                            yAxisID: 'yCredit',
+                            barPercentage: 0.5,
+                            borderRadius: 4
+                        },
+                        {
+                            type: 'line',
+                            label: 'Средний остаток (сум)',
+                            data: data.balances,
+                            borderColor: '#3b82f6',
+                            backgroundColor: 'transparent',
+                            borderWidth: 3,
+                            tension: 0.3,
+                            pointBackgroundColor: '#3b82f6',
+                            pointRadius: 4,
+                            yAxisID: 'yBalance'
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        x: {
+                            grid: { display: false },
+                            ticks: { color: themeColors.textSecondary, font: { size: 15 } }
+                        },
+                        yCredit: {
+                            type: 'linear',
+                            position: 'left',
+                            grid: { color: themeColors.gridColor },
+                            ticks: { 
+                                color: themeColors.textSecondary, 
+                                font: { size: 15 },
+                                callback: function(value) {
+                                    if (value >= 1e9) return (value / 1e9).toFixed(1) + ' млрд';
+                                    if (value >= 1e6) return (value / 1e6).toFixed(0) + ' млн';
+                                    return value;
+                                }
+                            },
+                            title: {
+                                display: true,
+                                text: 'Оборот поступлений',
+                                color: themeColors.textSecondary,
+                                font: { size: 15, weight: 'bold' }
+                            }
+                        },
+                        yBalance: {
+                            type: 'linear',
+                            position: 'right',
+                            grid: { display: false },
+                            ticks: { 
+                                color: themeColors.textSecondary, 
+                                font: { size: 15 },
+                                callback: function(value) {
+                                    if (value >= 1e9) return (value / 1e9).toFixed(1) + ' млрд';
+                                    if (value >= 1e6) return (value / 1e6).toFixed(0) + ' млн';
+                                    return value;
+                                }
+                            },
+                            title: {
+                                display: true,
+                                text: 'Средний остаток',
+                                color: themeColors.textSecondary,
+                                font: { size: 15, weight: 'bold' }
+                            }
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            display: true,
+                            position: 'top',
+                            labels: {
+                                color: themeColors.textPrimary,
+                                font: { size: 15 },
+                                padding: 20
+                            }
+                        },
+                        tooltip: {
+                            enabled: false,
+                            external: externalTooltipHandler
+                        }
+                    }
+                }
+            });
         }
 
         function renderRiskDashboard() {
