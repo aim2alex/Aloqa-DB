@@ -2405,16 +2405,16 @@ def main():
                         </div>
                         
                         <!-- Content: Grid of 2 columns -->
-                        <div style="display: grid; grid-template-columns: 1.2fr 1fr; gap: 1.25rem; align-items: center; margin-top: 1rem; min-height: 220px;">
+                        <div style="display: grid; grid-template-columns: 1.2fr 1fr; gap: 1.25rem; align-items: center; margin-top: 1rem; min-height: 250px;">
                             <!-- Column 1: Table -->
                             <div style="display: flex; flex-direction: column; gap: 10px;" id="jira-time-table-body">
                                 <!-- Dynamic rows -->
                             </div>
                             
                             <!-- Column 2: Doughnut Chart -->
-                            <div style="position: relative; width: 240px; height: 180px; margin: 0 auto;">
+                            <div style="position: relative; width: 250px; height: 250px; margin: 0 auto;">
                                 <canvas id="chart-jira-time-spent"></canvas>
-                                <div class="doughnut-center-card" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); background: var(--card-bg); border: 1px solid var(--card-border); box-shadow: 0 8px 24px rgba(0,0,0,0.08); width: 100px; height: 100px; border-radius: 50%; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; pointer-events: none; z-index: 5;">
+                                <div class="doughnut-center-card" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); background: var(--card-bg); border: 1px solid var(--card-border); box-shadow: 0 8px 24px rgba(0,0,0,0.08); width: 120px; height: 120px; border-radius: 50%; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; pointer-events: none; z-index: 5;">
                                     <span style="font-size: 0.65rem; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.05em; font-weight: 600;">Всего</span>
                                     <span id="doughnut-jira-time-center-value" style="font-size: 1.25rem; font-weight: 700; color: var(--text-primary); margin-top: 1px; line-height: 1;">0</span>
                                 </div>
@@ -2449,7 +2449,7 @@ def main():
                         </div>
                         
                         <!-- Content: Chart -->
-                        <div style="position: relative; width: 100%; height: 190px; margin-top: 0.5rem;">
+                        <div style="position: relative; width: 100%; height: 220px; margin-top: 0.5rem;">
                             <canvas id="chart-jira-categories-stacked"></canvas>
                         </div>
                     </div>
