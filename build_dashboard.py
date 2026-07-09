@@ -1245,6 +1245,18 @@ def main():
             transform: scale(1.2);
         }
 
+        #jira-top-slider::-webkit-slider-thumb {
+            background: var(--accent-purple);
+            box-shadow: 0 0 8px var(--accent-purple-glow);
+        }
+
+        .table-hover-row:hover {
+            background-color: rgba(255, 255, 255, 0.03);
+        }
+        body.light-theme .table-hover-row:hover {
+            background-color: rgba(0, 0, 0, 0.02);
+        }
+
         .chart-container-bar {
             position: relative;
             width: 100%;
@@ -2513,6 +2525,54 @@ def main():
                     <div class="chart-container-full" style="height: 380px;">
                         <canvas id="chart-jira-systems"></canvas>
                     </div>
+                </div>
+            </section>
+
+            <!-- Row 4: Business Directions Table -->
+            <section class="card" style="padding: 1.5rem 2rem; margin-top: 1rem; display: flex; flex-direction: column; gap: 1rem;">
+                <div class="chart-card-header bar-controls" style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
+                    <div>
+                        <div style="font-family: 'Outfit', sans-serif; font-size: 1.3rem; font-weight: 700; color: var(--text-primary);">Количество задач по бизнес направлениям</div>
+                        <div style="font-size: 0.8rem; color: var(--text-secondary); margin-top: 2px;">Кол-во задач по направлениям, шт</div>
+                    </div>
+                    
+                    <div class="slider-wrapper">
+                        <span>Показать Топ:</span>
+                        <input type="range" id="jira-top-slider" class="top-slider" min="5" max="35" value="10" step="5" oninput="handleJiraSliderChange(this.value)">
+                        <span id="jira-slider-val" style="font-weight: 700; width: 25px; text-align: right; color: var(--accent-purple);">10</span>
+                    </div>
+                </div>
+                
+                <div style="overflow-x: auto; margin-top: 0.5rem;">
+                    <table style="width: 100%; border-collapse: collapse; text-align: left; font-size: 0.9rem;">
+                        <thead>
+                            <tr style="border-bottom: 1px solid var(--card-border); color: var(--text-secondary); font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.05em;">
+                                <th style="padding: 10px 16px; font-weight: 600; text-align: left; color: var(--text-secondary);">Business yo'nalishi</th>
+                                <th style="padding: 10px 16px; font-weight: 600; text-align: right; color: var(--text-secondary);">
+                                    <span style="display: inline-flex; align-items: center; gap: 6px; justify-content: flex-end; white-space: nowrap;">
+                                        <span style="display: inline-block; width: 6px; height: 6px; border-radius: 50%; background-color: #3b82f6;"></span>
+                                        На приемке
+                                    </span>
+                                </th>
+                                <th style="padding: 10px 16px; font-weight: 600; text-align: right; color: var(--text-secondary);">
+                                    <span style="display: inline-flex; align-items: center; gap: 6px; justify-content: flex-end; white-space: nowrap;">
+                                        <span style="display: inline-block; width: 6px; height: 6px; border-radius: 50%; background-color: #f59e0b;"></span>
+                                        В работе
+                                    </span>
+                                </th>
+                                <th style="padding: 10px 16px; font-weight: 600; text-align: right; color: var(--text-secondary);">
+                                    <span style="display: inline-flex; align-items: center; gap: 6px; justify-content: flex-end; white-space: nowrap;">
+                                        <span style="display: inline-block; width: 6px; height: 6px; border-radius: 50%; background-color: #10b981;"></span>
+                                        Выполнено
+                                    </span>
+                                </th>
+                                <th style="padding: 10px 16px; font-weight: 600; text-align: right; color: var(--text-primary); white-space: nowrap;">Jami</th>
+                            </tr>
+                        </thead>
+                        <tbody id="jira-business-directions-table-body">
+                            <!-- Rendered dynamically -->
+                        </tbody>
+                    </table>
                 </div>
             </section>
         </div><!-- Closing #panel-jira -->
@@ -4486,6 +4546,155 @@ def main():
                     }
                 });
             }
+            
+            renderJiraBusinessDirectionsTable();
+        }
+
+        const jiraBusinessDirectionsData = {
+            all: [
+                { name: "Camunda (ФЛ)", acceptance: 4, in_progress: 23, completed: 117, total: 144 },
+                { name: "Кредиты БЭК (ФЛ и ЮЛ)", acceptance: 7, in_progress: 11, completed: 111, total: 129 },
+                { name: "Карточный бизнес", acceptance: 6, in_progress: 11, completed: 23, total: 40 },
+                { name: "КФО ФЛ", acceptance: 6, in_progress: 6, completed: 26, total: 38 },
+                { name: "IT", acceptance: 0, in_progress: 2, completed: 32, total: 34 },
+                { name: "Колл-центр", acceptance: 0, in_progress: 5, completed: 14, total: 19 },
+                { name: "Бухгалтерия и МСФО", acceptance: 6, in_progress: 3, completed: 9, total: 18 },
+                { name: "Риск менеджмент и расчет резервов", acceptance: 1, in_progress: 0, completed: 16, total: 17 },
+                { name: "Управление кадрами", acceptance: 0, in_progress: 1, completed: 16, total: 17 },
+                { name: "Залоги", acceptance: 1, in_progress: 2, completed: 10, total: 13 },
+                { name: "AML", acceptance: 3, in_progress: 2, completed: 7, total: 12 },
+                { name: "Электронная коммерция", acceptance: 3, in_progress: 3, completed: 6, total: 12 },
+                { name: "Отчетность", acceptance: 2, in_progress: 6, completed: 3, total: 11 },
+                { name: "Кассовые операции", acceptance: 1, in_progress: 3, completed: 3, total: 7 },
+                { name: "Проблемные активы", acceptance: 1, in_progress: 1, completed: 5, total: 7 },
+                { name: "КФО ФЛ", acceptance: 0, in_progress: 0, completed: 6, total: 6 },
+                { name: "Розничные услуги", acceptance: 0, in_progress: 1, completed: 5, total: 6 },
+                { name: "Бух. Главная книга и клиринг (БЭК)", acceptance: 0, in_progress: 1, completed: 4, total: 5 },
+                { name: "Валютные операции", acceptance: 0, in_progress: 1, completed: 4, total: 5 },
+                { name: "Клиенты и контрагенты", acceptance: 0, in_progress: 2, completed: 3, total: 5 },
+                { name: "Аккредитивы Гарантии (бэк-офис)", acceptance: 0, in_progress: 0, completed: 4, total: 4 },
+                { name: "Депозиты ФЛ и ЮЛ", acceptance: 0, in_progress: 1, completed: 3, total: 4 },
+                { name: "AUDIT", acceptance: 1, in_progress: 1, completed: 1, total: 3 },
+                { name: "Корпоративные услуги", acceptance: 1, in_progress: 0, completed: 2, total: 3 },
+                { name: "Методология", acceptance: 0, in_progress: 0, completed: 3, total: 3 },
+                { name: "Бух. Клиринг по Банковским картам и ПС (БЭК)", acceptance: 0, in_progress: 0, completed: 2, total: 2 },
+                { name: "Депозиты ЮЛ", acceptance: 0, in_progress: 0, completed: 2, total: 2 },
+                { name: "Заработная плата", acceptance: 0, in_progress: 0, completed: 2, total: 2 },
+                { name: "КФО ЮЛ", acceptance: 0, in_progress: 0, completed: 2, total: 2 },
+                { name: "Факторинг", acceptance: 0, in_progress: 0, completed: 2, total: 2 },
+                { name: "Автосписание", acceptance: 0, in_progress: 0, completed: 1, total: 1 },
+                { name: "Антифрод/Кибербезопасность", acceptance: 1, in_progress: 0, completed: 0, total: 1 },
+                { name: "Бух. Национальные ПС", acceptance: 0, in_progress: 1, completed: 0, total: 1 },
+                { name: "Депозиты ФЛ", acceptance: 1, in_progress: 0, completed: 0, total: 1 },
+                { name: "Объекты", acceptance: 0, in_progress: 1, completed: 0, total: 1 }
+            ],
+            q1: [
+                { name: "Camunda (ФЛ)", acceptance: 2, in_progress: 13, completed: 64, total: 79 },
+                { name: "Кредиты БЭК (ФЛ и ЮЛ)", acceptance: 4, in_progress: 6, completed: 61, total: 71 },
+                { name: "Карточный бизнес", acceptance: 3, in_progress: 6, completed: 13, total: 22 },
+                { name: "КФО ФЛ", acceptance: 3, in_progress: 3, completed: 14, total: 20 },
+                { name: "IT", acceptance: 0, in_progress: 1, completed: 18, total: 19 },
+                { name: "Колл-центр", acceptance: 0, in_progress: 3, completed: 8, total: 11 },
+                { name: "Бухгалтерия и МСФО", acceptance: 3, in_progress: 2, completed: 5, total: 10 },
+                { name: "Риск менеджмент и расчет резервов", acceptance: 1, in_progress: 0, completed: 9, total: 10 },
+                { name: "Управление кадрами", acceptance: 0, in_progress: 1, completed: 9, total: 10 },
+                { name: "Залоги", acceptance: 1, in_progress: 1, completed: 6, total: 8 },
+                { name: "AML", acceptance: 2, in_progress: 1, completed: 4, total: 7 },
+                { name: "Электронная коммерция", acceptance: 2, in_progress: 2, completed: 3, total: 7 },
+                { name: "Отчетность", acceptance: 1, in_progress: 3, completed: 2, total: 6 },
+                { name: "Кассовые операции", acceptance: 1, in_progress: 2, completed: 2, total: 5 },
+                { name: "Проблемные активы", acceptance: 1, in_progress: 1, completed: 3, total: 5 },
+                { name: "КФО ФЛ", acceptance: 0, in_progress: 0, completed: 3, total: 3 },
+                { name: "Розничные услуги", acceptance: 0, in_progress: 1, completed: 3, total: 4 },
+                { name: "Бух. Главная книга и клиринг (БЭК)", acceptance: 0, in_progress: 1, completed: 2, total: 3 },
+                { name: "Валютные операции", acceptance: 0, in_progress: 1, completed: 2, total: 3 },
+                { name: "Клиенты и контрагенты", acceptance: 0, in_progress: 1, completed: 2, total: 3 },
+                { name: "Аккредитивы Гарантии (бэк-офис)", acceptance: 0, in_progress: 0, completed: 2, total: 2 },
+                { name: "Депозиты ФЛ и ЮЛ", acceptance: 0, in_progress: 1, completed: 2, total: 3 },
+                { name: "AUDIT", acceptance: 1, in_progress: 1, completed: 1, total: 3 },
+                { name: "Корпоративные услуги", acceptance: 1, in_progress: 0, completed: 1, total: 2 },
+                { name: "Методология", acceptance: 0, in_progress: 0, completed: 2, total: 2 },
+                { name: "Бух. Клиринг по Банковским картам и ПС (БЭК)", acceptance: 0, in_progress: 0, completed: 1, total: 1 },
+                { name: "Депозиты ЮЛ", acceptance: 0, in_progress: 0, completed: 1, total: 1 },
+                { name: "Заработная плата", acceptance: 0, in_progress: 0, completed: 1, total: 1 },
+                { name: "КФО ЮЛ", acceptance: 0, in_progress: 0, completed: 1, total: 1 },
+                { name: "Факторинг", acceptance: 0, in_progress: 0, completed: 1, total: 1 },
+                { name: "Автосписание", acceptance: 0, in_progress: 0, completed: 1, total: 1 },
+                { name: "Антифрод/Кибербезопасность", acceptance: 1, in_progress: 0, completed: 0, total: 1 },
+                { name: "Бух. Национальные ПС", acceptance: 0, in_progress: 1, completed: 0, total: 1 },
+                { name: "Депозиты ФЛ", acceptance: 1, in_progress: 0, completed: 0, total: 1 },
+                { name: "Объекты", acceptance: 0, in_progress: 1, completed: 0, total: 1 }
+            ],
+            q2: [
+                { name: "Camunda (ФЛ)", acceptance: 2, in_progress: 10, completed: 53, total: 65 },
+                { name: "Кредиты БЭК (ФЛ и ЮЛ)", acceptance: 3, in_progress: 5, completed: 50, total: 58 },
+                { name: "Карточный бизнес", acceptance: 3, in_progress: 5, completed: 10, total: 18 },
+                { name: "КФО ФЛ", acceptance: 3, in_progress: 3, completed: 12, total: 18 },
+                { name: "IT", acceptance: 0, in_progress: 1, completed: 14, total: 15 },
+                { name: "Колл-центр", acceptance: 0, in_progress: 2, completed: 6, total: 8 },
+                { name: "Бухгалтерия и МСФО", acceptance: 3, in_progress: 1, completed: 4, total: 8 },
+                { name: "Риск менеджмент и расчет резервов", acceptance: 0, in_progress: 0, completed: 7, total: 7 },
+                { name: "Управление кадрами", acceptance: 0, in_progress: 0, completed: 7, total: 7 },
+                { name: "Залоги", acceptance: 0, in_progress: 1, completed: 4, total: 5 },
+                { name: "AML", acceptance: 1, in_progress: 1, completed: 3, total: 5 },
+                { name: "Электронная коммерция", acceptance: 1, in_progress: 1, completed: 3, total: 5 },
+                { name: "Отчетность", acceptance: 1, in_progress: 3, completed: 1, total: 5 },
+                { name: "Кассовые операции", acceptance: 0, in_progress: 1, completed: 1, total: 2 },
+                { name: "Проблемные активы", acceptance: 0, in_progress: 0, completed: 2, total: 2 },
+                { name: "КФО ФЛ", acceptance: 0, in_progress: 0, completed: 3, total: 3 },
+                { name: "Розничные услуги", acceptance: 0, in_progress: 0, completed: 2, total: 2 },
+                { name: "Бух. Главная книга и клиринг (БЭК)", acceptance: 0, in_progress: 0, completed: 2, total: 2 },
+                { name: "Валютные операции", acceptance: 0, in_progress: 0, completed: 2, total: 2 },
+                { name: "Клиенты и контрагенты", acceptance: 0, in_progress: 1, completed: 1, total: 2 },
+                { name: "Аккредитивы Гарантии (бэк-офис)", acceptance: 0, in_progress: 0, completed: 2, total: 2 },
+                { name: "Депозиты ФЛ и ЮЛ", acceptance: 0, in_progress: 0, completed: 1, total: 1 },
+                { name: "AUDIT", acceptance: 0, in_progress: 0, completed: 0, total: 0 },
+                { name: "Корпоративные услуги", acceptance: 0, in_progress: 0, completed: 1, total: 1 },
+                { name: "Методология", acceptance: 0, in_progress: 0, completed: 1, total: 1 },
+                { name: "Бух. Клиринг по Банковским картам и ПС (БЭК)", acceptance: 0, in_progress: 0, completed: 1, total: 1 },
+                { name: "Депозиты ЮЛ", acceptance: 0, in_progress: 0, completed: 1, total: 1 },
+                { name: "Заработная плата", acceptance: 0, in_progress: 0, completed: 1, total: 1 },
+                { name: "КФО ЮЛ", acceptance: 0, in_progress: 0, completed: 1, total: 1 },
+                { name: "Факторинг", acceptance: 0, in_progress: 0, completed: 1, total: 1 },
+                { name: "Автосписание", acceptance: 0, in_progress: 0, completed: 0, total: 0 },
+                { name: "Антифрод/Кибербезопасность", acceptance: 0, in_progress: 0, completed: 0, total: 0 },
+                { name: "Бух. Национальные ПС", acceptance: 0, in_progress: 0, completed: 0, total: 0 },
+                { name: "Депозиты ФЛ", acceptance: 0, in_progress: 0, completed: 0, total: 0 },
+                { name: "Объекты", acceptance: 0, in_progress: 0, completed: 0, total: 0 }
+            ]
+        };
+
+        function renderJiraBusinessDirectionsTable() {
+            const tableBody = document.getElementById('jira-business-directions-table-body');
+            if (!tableBody) return;
+            
+            const sliderValElement = document.getElementById('jira-slider-val');
+            const slider = document.getElementById('jira-top-slider');
+            const topN = parseInt(slider.value);
+            sliderValElement.innerText = topN;
+            
+            const periodData = jiraBusinessDirectionsData[activePeriod] || jiraBusinessDirectionsData.all;
+            
+            // Filter out items with 0 total to keep visual cleanliness, sort by total descending, slice to N
+            const sortedData = [...periodData]
+                .filter(item => item.total > 0)
+                .sort((a, b) => b.total - a.total)
+                .slice(0, topN);
+                
+            tableBody.innerHTML = sortedData.map(row => {
+                return `
+                <tr style="border-bottom: 1px solid var(--card-border); transition: background-color 0.2s; cursor: default;" class="table-hover-row">
+                    <td style="padding: 12px 16px; color: var(--text-primary); font-weight: 500;">${row.name}</td>
+                    <td style="padding: 12px 16px; text-align: right; color: var(--text-secondary);">${row.acceptance}</td>
+                    <td style="padding: 12px 16px; text-align: right; color: var(--text-secondary);">${row.in_progress}</td>
+                    <td style="padding: 12px 16px; text-align: right; color: var(--text-secondary);">${row.completed}</td>
+                    <td style="padding: 12px 16px; text-align: right; color: var(--text-primary); font-weight: 700;">${row.total}</td>
+                </tr>`;
+            }).join('');
+        }
+
+        function handleJiraSliderChange(val) {
+            renderJiraBusinessDirectionsTable();
         }
 
         function renderJiraCategoriesChart(months, monthlyCategories) {
