@@ -458,7 +458,7 @@ def main():
                 'total_issued': int(sum(monthly_counts)),
                 'avg_balance': round(all_avg_balance, 2),
                 'total_credit': round(sum(monthly_credits), 2),
-                'months': ['Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь'],
+                'months': ['01.2026', '02.2026', '03.2026', '04.2026', '05.2026', '06.2026'],
                 'counts': [int(x) for x in monthly_counts],
                 'balances': [round(x, 2) for x in monthly_balances],
                 'credits': [round(x, 2) for x in monthly_credits]
@@ -467,7 +467,7 @@ def main():
                 'total_issued': int(sum(monthly_counts[:3])),
                 'avg_balance': round(q1_avg_balance, 2),
                 'total_credit': round(sum(monthly_credits[:3]), 2),
-                'months': ['Январь', 'Февраль', 'Март'],
+                'months': ['01.2026', '02.2026', '03.2026'],
                 'counts': [int(x) for x in monthly_counts[:3]],
                 'balances': [round(x, 2) for x in monthly_balances[:3]],
                 'credits': [round(x, 2) for x in monthly_credits[:3]]
@@ -476,7 +476,7 @@ def main():
                 'total_issued': int(sum(monthly_counts[3:])),
                 'avg_balance': round(q2_avg_balance, 2),
                 'total_credit': round(sum(monthly_credits[3:])),
-                'months': ['Апрель', 'Май', 'Июнь'],
+                'months': ['04.2026', '05.2026', '06.2026'],
                 'counts': [int(x) for x in monthly_counts[3:]],
                 'balances': [round(x, 2) for x in monthly_balances[3:]],
                 'credits': [round(x, 2) for x in monthly_credits[3:]]
