@@ -4302,17 +4302,6 @@ def main():
             // Update Jira Time Spent Section (Category percentages & Doughnut Chart)
             const jiraTimeSpentData = {
                 q1: {
-                    total: 701.2,
-                    categories: [
-                        { name: "Внутренняя автоматизация", value: 37.23, color: "#8b5cf6" },
-                        { name: "Поддержка и инциденты", value: 13.22, color: "#ef4444" },
-                        { name: "Новые продукты для клиентов", value: 34.15, color: "#10b981" },
-                        { name: "Требования регулятора", value: 15.35, color: "#06b6d4" },
-                        { name: "KPI-цели (KPI план бизнеса)", value: 0.04, color: "#f97316" },
-                        { name: "Без категории", value: 0.02, color: "#64748b" }
-                    ]
-                },
-                q2: {
                     total: 925.5,
                     categories: [
                         { name: "Поддержка и инциденты", value: 14.15, color: "#ef4444" },
@@ -4321,6 +4310,17 @@ def main():
                         { name: "Новые продукты для клиентов", value: 41.34, color: "#10b981" },
                         { name: "KPI-цели (KPI план бизнеса)", value: 1.74, color: "#f97316" },
                         { name: "Без категории", value: 0.01, color: "#64748b" }
+                    ]
+                },
+                q2: {
+                    total: 701.2,
+                    categories: [
+                        { name: "Внутренняя автоматизация", value: 37.23, color: "#8b5cf6" },
+                        { name: "Поддержка и инциденты", value: 13.22, color: "#ef4444" },
+                        { name: "Новые продукты для клиентов", value: 34.15, color: "#10b981" },
+                        { name: "Требования регулятора", value: 15.35, color: "#06b6d4" },
+                        { name: "KPI-цели (KPI план бизнеса)", value: 0.04, color: "#f97316" },
+                        { name: "Без категории", value: 0.02, color: "#64748b" }
                     ]
                 },
                 all: {
