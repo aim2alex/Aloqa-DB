@@ -2566,7 +2566,7 @@ def main():
                                         Выполнено
                                     </span>
                                 </th>
-                                <th style="padding: 10px 16px; font-weight: 600; text-align: right; color: var(--text-primary); white-space: nowrap;">Jami</th>
+                                <th style="padding: 10px 16px; font-weight: 600; text-align: right; color: var(--text-primary); white-space: nowrap;">ОБЩЕЕ</th>
                             </tr>
                         </thead>
                         <tbody id="jira-business-directions-table-body">
