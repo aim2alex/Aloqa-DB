@@ -1253,6 +1253,19 @@ def main():
             display: none !important;
         }
 
+        /* Quarters Grid */
+        .quarters-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.5rem;
+            margin-top: 0.5rem;
+        }
+        @media (max-width: 1024px) {
+            .quarters-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
         /* Section Dividers */
         .section-divider {
             border-top: 1px solid rgba(255, 255, 255, 0.05);
@@ -2229,6 +2242,215 @@ def main():
                             <div style="display: flex; align-items: baseline; gap: 4px;">
                                 <span style="font-size: 1.8rem; font-weight: 700; color: var(--text-primary); line-height: 1;">4</span>
                                 <span style="font-size: 0.9rem; color: var(--text-secondary);">чел</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Row 1.7: Completed Tasks by Quarters -->
+            <section style="display: flex; flex-direction: column; gap: 1rem; margin-top: 1.5rem;">
+                <div class="quarters-grid">
+                    <!-- Card 1: 1-3 Month (1st Quarter) -->
+                    <div class="card" style="padding: 1.5rem 2rem; position: relative;">
+                        <!-- Header -->
+                        <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0.5rem;">
+                            <div>
+                                <div style="font-family: 'Outfit', sans-serif; font-size: 1.3rem; font-weight: 700; color: var(--text-primary);">Выполнено (1-3 месяц)</div>
+                                <div style="font-size: 0.8rem; color: var(--text-secondary); margin-top: 2px;">Всего задач, шт.</div>
+                            </div>
+                            <svg class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width: 20px; height: 20px; color: var(--text-secondary); opacity: 0.7;">
+                                <line x1="7" y1="17" x2="17" y2="7"></line>
+                                <polyline points="7 7 17 7 17 17"></polyline>
+                            </svg>
+                        </div>
+                        
+                        <!-- Content Grid -->
+                        <div style="display: grid; grid-template-columns: 1.2fr 1fr 1.5fr; gap: 1.5rem; align-items: center; margin-top: 1rem;">
+                            <!-- Column 1: Teams 1-4 -->
+                            <div style="display: flex; flex-direction: column; gap: 10px;">
+                                <div style="display: flex; align-items: center; justify-content: space-between; font-size: 0.85rem;">
+                                    <div style="display: flex; align-items: center; gap: 8px;">
+                                        <span style="display: inline-block; width: 8px; height: 8px; border-radius: 50%; background-color: #3b82f6;"></span>
+                                        <span style="color: var(--text-secondary);">Camunda</span>
+                                    </div>
+                                    <span style="font-weight: 700; color: var(--text-primary);">76</span>
+                                </div>
+                                <div style="display: flex; align-items: center; justify-content: space-between; font-size: 0.85rem;">
+                                    <div style="display: flex; align-items: center; gap: 8px;">
+                                        <span style="display: inline-block; width: 8px; height: 8px; border-radius: 50%; background-color: #10b981;"></span>
+                                        <span style="color: var(--text-secondary);">Devops</span>
+                                    </div>
+                                    <span style="font-weight: 700; color: var(--text-primary);">60</span>
+                                </div>
+                                <div style="display: flex; align-items: center; justify-content: space-between; font-size: 0.85rem;">
+                                    <div style="display: flex; align-items: center; gap: 8px;">
+                                        <span style="display: inline-block; width: 8px; height: 8px; border-radius: 50%; background-color: #f59e0b;"></span>
+                                        <span style="color: var(--text-secondary);">Front</span>
+                                    </div>
+                                    <span style="font-weight: 700; color: var(--text-primary);">46</span>
+                                </div>
+                                <div style="display: flex; align-items: center; justify-content: space-between; font-size: 0.85rem;">
+                                    <div style="display: flex; align-items: center; gap: 8px;">
+                                        <span style="display: inline-block; width: 8px; height: 8px; border-radius: 50%; background-color: #ef4444;"></span>
+                                        <span style="color: var(--text-secondary);">Абс</span>
+                                    </div>
+                                    <span style="font-weight: 700; color: var(--text-primary);">176</span>
+                                </div>
+                            </div>
+                            
+                            <!-- Column 2: Center Big Value & Trend -->
+                            <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center;">
+                                <div style="display: flex; align-items: center; gap: 4px; color: #10b981; font-weight: 700; font-size: 0.95rem; margin-bottom: 4px;">
+                                    <svg class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" style="width: 14px; height: 14px; color: #10b981;">
+                                        <polyline points="18 15 12 9 6 15"></polyline>
+                                    </svg>
+                                    <span>+50%</span>
+                                </div>
+                                <div style="font-family: 'Outfit', sans-serif; font-size: 3.2rem; font-weight: 700; color: var(--text-primary); line-height: 1;">451</div>
+                            </div>
+                            
+                            <!-- Column 3: Teams 5-8 & Sparkline -->
+                            <div style="display: flex; flex-direction: column; gap: 10px; position: relative;">
+                                <!-- Sparkline -->
+                                <div style="position: absolute; right: 0; top: -35px; display: flex; align-items: flex-end; gap: 3px; height: 28px;">
+                                    <div style="width: 3px; height: 12px; background-color: #10b981; border-radius: 1px; opacity: 0.8;"></div>
+                                    <div style="width: 3px; height: 18px; background-color: #10b981; border-radius: 1px; opacity: 0.8;"></div>
+                                    <div style="width: 3px; height: 15px; background-color: #10b981; border-radius: 1px; opacity: 0.8;"></div>
+                                    <div style="width: 3px; height: 22px; background-color: #10b981; border-radius: 1px; opacity: 0.8;"></div>
+                                    <div style="width: 3px; height: 20px; background-color: #10b981; border-radius: 1px; opacity: 0.8;"></div>
+                                    <div style="width: 3px; height: 26px; background-color: #10b981; border-radius: 1px;"></div>
+                                </div>
+                                <div style="display: flex; align-items: center; justify-content: space-between; font-size: 0.85rem;">
+                                    <div style="display: flex; align-items: center; gap: 8px;">
+                                        <span style="display: inline-block; width: 8px; height: 8px; border-radius: 50%; background-color: #8b5cf6;"></span>
+                                        <span style="color: var(--text-secondary); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 140px;" title="Колл-центр / Амл / Риски">Колл-центр / Амл...</span>
+                                    </div>
+                                    <span style="font-weight: 700; color: var(--text-primary);">38</span>
+                                </div>
+                                <div style="display: flex; align-items: center; justify-content: space-between; font-size: 0.85rem;">
+                                    <div style="display: flex; align-items: center; gap: 8px;">
+                                        <span style="display: inline-block; width: 8px; height: 8px; border-radius: 50%; background-color: #06b6d4;"></span>
+                                        <span style="color: var(--text-secondary); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 140px;" title="Кфо / Залоги / Проблемные Кредиты">Кфо / Залоги / Кред...</span>
+                                    </div>
+                                    <span style="font-weight: 700; color: var(--text-primary);">62</span>
+                                </div>
+                                <div style="display: flex; align-items: center; justify-content: space-between; font-size: 0.85rem;">
+                                    <div style="display: flex; align-items: center; gap: 8px;">
+                                        <span style="display: inline-block; width: 8px; height: 8px; border-radius: 50%; background-color: #ec4899;"></span>
+                                        <span style="color: var(--text-secondary); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 140px;" title="Пластиковые Карты">Пластиковые Карты</span>
+                                    </div>
+                                    <span style="font-weight: 700; color: var(--text-primary);">18</span>
+                                </div>
+                                <div style="display: flex; align-items: center; justify-content: space-between; font-size: 0.85rem;">
+                                    <div style="display: flex; align-items: center; gap: 8px;">
+                                        <span style="display: inline-block; width: 8px; height: 8px; border-radius: 50%; background-color: #f97316;"></span>
+                                        <span style="color: var(--text-secondary);">Скоринг</span>
+                                    </div>
+                                    <span style="font-weight: 700; color: var(--text-primary);">51</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Card 2: 4-6 Month (2nd Quarter) -->
+                    <div class="card" style="padding: 1.5rem 2rem; position: relative;">
+                        <!-- Header -->
+                        <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0.5rem;">
+                            <div>
+                                <div style="font-family: 'Outfit', sans-serif; font-size: 1.3rem; font-weight: 700; color: var(--text-primary);">Выполнено (4-6 месяц)</div>
+                                <div style="font-size: 0.8rem; color: var(--text-secondary); margin-top: 2px;">Всего задач, шт.</div>
+                            </div>
+                            <svg class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width: 20px; height: 20px; color: var(--text-secondary); opacity: 0.7;">
+                                <line x1="7" y1="17" x2="17" y2="7"></line>
+                                <polyline points="7 7 17 7 17 17"></polyline>
+                            </svg>
+                        </div>
+                        
+                        <!-- Content Grid -->
+                        <div style="display: grid; grid-template-columns: 1.2fr 1fr 1.5fr; gap: 1.5rem; align-items: center; margin-top: 1rem;">
+                            <!-- Column 1: Teams 1-4 -->
+                            <div style="display: flex; flex-direction: column; gap: 10px;">
+                                <div style="display: flex; align-items: center; justify-content: space-between; font-size: 0.85rem;">
+                                    <div style="display: flex; align-items: center; gap: 8px;">
+                                        <span style="display: inline-block; width: 8px; height: 8px; border-radius: 50%; background-color: #3b82f6;"></span>
+                                        <span style="color: var(--text-secondary);">Camunda</span>
+                                    </div>
+                                    <span style="font-weight: 700; color: var(--text-primary);">57</span>
+                                </div>
+                                <div style="display: flex; align-items: center; justify-content: space-between; font-size: 0.85rem;">
+                                    <div style="display: flex; align-items: center; gap: 8px;">
+                                        <span style="display: inline-block; width: 8px; height: 8px; border-radius: 50%; background-color: #10b981;"></span>
+                                        <span style="color: var(--text-secondary);">Devops</span>
+                                    </div>
+                                    <span style="font-weight: 700; color: var(--text-primary);">55</span>
+                                </div>
+                                <div style="display: flex; align-items: center; justify-content: space-between; font-size: 0.85rem;">
+                                    <div style="display: flex; align-items: center; gap: 8px;">
+                                        <span style="display: inline-block; width: 8px; height: 8px; border-radius: 50%; background-color: #f59e0b;"></span>
+                                        <span style="color: var(--text-secondary);">Front</span>
+                                    </div>
+                                    <span style="font-weight: 700; color: var(--text-primary);">50</span>
+                                </div>
+                                <div style="display: flex; align-items: center; justify-content: space-between; font-size: 0.85rem;">
+                                    <div style="display: flex; align-items: center; gap: 8px;">
+                                        <span style="display: inline-block; width: 8px; height: 8px; border-radius: 50%; background-color: #ef4444;"></span>
+                                        <span style="color: var(--text-secondary);">Абс</span>
+                                    </div>
+                                    <span style="font-weight: 700; color: var(--text-primary);">187</span>
+                                </div>
+                            </div>
+                            
+                            <!-- Column 2: Center Big Value & Trend -->
+                            <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center;">
+                                <div style="display: flex; align-items: center; gap: 4px; color: #ef4444; font-weight: 700; font-size: 0.95rem; margin-bottom: 4px;">
+                                    <svg class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" style="width: 14px; height: 14px; color: #ef4444;">
+                                        <polyline points="6 9 12 15 18 9"></polyline>
+                                    </svg>
+                                    <span>-14.9%</span>
+                                </div>
+                                <div style="font-family: 'Outfit', sans-serif; font-size: 3.2rem; font-weight: 700; color: var(--text-primary); line-height: 1;">516</div>
+                            </div>
+                            
+                            <!-- Column 3: Teams 5-8 & Sparkline -->
+                            <div style="display: flex; flex-direction: column; gap: 10px; position: relative;">
+                                <!-- Sparkline -->
+                                <div style="position: absolute; right: 0; top: -35px; display: flex; align-items: flex-end; gap: 3px; height: 28px;">
+                                    <div style="width: 3px; height: 24px; background-color: #10b981; border-radius: 1px; opacity: 0.8;"></div>
+                                    <div style="width: 3px; height: 18px; background-color: #10b981; border-radius: 1px; opacity: 0.8;"></div>
+                                    <div style="width: 3px; height: 26px; background-color: #10b981; border-radius: 1px; opacity: 0.8;"></div>
+                                    <div style="width: 3px; height: 20px; background-color: #10b981; border-radius: 1px; opacity: 0.8;"></div>
+                                    <div style="width: 3px; height: 25px; background-color: #10b981; border-radius: 1px; opacity: 0.8;"></div>
+                                    <div style="width: 3px; height: 22px; background-color: #10b981; border-radius: 1px;"></div>
+                                </div>
+                                <div style="display: flex; align-items: center; justify-content: space-between; font-size: 0.85rem;">
+                                    <div style="display: flex; align-items: center; gap: 8px;">
+                                        <span style="display: inline-block; width: 8px; height: 8px; border-radius: 50%; background-color: #8b5cf6;"></span>
+                                        <span style="color: var(--text-secondary); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 140px;" title="Колл-центр / Амл / Риски">Колл-центр / Амл...</span>
+                                    </div>
+                                    <span style="font-weight: 700; color: var(--text-primary);">36</span>
+                                </div>
+                                <div style="display: flex; align-items: center; justify-content: space-between; font-size: 0.85rem;">
+                                    <div style="display: flex; align-items: center; gap: 8px;">
+                                        <span style="display: inline-block; width: 8px; height: 8px; border-radius: 50%; background-color: #06b6d4;"></span>
+                                        <span style="color: var(--text-secondary); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 140px;" title="Кфо / Залоги / Проблемные Кредиты">Кфо / Залоги / Кред...</span>
+                                    </div>
+                                    <span style="font-weight: 700; color: var(--text-primary);">105</span>
+                                </div>
+                                <div style="display: flex; align-items: center; justify-content: space-between; font-size: 0.85rem;">
+                                    <div style="display: flex; align-items: center; gap: 8px;">
+                                        <span style="display: inline-block; width: 8px; height: 8px; border-radius: 50%; background-color: #ec4899;"></span>
+                                        <span style="color: var(--text-secondary); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 140px;" title="Пластиковые Карты">Пластиковые Карты</span>
+                                    </div>
+                                    <span style="font-weight: 700; color: var(--text-primary);">33</span>
+                                </div>
+                                <div style="display: flex; align-items: center; justify-content: space-between; font-size: 0.85rem;">
+                                    <div style="display: flex; align-items: center; gap: 8px;">
+                                        <span style="display: inline-block; width: 8px; height: 8px; border-radius: 50%; background-color: #f97316;"></span>
+                                        <span style="color: var(--text-secondary);">Скоринг</span>
+                                    </div>
+                                    <span style="font-weight: 700; color: var(--text-primary);">78</span>
+                                </div>
                             </div>
                         </div>
                     </div>
