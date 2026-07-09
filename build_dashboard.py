@@ -2150,144 +2150,264 @@ def main():
                     <!-- Camunda -->
                     <div class="card team-card" style="border-left-color: #3b82f6;">
                         <div style="font-size: 0.95rem; font-weight: 700; color: var(--text-primary); margin-bottom: 12px; font-family: 'Outfit', sans-serif; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;" title="Camunda">Camunda</div>
-                        <div style="display: flex; align-items: center; gap: 12px;">
-                            <div style="background: rgba(59, 130, 246, 0.15); color: #3b82f6; width: 36px; height: 36px; border-radius: 8px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
-                                <svg class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width: 18px; height: 18px;">
-                                    <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
-                                    <circle cx="9" cy="7" r="4"></circle>
-                                    <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
-                                    <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
-                                </svg>
+                        <div style="display: flex; align-items: center; justify-content: space-between; width: 100%;">
+                            <div style="display: flex; align-items: center; gap: 10px;">
+                                <div style="background: rgba(59, 130, 246, 0.15); color: #3b82f6; width: 36px; height: 36px; border-radius: 8px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+                                    <svg class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width: 18px; height: 18px;">
+                                        <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                                        <circle cx="9" cy="7" r="4"></circle>
+                                        <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                                        <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                                    </svg>
+                                </div>
+                                <div style="display: flex; align-items: baseline; gap: 4px;">
+                                    <span style="font-size: 1.8rem; font-weight: 700; color: var(--text-primary); line-height: 1;">4</span>
+                                    <span style="font-size: 0.9rem; color: var(--text-secondary);">чел</span>
+                                </div>
                             </div>
-                            <div style="display: flex; align-items: baseline; gap: 4px;">
-                                <span style="font-size: 1.8rem; font-weight: 700; color: var(--text-primary); line-height: 1;">4</span>
-                                <span style="font-size: 0.9rem; color: var(--text-secondary);">чел</span>
+                            <div style="width: 1px; height: 30px; background-color: var(--card-border); opacity: 0.8; margin: 0 10px;"></div>
+                            <div style="display: flex; align-items: center; gap: 10px;">
+                                <div style="background: rgba(59, 130, 246, 0.15); color: #3b82f6; width: 36px; height: 36px; border-radius: 8px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+                                    <svg class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width: 18px; height: 18px;">
+                                        <polyline points="9 11 12 14 22 4"></polyline>
+                                        <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path>
+                                    </svg>
+                                </div>
+                                <div style="display: flex; flex-direction: column;">
+                                    <span style="font-size: 0.65rem; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.05em; font-weight: 600; line-height: 1;">Задач</span>
+                                    <span id="jira-team-tasks-camunda" style="font-size: 1.5rem; font-weight: 700; color: var(--text-primary); line-height: 1; margin-top: 2px;">0</span>
+                                </div>
                             </div>
                         </div>
                     </div>
                     <!-- Devops -->
                     <div class="card team-card" style="border-left-color: #10b981;">
                         <div style="font-size: 0.95rem; font-weight: 700; color: var(--text-primary); margin-bottom: 12px; font-family: 'Outfit', sans-serif; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;" title="Devops">Devops</div>
-                        <div style="display: flex; align-items: center; gap: 12px;">
-                            <div style="background: rgba(16, 185, 129, 0.15); color: #10b981; width: 36px; height: 36px; border-radius: 8px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
-                                <svg class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width: 18px; height: 18px;">
-                                    <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
-                                    <circle cx="9" cy="7" r="4"></circle>
-                                    <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
-                                    <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
-                                </svg>
+                        <div style="display: flex; align-items: center; justify-content: space-between; width: 100%;">
+                            <div style="display: flex; align-items: center; gap: 10px;">
+                                <div style="background: rgba(16, 185, 129, 0.15); color: #10b981; width: 36px; height: 36px; border-radius: 8px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+                                    <svg class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width: 18px; height: 18px;">
+                                        <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                                        <circle cx="9" cy="7" r="4"></circle>
+                                        <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                                        <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                                    </svg>
+                                </div>
+                                <div style="display: flex; align-items: baseline; gap: 4px;">
+                                    <span style="font-size: 1.8rem; font-weight: 700; color: var(--text-primary); line-height: 1;">2</span>
+                                    <span style="font-size: 0.9rem; color: var(--text-secondary);">чел</span>
+                                </div>
                             </div>
-                            <div style="display: flex; align-items: baseline; gap: 4px;">
-                                <span style="font-size: 1.8rem; font-weight: 700; color: var(--text-primary); line-height: 1;">2</span>
-                                <span style="font-size: 0.9rem; color: var(--text-secondary);">чел</span>
+                            <div style="width: 1px; height: 30px; background-color: var(--card-border); opacity: 0.8; margin: 0 10px;"></div>
+                            <div style="display: flex; align-items: center; gap: 10px;">
+                                <div style="background: rgba(16, 185, 129, 0.15); color: #10b981; width: 36px; height: 36px; border-radius: 8px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+                                    <svg class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width: 18px; height: 18px;">
+                                        <polyline points="9 11 12 14 22 4"></polyline>
+                                        <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path>
+                                    </svg>
+                                </div>
+                                <div style="display: flex; flex-direction: column;">
+                                    <span style="font-size: 0.65rem; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.05em; font-weight: 600; line-height: 1;">Задач</span>
+                                    <span id="jira-team-tasks-devops" style="font-size: 1.5rem; font-weight: 700; color: var(--text-primary); line-height: 1; margin-top: 2px;">0</span>
+                                </div>
                             </div>
                         </div>
                     </div>
                     <!-- Front -->
                     <div class="card team-card" style="border-left-color: #f59e0b;">
                         <div style="font-size: 0.95rem; font-weight: 700; color: var(--text-primary); margin-bottom: 12px; font-family: 'Outfit', sans-serif; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;" title="Front">Front</div>
-                        <div style="display: flex; align-items: center; gap: 12px;">
-                            <div style="background: rgba(245, 158, 11, 0.15); color: #f59e0b; width: 36px; height: 36px; border-radius: 8px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
-                                <svg class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width: 18px; height: 18px;">
-                                    <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
-                                    <circle cx="9" cy="7" r="4"></circle>
-                                    <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
-                                    <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
-                                </svg>
+                        <div style="display: flex; align-items: center; justify-content: space-between; width: 100%;">
+                            <div style="display: flex; align-items: center; gap: 10px;">
+                                <div style="background: rgba(245, 158, 11, 0.15); color: #f59e0b; width: 36px; height: 36px; border-radius: 8px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+                                    <svg class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width: 18px; height: 18px;">
+                                        <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                                        <circle cx="9" cy="7" r="4"></circle>
+                                        <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                                        <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                                    </svg>
+                                </div>
+                                <div style="display: flex; align-items: baseline; gap: 4px;">
+                                    <span style="font-size: 1.8rem; font-weight: 700; color: var(--text-primary); line-height: 1;">6</span>
+                                    <span style="font-size: 0.9rem; color: var(--text-secondary);">чел</span>
+                                </div>
                             </div>
-                            <div style="display: flex; align-items: baseline; gap: 4px;">
-                                <span style="font-size: 1.8rem; font-weight: 700; color: var(--text-primary); line-height: 1;">6</span>
-                                <span style="font-size: 0.9rem; color: var(--text-secondary);">чел</span>
+                            <div style="width: 1px; height: 30px; background-color: var(--card-border); opacity: 0.8; margin: 0 10px;"></div>
+                            <div style="display: flex; align-items: center; gap: 10px;">
+                                <div style="background: rgba(245, 158, 11, 0.15); color: #f59e0b; width: 36px; height: 36px; border-radius: 8px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+                                    <svg class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width: 18px; height: 18px;">
+                                        <polyline points="9 11 12 14 22 4"></polyline>
+                                        <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path>
+                                    </svg>
+                                </div>
+                                <div style="display: flex; flex-direction: column;">
+                                    <span style="font-size: 0.65rem; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.05em; font-weight: 600; line-height: 1;">Задач</span>
+                                    <span id="jira-team-tasks-front" style="font-size: 1.5rem; font-weight: 700; color: var(--text-primary); line-height: 1; margin-top: 2px;">0</span>
+                                </div>
                             </div>
                         </div>
                     </div>
                     <!-- Абс -->
                     <div class="card team-card" style="border-left-color: #ef4444;">
                         <div style="font-size: 0.95rem; font-weight: 700; color: var(--text-primary); margin-bottom: 12px; font-family: 'Outfit', sans-serif; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;" title="Абс">Абс</div>
-                        <div style="display: flex; align-items: center; gap: 12px;">
-                            <div style="background: rgba(239, 68, 68, 0.15); color: #ef4444; width: 36px; height: 36px; border-radius: 8px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
-                                <svg class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width: 18px; height: 18px;">
-                                    <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
-                                    <circle cx="9" cy="7" r="4"></circle>
-                                    <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
-                                    <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
-                                </svg>
+                        <div style="display: flex; align-items: center; justify-content: space-between; width: 100%;">
+                            <div style="display: flex; align-items: center; gap: 10px;">
+                                <div style="background: rgba(239, 68, 68, 0.15); color: #ef4444; width: 36px; height: 36px; border-radius: 8px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+                                    <svg class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width: 18px; height: 18px;">
+                                        <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                                        <circle cx="9" cy="7" r="4"></circle>
+                                        <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                                        <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                                    </svg>
+                                </div>
+                                <div style="display: flex; align-items: baseline; gap: 4px;">
+                                    <span style="font-size: 1.8rem; font-weight: 700; color: var(--text-primary); line-height: 1;">4</span>
+                                    <span style="font-size: 0.9rem; color: var(--text-secondary);">чел</span>
+                                </div>
                             </div>
-                            <div style="display: flex; align-items: baseline; gap: 4px;">
-                                <span style="font-size: 1.8rem; font-weight: 700; color: var(--text-primary); line-height: 1;">4</span>
-                                <span style="font-size: 0.9rem; color: var(--text-secondary);">чел</span>
+                            <div style="width: 1px; height: 30px; background-color: var(--card-border); opacity: 0.8; margin: 0 10px;"></div>
+                            <div style="display: flex; align-items: center; gap: 10px;">
+                                <div style="background: rgba(239, 68, 68, 0.15); color: #ef4444; width: 36px; height: 36px; border-radius: 8px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+                                    <svg class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width: 18px; height: 18px;">
+                                        <polyline points="9 11 12 14 22 4"></polyline>
+                                        <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path>
+                                    </svg>
+                                </div>
+                                <div style="display: flex; flex-direction: column;">
+                                    <span style="font-size: 0.65rem; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.05em; font-weight: 600; line-height: 1;">Задач</span>
+                                    <span id="jira-team-tasks-abs" style="font-size: 1.5rem; font-weight: 700; color: var(--text-primary); line-height: 1; margin-top: 2px;">0</span>
+                                </div>
                             </div>
                         </div>
                     </div>
                     <!-- Колл-центр / Амл / Риски -->
                     <div class="card team-card" style="border-left-color: #8b5cf6;">
                         <div style="font-size: 0.95rem; font-weight: 700; color: var(--text-primary); margin-bottom: 12px; font-family: 'Outfit', sans-serif; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;" title="Колл-центр / Амл / Риски">Колл-центр / Амл / Риски</div>
-                        <div style="display: flex; align-items: center; gap: 12px;">
-                            <div style="background: rgba(139, 92, 246, 0.15); color: #8b5cf6; width: 36px; height: 36px; border-radius: 8px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
-                                <svg class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width: 18px; height: 18px;">
-                                    <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
-                                    <circle cx="9" cy="7" r="4"></circle>
-                                    <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
-                                    <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
-                                </svg>
+                        <div style="display: flex; align-items: center; justify-content: space-between; width: 100%;">
+                            <div style="display: flex; align-items: center; gap: 10px;">
+                                <div style="background: rgba(139, 92, 246, 0.15); color: #8b5cf6; width: 36px; height: 36px; border-radius: 8px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+                                    <svg class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width: 18px; height: 18px;">
+                                        <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                                        <circle cx="9" cy="7" r="4"></circle>
+                                        <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                                        <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                                    </svg>
+                                </div>
+                                <div style="display: flex; align-items: baseline; gap: 4px;">
+                                    <span style="font-size: 1.8rem; font-weight: 700; color: var(--text-primary); line-height: 1;">5</span>
+                                    <span style="font-size: 0.9rem; color: var(--text-secondary);">чел</span>
+                                </div>
                             </div>
-                            <div style="display: flex; align-items: baseline; gap: 4px;">
-                                <span style="font-size: 1.8rem; font-weight: 700; color: var(--text-primary); line-height: 1;">5</span>
-                                <span style="font-size: 0.9rem; color: var(--text-secondary);">чел</span>
+                            <div style="width: 1px; height: 30px; background-color: var(--card-border); opacity: 0.8; margin: 0 10px;"></div>
+                            <div style="display: flex; align-items: center; gap: 10px;">
+                                <div style="background: rgba(139, 92, 246, 0.15); color: #8b5cf6; width: 36px; height: 36px; border-radius: 8px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+                                    <svg class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width: 18px; height: 18px;">
+                                        <polyline points="9 11 12 14 22 4"></polyline>
+                                        <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path>
+                                    </svg>
+                                </div>
+                                <div style="display: flex; flex-direction: column;">
+                                    <span style="font-size: 0.65rem; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.05em; font-weight: 600; line-height: 1;">Задач</span>
+                                    <span id="jira-team-tasks-callcenter" style="font-size: 1.5rem; font-weight: 700; color: var(--text-primary); line-height: 1; margin-top: 2px;">0</span>
+                                </div>
                             </div>
                         </div>
                     </div>
                     <!-- Кфо / Залоги / Проблемные Кредиты -->
                     <div class="card team-card" style="border-left-color: #06b6d4;">
                         <div style="font-size: 0.95rem; font-weight: 700; color: var(--text-primary); margin-bottom: 12px; font-family: 'Outfit', sans-serif; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;" title="Кфо / Залоги / Проблемные Кредиты">Кфо / Залоги / Проблемные Кредиты</div>
-                        <div style="display: flex; align-items: center; gap: 12px;">
-                            <div style="background: rgba(6, 182, 212, 0.15); color: #06b6d4; width: 36px; height: 36px; border-radius: 8px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
-                                <svg class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width: 18px; height: 18px;">
-                                    <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
-                                    <circle cx="9" cy="7" r="4"></circle>
-                                    <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
-                                    <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
-                                </svg>
+                        <div style="display: flex; align-items: center; justify-content: space-between; width: 100%;">
+                            <div style="display: flex; align-items: center; gap: 10px;">
+                                <div style="background: rgba(6, 182, 212, 0.15); color: #06b6d4; width: 36px; height: 36px; border-radius: 8px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+                                    <svg class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width: 18px; height: 18px;">
+                                        <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                                        <circle cx="9" cy="7" r="4"></circle>
+                                        <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                                        <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                                    </svg>
+                                </div>
+                                <div style="display: flex; align-items: baseline; gap: 4px;">
+                                    <span style="font-size: 1.8rem; font-weight: 700; color: var(--text-primary); line-height: 1;">4</span>
+                                    <span style="font-size: 0.9rem; color: var(--text-secondary);">чел</span>
+                                </div>
                             </div>
-                            <div style="display: flex; align-items: baseline; gap: 4px;">
-                                <span style="font-size: 1.8rem; font-weight: 700; color: var(--text-primary); line-height: 1;">4</span>
-                                <span style="font-size: 0.9rem; color: var(--text-secondary);">чел</span>
+                            <div style="width: 1px; height: 30px; background-color: var(--card-border); opacity: 0.8; margin: 0 10px;"></div>
+                            <div style="display: flex; align-items: center; gap: 10px;">
+                                <div style="background: rgba(6, 182, 212, 0.15); color: #06b6d4; width: 36px; height: 36px; border-radius: 8px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+                                    <svg class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width: 18px; height: 18px;">
+                                        <polyline points="9 11 12 14 22 4"></polyline>
+                                        <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path>
+                                    </svg>
+                                </div>
+                                <div style="display: flex; flex-direction: column;">
+                                    <span style="font-size: 0.65rem; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.05em; font-weight: 600; line-height: 1;">Задач</span>
+                                    <span id="jira-team-tasks-kfo" style="font-size: 1.5rem; font-weight: 700; color: var(--text-primary); line-height: 1; margin-top: 2px;">0</span>
+                                </div>
                             </div>
                         </div>
                     </div>
                     <!-- Пластиковые Карты -->
                     <div class="card team-card" style="border-left-color: #ec4899;">
                         <div style="font-size: 0.95rem; font-weight: 700; color: var(--text-primary); margin-bottom: 12px; font-family: 'Outfit', sans-serif; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;" title="Пластиковые Карты">Пластиковые Карты</div>
-                        <div style="display: flex; align-items: center; gap: 12px;">
-                            <div style="background: rgba(236, 72, 153, 0.15); color: #ec4899; width: 36px; height: 36px; border-radius: 8px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
-                                <svg class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width: 18px; height: 18px;">
-                                    <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
-                                    <circle cx="9" cy="7" r="4"></circle>
-                                    <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
-                                    <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
-                                </svg>
+                        <div style="display: flex; align-items: center; justify-content: space-between; width: 100%;">
+                            <div style="display: flex; align-items: center; gap: 10px;">
+                                <div style="background: rgba(236, 72, 153, 0.15); color: #ec4899; width: 36px; height: 36px; border-radius: 8px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+                                    <svg class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width: 18px; height: 18px;">
+                                        <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                                        <circle cx="9" cy="7" r="4"></circle>
+                                        <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                                        <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                                    </svg>
+                                </div>
+                                <div style="display: flex; align-items: baseline; gap: 4px;">
+                                    <span style="font-size: 1.8rem; font-weight: 700; color: var(--text-primary); line-height: 1;">3</span>
+                                    <span style="font-size: 0.9rem; color: var(--text-secondary);">чел</span>
+                                </div>
                             </div>
-                            <div style="display: flex; align-items: baseline; gap: 4px;">
-                                <span style="font-size: 1.8rem; font-weight: 700; color: var(--text-primary); line-height: 1;">3</span>
-                                <span style="font-size: 0.9rem; color: var(--text-secondary);">чел</span>
+                            <div style="width: 1px; height: 30px; background-color: var(--card-border); opacity: 0.8; margin: 0 10px;"></div>
+                            <div style="display: flex; align-items: center; gap: 10px;">
+                                <div style="background: rgba(236, 72, 153, 0.15); color: #ec4899; width: 36px; height: 36px; border-radius: 8px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+                                    <svg class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width: 18px; height: 18px;">
+                                        <polyline points="9 11 12 14 22 4"></polyline>
+                                        <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path>
+                                    </svg>
+                                </div>
+                                <div style="display: flex; flex-direction: column;">
+                                    <span style="font-size: 0.65rem; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.05em; font-weight: 600; line-height: 1;">Задач</span>
+                                    <span id="jira-team-tasks-cards" style="font-size: 1.5rem; font-weight: 700; color: var(--text-primary); line-height: 1; margin-top: 2px;">0</span>
+                                </div>
                             </div>
                         </div>
                     </div>
                     <!-- Скоринг -->
                     <div class="card team-card" style="border-left-color: #f97316;">
                         <div style="font-size: 0.95rem; font-weight: 700; color: var(--text-primary); margin-bottom: 12px; font-family: 'Outfit', sans-serif; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;" title="Скоринг">Скоринг</div>
-                        <div style="display: flex; align-items: center; gap: 12px;">
-                            <div style="background: rgba(249, 115, 22, 0.15); color: #f97316; width: 36px; height: 36px; border-radius: 8px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
-                                <svg class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width: 18px; height: 18px;">
-                                    <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
-                                    <circle cx="9" cy="7" r="4"></circle>
-                                    <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
-                                    <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
-                                </svg>
+                        <div style="display: flex; align-items: center; justify-content: space-between; width: 100%;">
+                            <div style="display: flex; align-items: center; gap: 10px;">
+                                <div style="background: rgba(249, 115, 22, 0.15); color: #f97316; width: 36px; height: 36px; border-radius: 8px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+                                    <svg class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width: 18px; height: 18px;">
+                                        <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                                        <circle cx="9" cy="7" r="4"></circle>
+                                        <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                                        <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                                    </svg>
+                                </div>
+                                <div style="display: flex; align-items: baseline; gap: 4px;">
+                                    <span style="font-size: 1.8rem; font-weight: 700; color: var(--text-primary); line-height: 1;">4</span>
+                                    <span style="font-size: 0.9rem; color: var(--text-secondary);">чел</span>
+                                </div>
                             </div>
-                            <div style="display: flex; align-items: baseline; gap: 4px;">
-                                <span style="font-size: 1.8rem; font-weight: 700; color: var(--text-primary); line-height: 1;">4</span>
-                                <span style="font-size: 0.9rem; color: var(--text-secondary);">чел</span>
+                            <div style="width: 1px; height: 30px; background-color: var(--card-border); opacity: 0.8; margin: 0 10px;"></div>
+                            <div style="display: flex; align-items: center; gap: 10px;">
+                                <div style="background: rgba(249, 115, 22, 0.15); color: #f97316; width: 36px; height: 36px; border-radius: 8px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+                                    <svg class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width: 18px; height: 18px;">
+                                        <polyline points="9 11 12 14 22 4"></polyline>
+                                        <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path>
+                                    </svg>
+                                </div>
+                                <div style="display: flex; flex-direction: column;">
+                                    <span style="font-size: 0.65rem; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.05em; font-weight: 600; line-height: 1;">Задач</span>
+                                    <span id="jira-team-tasks-scoring" style="font-size: 1.5rem; font-weight: 700; color: var(--text-primary); line-height: 1; margin-top: 2px;">0</span>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -4319,6 +4439,15 @@ def main():
             document.getElementById('jira-completed-kfo').innerText = formatNumber(completedInfo.teams.kfo);
             document.getElementById('jira-completed-cards').innerText = formatNumber(completedInfo.teams.cards);
             document.getElementById('jira-completed-scoring').innerText = formatNumber(completedInfo.teams.scoring);
+            
+            document.getElementById('jira-team-tasks-camunda').innerText = formatNumber(completedInfo.teams.camunda);
+            document.getElementById('jira-team-tasks-devops').innerText = formatNumber(completedInfo.teams.devops);
+            document.getElementById('jira-team-tasks-front').innerText = formatNumber(completedInfo.teams.front);
+            document.getElementById('jira-team-tasks-abs').innerText = formatNumber(completedInfo.teams.abs);
+            document.getElementById('jira-team-tasks-callcenter').innerText = formatNumber(completedInfo.teams.callcenter);
+            document.getElementById('jira-team-tasks-kfo').innerText = formatNumber(completedInfo.teams.kfo);
+            document.getElementById('jira-team-tasks-cards').innerText = formatNumber(completedInfo.teams.cards);
+            document.getElementById('jira-team-tasks-scoring').innerText = formatNumber(completedInfo.teams.scoring);
             
             const sparklineDiv = document.getElementById('jira-completed-sparkline');
             if (sparklineDiv) {
