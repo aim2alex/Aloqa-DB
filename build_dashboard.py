@@ -1434,7 +1434,7 @@ def main():
         <div id="panel-loans" class="main-panel" style="display: none;">
             <div class="panel-header">
                 <div class="header-title">
-                    <h1 class="title-loans" style="background: linear-gradient(135deg, var(--text-primary) 30%, #0099FF 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Аналитический Дашборд Кредитных продуктов</h1>
+                    <h1 class="title-loans" style="background: linear-gradient(135deg, var(--text-primary) 30%, #0099FF 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Кредитные продукты</h1>
                     <p>Анализ кредитных заявок • 1 Квартал - 2 Квартал 2026 г.</p>
                 </div>
                 
@@ -1614,7 +1614,7 @@ def main():
         <div id="panel-callcenter" class="main-panel" style="display: none;">
             <div class="panel-header">
                 <div class="header-title">
-                    <h1>Аналитический Дашборд Call-центра</h1>
+                    <h1>Обращения Call-центра</h1>
                     <p>Анализ обращений клиентов • 1 Квартал - 2 Квартал 2026 г.</p>
                 </div>
                 
@@ -1850,7 +1850,7 @@ def main():
         <div id="panel-risks" class="main-panel" style="display: none;">
             <div class="panel-header">
                 <div class="header-title">
-                    <h1 class="title-risks">Аналитический Дашборд Событий операционных рисков</h1>
+                    <h1 class="title-risks">События операционных рисков</h1>
                     <p>Анализ и мониторинг событий операционных рисков</p>
                 </div>
             </div>
