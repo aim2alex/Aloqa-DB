@@ -2103,23 +2103,6 @@ def main():
                     </div>
                 </div>
 
-                <!-- Main Direction -->
-                <div class="card card-loans-yellow">
-                    <div class="card-header">
-                        <span class="card-title">Основное направление</span>
-                        <div class="card-icon" style="background: rgba(234, 179, 8, 0.15); color: #eab308;">
-                            <svg class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
-                            </svg>
-                        </div>
-                    </div>
-                    <div class="card-body">
-                        <span class="card-value" id="kpi-jira-main-category" style="font-size: 1.9rem; line-height: 2.4rem; font-weight: 700; height: 44px; display: flex; align-items: center; justify-content: flex-start; text-align: left; color: var(--text-primary);">Поддержка</span>
-                        <div class="card-meta">
-                            <span id="kpi-jira-main-category-pct">0% от общего числа</span>
-                        </div>
-                    </div>
-                </div>
 
                 <!-- Total Employees -->
                 <div class="card card-mc-completed">
@@ -4260,8 +4243,7 @@ def main():
             // 1. Update KPI Values
             animateValue('kpi-jira-total-tasks', 0, data.total_tasks, 800);
             animateValue('kpi-jira-avg-tasks', 0, data.avg_tasks, 800);
-            document.getElementById('kpi-jira-main-category').innerText = data.main_category;
-            document.getElementById('kpi-jira-main-category-pct').innerText = `${data.main_category_pct}% от общего числа`;
+
 
             // 2. Render Charts
             if (!jiraChartsInitialized) {
