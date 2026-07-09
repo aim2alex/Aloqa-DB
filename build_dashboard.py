@@ -526,7 +526,7 @@ def main():
         'jira': jira_stats
     }
     
-    print("Generating HTML dashboard index.html...")
+    print("Generating HTML dashboard Aloqa-Dashboard.html...")
     
     html_template = """<!DOCTYPE html>
 <html lang="ru">
@@ -4793,13 +4793,13 @@ def main():
     # Inject aggregated data
     html_content = html_template.replace("##DATA_PLACEHOLDER##", json.dumps(stats_data, ensure_ascii=False, indent=2))
     
-    # Write index.html
-    output_file = "index.html"
+    # Write Aloqa-Dashboard.html
+    output_file = "Aloqa-Dashboard.html"
     print(f"Writing {output_file}...")
     with open(output_file, "w", encoding="utf-8") as f:
         f.write(html_content)
         
-    print("Dashboard index.html generated successfully with Theme Toggle, Substance of Theme, MicroCredit statistics, and Monthly Grouped Chart!")
+    print("Dashboard Aloqa-Dashboard.html generated successfully with Theme Toggle, Substance of Theme, MicroCredit statistics, and Monthly Grouped Chart!")
 
 if __name__ == "__main__":
     main()
