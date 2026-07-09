@@ -2249,7 +2249,7 @@ def main():
             </section>
 
             <!-- Row 1.7: Completed Tasks (Quarterly filterable) -->
-            <section style="display: flex; flex-direction: column; gap: 1rem; margin-top: 1.5rem;">
+            <section style="display: flex; flex-direction: column; gap: 1rem;">
                 <!-- Left Card: Выполнено (Команды) -->
                 <div class="card" style="padding: 1.5rem 2rem; position: relative; display: flex; flex-direction: column; justify-content: space-between; width: 100%;">
                     <!-- Header & Sparkline -->
@@ -2354,7 +2354,7 @@ def main():
             </section>
             
             <!-- Row 1.8: Time Spent & Tasks by Categories (Quarterly filterable) -->
-            <section style="display: flex; flex-direction: column; gap: 1rem; margin-top: 1.5rem;">
+            <section style="display: flex; flex-direction: column; gap: 1rem;">
                 <div class="quarters-grid" style="grid-template-columns: 1fr 1fr;">
                     <!-- Left Card: Время выполненных задач -->
                     <div class="card" style="padding: 1.5rem 2rem; position: relative;">
