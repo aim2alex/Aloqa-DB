@@ -3938,9 +3938,9 @@ def main():
                             position: 'bottom',
                             labels: {
                                 color: colors.textSecondary,
-                                font: { size: 16, family: 'Inter' },
+                                font: { size: 15, family: 'Inter' },
                                 boxWidth: 10,
-                                padding: 15,
+                                padding: 20,
                                 usePointStyle: true,
                                 pointStyle: 'circle'
                             }
