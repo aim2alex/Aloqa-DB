@@ -2520,6 +2520,61 @@ def main():
     <script>
         const dashboardData = ##DATA_PLACEHOLDER##;
 
+        function getOrCreateTooltip() {
+            let tooltipEl = document.getElementById('chartjs-global-tooltip');
+            if (!tooltipEl) {
+                tooltipEl = document.createElement('div');
+                tooltipEl.id = 'chartjs-global-tooltip';
+                tooltipEl.style.background = 'var(--card-bg)';
+                tooltipEl.style.backdropFilter = 'blur(16px)';
+                tooltipEl.style.border = '1px solid var(--card-border)';
+                tooltipEl.style.borderRadius = '8px';
+                tooltipEl.style.padding = '10px 14px';
+                tooltipEl.style.boxShadow = '0 10px 30px rgba(0, 0, 0, 0.15)';
+                tooltipEl.style.pointerEvents = 'none';
+                tooltipEl.style.position = 'absolute';
+                tooltipEl.style.transform = 'translate(-50%, -110%)';
+                tooltipEl.style.transition = 'opacity 0.15s ease, left 0.1s ease, top 0.1s ease';
+                tooltipEl.style.zIndex = '99999';
+                document.body.appendChild(tooltipEl);
+            }
+            return tooltipEl;
+        }
+
+        function externalTooltipHandler(context) {
+            const {chart, tooltip} = context;
+            const tooltipEl = getOrCreateTooltip();
+
+            if (tooltip.opacity === 0) {
+                tooltipEl.style.opacity = '0';
+                return;
+            }
+
+            if (tooltip.body) {
+                const titleLines = tooltip.title || [];
+                const bodyLines = tooltip.body.map(b => b.lines);
+
+                let innerHtml = '';
+                titleLines.forEach(title => {
+                    innerHtml += `<div style="font-family: 'Inter', sans-serif; font-size: 15px; font-weight: 700; color: var(--text-primary); margin-bottom: 6px; white-space: nowrap;">${title}</div>`;
+                });
+
+                bodyLines.forEach((body, i) => {
+                    const colors = tooltip.labelColors[i];
+                    const dotColor = (colors && colors.backgroundColor) ? colors.backgroundColor : '#3b82f6';
+                    const span = `<span style="display: inline-block; width: 10px; height: 10px; border-radius: 50%; background: ${dotColor}; margin-right: 8px; flex-shrink: 0;"></span>`;
+                    innerHtml += `<div style="display: flex; align-items: center; font-family: 'Inter', sans-serif; font-size: 15px; color: var(--text-secondary); white-space: nowrap;">${span}${body}</div>`;
+                });
+
+                tooltipEl.innerHTML = innerHtml;
+            }
+
+            const position = chart.canvas.getBoundingClientRect();
+            tooltipEl.style.opacity = '1';
+            tooltipEl.style.left = window.pageXOffset + position.left + tooltip.caretX + 'px';
+            tooltipEl.style.top = window.pageYOffset + position.top + tooltip.caretY + 'px';
+        }
+
         let activeMainTab = 'jira';
         let activePeriod = 'all';
         let subthemeSearchQuery = '';
@@ -2730,22 +2785,8 @@ def main():
                             }
                         },
                         tooltip: {
-                            titleFont: { size: 15, family: 'Inter' },
-                            bodyFont: { size: 15, family: 'Inter' },
-                            backgroundColor: '#0f172a',
-                            titleColor: '#fff',
-                            bodyColor: '#e2e8f0',
-                            borderColor: 'rgba(255,255,255,0.1)',
-                            borderWidth: 1,
-                            padding: 12,
-                            callbacks: {
-                                label: function(context) {
-                                    const val = context.raw;
-                                    const total = context.dataset.data.reduce((a, b) => a + b, 0);
-                                    const pct = ((val / total) * 100).toFixed(1);
-                                    return ` Обращения: ${formatNumber(val)} (${pct}%)`;
-                                }
-                            }
+                            enabled: false,
+                            external: externalTooltipHandler
                         }
                     },
                     cutout: '65%'
@@ -2808,22 +2849,8 @@ def main():
                             }
                         },
                         tooltip: {
-                            titleFont: { size: 15, family: 'Inter' },
-                            bodyFont: { size: 15, family: 'Inter' },
-                            backgroundColor: '#0f172a',
-                            titleColor: '#fff',
-                            bodyColor: '#e2e8f0',
-                            borderColor: 'rgba(255,255,255,0.1)',
-                            borderWidth: 1,
-                            padding: 12,
-                            callbacks: {
-                                label: function(context) {
-                                    const val = context.raw;
-                                    const total = context.dataset.data.reduce((a, b) => a + b, 0);
-                                    const pct = ((val / total) * 100).toFixed(1);
-                                    return ` Обращения: ${formatNumber(val)} (${pct}%)`;
-                                }
-                            }
+                            enabled: false,
+                            external: externalTooltipHandler
                         }
                     }
                 }
@@ -2900,19 +2927,8 @@ def main():
                             display: false
                         },
                         tooltip: {
-                            titleFont: { size: 15, family: 'Inter' },
-                            bodyFont: { size: 15, family: 'Inter' },
-                            backgroundColor: '#0f172a',
-                            titleColor: '#fff',
-                            bodyColor: '#e2e8f0',
-                            borderColor: 'rgba(255,255,255,0.1)',
-                            borderWidth: 1,
-                            padding: 12,
-                            callbacks: {
-                                label: function(context) {
-                                    return ` Обращения: ${formatNumber(context.raw)}`;
-                                }
-                            }
+                            enabled: false,
+                            external: externalTooltipHandler
                         }
                     }
                 }
@@ -2989,19 +3005,8 @@ def main():
                             display: false
                         },
                         tooltip: {
-                            titleFont: { size: 15, family: 'Inter' },
-                            bodyFont: { size: 15, family: 'Inter' },
-                            backgroundColor: '#0f172a',
-                            titleColor: '#fff',
-                            bodyColor: '#e2e8f0',
-                            borderColor: 'rgba(255,255,255,0.1)',
-                            borderWidth: 1,
-                            padding: 12,
-                            callbacks: {
-                                label: function(context) {
-                                    return ` Обращения: ${formatNumber(context.raw)}`;
-                                }
-                            }
+                            enabled: false,
+                            external: externalTooltipHandler
                         }
                     }
                 }
@@ -3098,19 +3103,8 @@ def main():
                             }
                         },
                         tooltip: {
-                            titleFont: { size: 15, family: 'Inter' },
-                            bodyFont: { size: 15, family: 'Inter' },
-                            backgroundColor: '#0f172a',
-                            titleColor: '#fff',
-                            bodyColor: '#e2e8f0',
-                            borderColor: 'rgba(255,255,255,0.1)',
-                            borderWidth: 1,
-                            padding: 12,
-                            callbacks: {
-                                label: function(context) {
-                                    return ` ${context.dataset.label}: ${formatNumber(context.raw)}`;
-                                }
-                            }
+                            enabled: false,
+                            external: externalTooltipHandler
                         }
                     }
                 }
@@ -3393,22 +3387,8 @@ def main():
                             }
                         },
                         tooltip: {
-                            titleFont: { size: 15, family: 'Inter' },
-                            bodyFont: { size: 15, family: 'Inter' },
-                            backgroundColor: '#0f172a',
-                            titleColor: '#fff',
-                            bodyColor: '#e2e8f0',
-                            borderColor: 'rgba(255,255,255,0.1)',
-                            borderWidth: 1,
-                            padding: 12,
-                            callbacks: {
-                                label: function(context) {
-                                    const val = context.raw;
-                                    const total = context.dataset.data.reduce((a, b) => a + b, 0);
-                                    const pct = ((val / total) * 100).toFixed(1);
-                                    return ` События: ${formatNumber(val)} (${pct}%)`;
-                                }
-                            }
+                            enabled: false,
+                            external: externalTooltipHandler
                         }
                     },
                     cutout: '60%'
@@ -3490,22 +3470,8 @@ def main():
                             }
                         },
                         tooltip: {
-                            titleFont: { size: 15, family: 'Inter' },
-                            bodyFont: { size: 15, family: 'Inter' },
-                            backgroundColor: '#0f172a',
-                            titleColor: '#fff',
-                            bodyColor: '#e2e8f0',
-                            borderColor: 'rgba(255,255,255,0.1)',
-                            borderWidth: 1,
-                            padding: 12,
-                            callbacks: {
-                                label: function(context) {
-                                    const val = context.raw;
-                                    const total = context.dataset.data.reduce((a, b) => a + b, 0);
-                                    const pct = ((val / total) * 100).toFixed(1);
-                                    return ` События: ${formatNumber(val)} (${pct}%)`;
-                                }
-                            }
+                            enabled: false,
+                            external: externalTooltipHandler
                         }
                     }
                 }
@@ -3563,19 +3529,8 @@ def main():
                     plugins: {
                         legend: { display: false },
                         tooltip: {
-                            titleFont: { size: 15, family: 'Inter' },
-                            bodyFont: { size: 15, family: 'Inter' },
-                            backgroundColor: '#0f172a',
-                            titleColor: '#fff',
-                            bodyColor: '#e2e8f0',
-                            borderColor: 'rgba(255,255,255,0.1)',
-                            borderWidth: 1,
-                            padding: 12,
-                            callbacks: {
-                                label: function(context) {
-                                    return ` События: ${formatNumber(context.raw)}`;
-                                }
-                            }
+                            enabled: false,
+                            external: externalTooltipHandler
                         }
                     }
                 }
@@ -3619,22 +3574,8 @@ def main():
                             }
                         },
                         tooltip: {
-                            titleFont: { size: 15, family: 'Inter' },
-                            bodyFont: { size: 15, family: 'Inter' },
-                            backgroundColor: '#0f172a',
-                            titleColor: '#fff',
-                            bodyColor: '#e2e8f0',
-                            borderColor: 'rgba(255,255,255,0.1)',
-                            borderWidth: 1,
-                            padding: 12,
-                            callbacks: {
-                                label: function(context) {
-                                    const val = context.raw;
-                                    const total = context.dataset.data.reduce((a, b) => a + b, 0);
-                                    const pct = ((val / total) * 100).toFixed(1);
-                                    return ` События: ${formatNumber(val)} (${pct}%)`;
-                                }
-                            }
+                            enabled: false,
+                            external: externalTooltipHandler
                         }
                     },
                     cutout: '55%'
@@ -3679,22 +3620,8 @@ def main():
                             }
                         },
                         tooltip: {
-                            titleFont: { size: 15, family: 'Inter' },
-                            bodyFont: { size: 15, family: 'Inter' },
-                            backgroundColor: '#0f172a',
-                            titleColor: '#fff',
-                            bodyColor: '#e2e8f0',
-                            borderColor: 'rgba(255,255,255,0.1)',
-                            borderWidth: 1,
-                            padding: 12,
-                            callbacks: {
-                                label: function(context) {
-                                    const val = context.raw;
-                                    const total = context.dataset.data.reduce((a, b) => a + b, 0);
-                                    const pct = ((val / total) * 100).toFixed(1);
-                                    return ` События: ${formatNumber(val)} (${pct}%)`;
-                                }
-                            }
+                            enabled: false,
+                            external: externalTooltipHandler
                         }
                     },
                     cutout: '55%'
@@ -3879,22 +3806,8 @@ def main():
                             display: false
                         },
                         tooltip: {
-                            titleFont: { size: 15, family: 'Inter' },
-                            bodyFont: { size: 15, family: 'Inter' },
-                            backgroundColor: '#0f172a',
-                            titleColor: '#fff',
-                            bodyColor: '#e2e8f0',
-                            borderColor: 'rgba(255,255,255,0.1)',
-                            borderWidth: 1,
-                            padding: 12,
-                            callbacks: {
-                                label: function(context) {
-                                    const val = context.raw;
-                                    const total = context.dataset.data.reduce((a, b) => a + b, 0);
-                                    const pct = ((val / total) * 100).toFixed(1);
-                                    return ` ${context.label}: ${formatNumber(val)} (${pct}%)`;
-                                }
-                            }
+                            enabled: false,
+                            external: externalTooltipHandler
                         }
                     }
                 }
@@ -3968,19 +3881,8 @@ def main():
                             }
                         },
                         tooltip: {
-                            titleFont: { size: 15, family: 'Inter' },
-                            bodyFont: { size: 15, family: 'Inter' },
-                            backgroundColor: '#0f172a',
-                            titleColor: '#fff',
-                            bodyColor: '#e2e8f0',
-                            borderColor: 'rgba(255,255,255,0.1)',
-                            borderWidth: 1,
-                            padding: 12,
-                            callbacks: {
-                                label: function(context) {
-                                    return ` ${context.dataset.label}: ${formatNumber(context.raw)}`;
-                                }
-                            }
+                            enabled: false,
+                            external: externalTooltipHandler
                         }
                     }
                 }
@@ -4022,22 +3924,8 @@ def main():
                             display: false
                         },
                         tooltip: {
-                            titleFont: { size: 15, family: 'Inter' },
-                            bodyFont: { size: 15, family: 'Inter' },
-                            backgroundColor: '#0f172a',
-                            titleColor: '#fff',
-                            bodyColor: '#e2e8f0',
-                            borderColor: 'rgba(255,255,255,0.1)',
-                            borderWidth: 1,
-                            padding: 12,
-                            callbacks: {
-                                label: function(context) {
-                                    const val = context.raw;
-                                    const total = context.dataset.data.reduce((a, b) => a + b, 0);
-                                    const pct = ((val / total) * 100).toFixed(1);
-                                    return ` ${context.label}: ${formatNumber(val)} (${pct}%)`;
-                                }
-                            }
+                            enabled: false,
+                            external: externalTooltipHandler
                         }
                     }
                 }
@@ -4121,19 +4009,8 @@ def main():
                             }
                         },
                         tooltip: {
-                            titleFont: { size: 15, family: 'Inter' },
-                            bodyFont: { size: 15, family: 'Inter' },
-                            backgroundColor: '#0f172a',
-                            titleColor: '#fff',
-                            bodyColor: '#e2e8f0',
-                            borderColor: 'rgba(255,255,255,0.1)',
-                            borderWidth: 1,
-                            padding: 12,
-                            callbacks: {
-                                label: function(context) {
-                                    return ` ${context.dataset.label}: ${formatNumber(context.raw)}`;
-                                }
-                            }
+                            enabled: false,
+                            external: externalTooltipHandler
                         }
                     }
                 }
@@ -4192,19 +4069,8 @@ def main():
                             display: false
                         },
                         tooltip: {
-                            titleFont: { size: 15, family: 'Inter' },
-                            bodyFont: { size: 15, family: 'Inter' },
-                            backgroundColor: '#0f172a',
-                            titleColor: '#fff',
-                            bodyColor: '#e2e8f0',
-                            borderColor: 'rgba(255,255,255,0.1)',
-                            borderWidth: 1,
-                            padding: 12,
-                            callbacks: {
-                                label: function(context) {
-                                    return ` Выдано: ${formatNumber(context.raw.toFixed(2))} UZS`;
-                                }
-                            }
+                            enabled: false,
+                            external: externalTooltipHandler
                         }
                     }
                 }
@@ -4539,19 +4405,8 @@ def main():
                     plugins: {
                         legend: { display: false },
                         tooltip: {
-                            titleFont: { size: 15, family: 'Inter' },
-                            bodyFont: { size: 15, family: 'Inter' },
-                            backgroundColor: '#0f172a',
-                            titleColor: '#fff',
-                            bodyColor: '#e2e8f0',
-                            borderColor: 'rgba(255,255,255,0.1)',
-                            borderWidth: 1,
-                            padding: 10,
-                            callbacks: {
-                                label: function(context) {
-                                    return ` ${context.label}: ${context.raw.toFixed(2)}%`;
-                                }
-                            }
+                            enabled: false,
+                            external: externalTooltipHandler
                         }
                     }
                 }
@@ -4647,15 +4502,9 @@ def main():
                         plugins: {
                             legend: { display: false },
                             tooltip: {
-                            titleFont: { size: 15, family: 'Inter' },
-                            bodyFont: { size: 15, family: 'Inter' },
-                                backgroundColor: '#0f172a',
-                                titleColor: '#fff',
-                                bodyColor: '#e2e8f0',
-                                borderColor: 'rgba(255,255,255,0.1)',
-                                borderWidth: 1,
-                                padding: 10
-                            }
+                            enabled: false,
+                            external: externalTooltipHandler
+                        }
                         }
                     }
                 });
@@ -4705,22 +4554,8 @@ def main():
                             display: false
                         },
                         tooltip: {
-                            titleFont: { size: 15, family: 'Inter' },
-                            bodyFont: { size: 15, family: 'Inter' },
-                            backgroundColor: '#0f172a',
-                            titleColor: '#fff',
-                            bodyColor: '#e2e8f0',
-                            borderColor: 'rgba(255,255,255,0.1)',
-                            borderWidth: 1,
-                            padding: 12,
-                            callbacks: {
-                                label: function(context) {
-                                    const val = context.raw;
-                                    const total = context.dataset.data.reduce((a, b) => a + b, 0);
-                                    const pct = ((val / total) * 100).toFixed(1);
-                                    return ` ${context.label}: ${formatNumber(val)} (${pct}%)`;
-                                }
-                            }
+                            enabled: false,
+                            external: externalTooltipHandler
                         }
                     }
                 }
@@ -4790,20 +4625,8 @@ def main():
                             display: false
                         },
                         tooltip: {
-                            titleFont: { size: 15, family: 'Inter' },
-                            bodyFont: { size: 15, family: 'Inter' },
-                            backgroundColor: '#0f172a',
-                            titleColor: '#fff',
-                            bodyColor: '#e2e8f0',
-                            borderColor: 'rgba(255,255,255,0.1)',
-                            borderWidth: 1,
-                            padding: 12,
-                            callbacks: {
-                                label: function(context) {
-                                    const val = context.raw;
-                                    return ` ${context.label}: ${val.toFixed(1)}%`;
-                                }
-                            }
+                            enabled: false,
+                            external: externalTooltipHandler
                         }
                     }
                 }
@@ -4871,19 +4694,8 @@ def main():
                             }
                         },
                         tooltip: {
-                            titleFont: { size: 15, family: 'Inter' },
-                            bodyFont: { size: 15, family: 'Inter' },
-                            backgroundColor: '#0f172a',
-                            titleColor: '#fff',
-                            bodyColor: '#e2e8f0',
-                            borderColor: 'rgba(255,255,255,0.1)',
-                            borderWidth: 1,
-                            padding: 12,
-                            callbacks: {
-                                label: function(context) {
-                                    return ` ${context.dataset.label}: ${formatNumber(context.raw)} задач`;
-                                }
-                            }
+                            enabled: false,
+                            external: externalTooltipHandler
                         }
                     }
                 }
