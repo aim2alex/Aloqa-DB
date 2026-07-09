@@ -2265,8 +2265,8 @@ def main():
                             <canvas id="chart-jira-hours"></canvas>
                             <div class="doughnut-center-card" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); background: var(--card-bg); border: 1px solid var(--card-border); box-shadow: 0 8px 32px rgba(0,0,0,0.12); width: 150px; height: 150px; border-radius: 50%; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; pointer-events: none; z-index: 5;">
                                 <span style="font-size: 0.75rem; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.05em; font-weight: 600;">Всего</span>
-                                <span id="doughnut-jira-hours-center-value" style="font-size: 1.6rem; font-weight: 700; color: var(--text-primary); margin-top: 2px; line-height: 1;">0</span>
-                                <span style="font-size: 0.7rem; color: var(--text-secondary); margin-top: 2px;">часов</span>
+                                <span id="doughnut-jira-hours-center-value" style="font-size: 1.6rem; font-weight: 700; color: var(--text-primary); margin-top: 2px; line-height: 1;">100%</span>
+                                <span style="font-size: 0.7rem; color: var(--text-secondary); margin-top: 2px;">трудозатрат</span>
                             </div>
                         </div>
                         <div id="doughnut-jira-hours-legend" style="display: flex; flex-wrap: wrap; justify-content: center; gap: 8px 12px; width: 100%; max-height: 75px; overflow-y: auto; padding: 5px 10px;">
@@ -4059,7 +4059,7 @@ def main():
 
                 // Update Hours Chart
                 if (jiraHoursChart) {
-                    const hoursData = data.monthly_hours.map(h => {
+                    const rawHoursData = data.monthly_hours.map(h => {
                         const totalVal = h.values.reduce((a, b) => a + b, 0);
                         return {
                             name: h.name,
@@ -4067,10 +4067,18 @@ def main():
                         };
                     });
                     
-                    const totalHours = hoursData.reduce((sum, item) => sum + item.value, 0);
+                    const totalSum = rawHoursData.reduce((sum, item) => sum + item.value, 0);
+                    
+                    const hoursData = rawHoursData.map(item => {
+                        return {
+                            name: item.name,
+                            value: totalSum > 0 ? parseFloat(((item.value / totalSum) * 100).toFixed(2)) : 0
+                        };
+                    });
+                    
                     const centerValElement = document.getElementById('doughnut-jira-hours-center-value');
                     if (centerValElement) {
-                        centerValElement.innerText = formatNumber(totalHours);
+                        centerValElement.innerText = "100%";
                     }
                     
                     jiraHoursChart.data.labels = hoursData.map(item => item.name);
@@ -4082,10 +4090,11 @@ def main():
                     if (legendContainer) {
                         legendContainer.innerHTML = hoursData.map((item, idx) => {
                             const color = chartColors[(idx + 5) % chartColors.length];
+                            const valPct = item.value.toFixed(1);
                             return `
                             <div style="display: flex; align-items: center; gap: 6px; cursor: pointer; transition: opacity 0.2s; font-size: 11px;" onclick="toggleChartSlice('jiraHoursChart', ${idx}, this)" title="${item.name}">
                                 <span style="display: inline-block; width: 6px; height: 6px; border-radius: 50%; background-color: ${color}; flex-shrink: 0;"></span>
-                                <span style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 160px; color: var(--text-secondary);">${item.name}</span>
+                                <span style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 160px; color: var(--text-secondary);">${item.name}: ${valPct}%</span>
                             </div>`;
                         }).join('');
                     }
@@ -4188,8 +4197,7 @@ def main():
                 jiraHoursChart.destroy();
             }
             
-            // Sum values for each category across all months
-            const hoursData = monthlyHours.map((h, idx) => {
+            const rawHoursData = monthlyHours.map(h => {
                 const totalVal = h.values.reduce((a, b) => a + b, 0);
                 return {
                     name: h.name,
@@ -4197,10 +4205,18 @@ def main():
                 };
             });
             
-            const totalHours = hoursData.reduce((sum, item) => sum + item.value, 0);
+            const totalSum = rawHoursData.reduce((sum, item) => sum + item.value, 0);
+            
+            const hoursData = rawHoursData.map(item => {
+                return {
+                    name: item.name,
+                    value: totalSum > 0 ? parseFloat(((item.value / totalSum) * 100).toFixed(2)) : 0
+                };
+            });
+            
             const centerValElement = document.getElementById('doughnut-jira-hours-center-value');
             if (centerValElement) {
-                centerValElement.innerText = formatNumber(totalHours);
+                centerValElement.innerText = "100%";
             }
             
             jiraHoursChart = new Chart(ctx, {
@@ -4232,9 +4248,7 @@ def main():
                             callbacks: {
                                 label: function(context) {
                                     const val = context.raw;
-                                    const total = context.dataset.data.reduce((a, b) => a + b, 0);
-                                    const pct = ((val / total) * 100).toFixed(1);
-                                    return ` ${context.label}: ${formatNumber(val)} ч (${pct}%)`;
+                                    return ` ${context.label}: ${val.toFixed(1)}%`;
                                 }
                             }
                         }
@@ -4247,10 +4261,11 @@ def main():
             if (legendContainer) {
                 legendContainer.innerHTML = hoursData.map((item, idx) => {
                     const color = chartColors[(idx + 5) % chartColors.length];
+                    const valPct = item.value.toFixed(1);
                     return `
                     <div style="display: flex; align-items: center; gap: 6px; cursor: pointer; transition: opacity 0.2s; font-size: 11px;" onclick="toggleChartSlice('jiraHoursChart', ${idx}, this)" title="${item.name}">
                         <span style="display: inline-block; width: 6px; height: 6px; border-radius: 50%; background-color: ${color}; flex-shrink: 0;"></span>
-                        <span style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 160px; color: var(--text-secondary);">${item.name}</span>
+                        <span style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 160px; color: var(--text-secondary);">${item.name}: ${valPct}%</span>
                     </div>`;
                 }).join('');
             }
