@@ -2721,7 +2721,7 @@ def main():
                                 color: colors.textSecondary,
                                 padding: 15,
                                 font: {
-                                    size: 11,
+                                    size: 14,
                                     family: 'Inter'
                                 },
                                 boxWidth: 12,
@@ -2797,7 +2797,7 @@ def main():
                                 color: colors.textSecondary,
                                 padding: 15,
                                 font: {
-                                    size: 11,
+                                    size: 14,
                                     family: 'Inter'
                                 },
                                 boxWidth: 12,
@@ -2886,7 +2886,7 @@ def main():
                                 font: {
                                     family: 'Inter',
                                     weight: '500',
-                                    size: 11
+                                    size: 14
                                 }
                             }
                         }
@@ -2973,7 +2973,7 @@ def main():
                                 font: {
                                     family: 'Inter',
                                     weight: '500',
-                                    size: 11
+                                    size: 14
                                 }
                             }
                         }
@@ -3056,7 +3056,7 @@ def main():
                                 font: {
                                     family: 'Inter',
                                     weight: '500',
-                                    size: 11
+                                    size: 14
                                 }
                             }
                         },
@@ -3082,7 +3082,7 @@ def main():
                                 color: colors.textSecondary,
                                 font: {
                                     family: 'Inter',
-                                    size: 11
+                                    size: 14
                                 },
                                 boxWidth: 12,
                                 usePointStyle: true,
@@ -3542,7 +3542,7 @@ def main():
                             grid: { display: false },
                             ticks: {
                                 color: colors.textPrimary,
-                                font: { family: 'Inter', weight: '500', size: 11 }
+                                font: { family: 'Inter', weight: '500', size: 14 }
                             }
                         }
                     },
@@ -3884,7 +3884,7 @@ def main():
                 legendContainer.innerHTML = productsData.map((item, idx) => {
                     const color = chartColors[idx % chartColors.length];
                     return `
-                    <div style="display: flex; align-items: center; gap: 6px; cursor: pointer; transition: opacity 0.2s; font-size: 11px;" onclick="toggleChartSlice('loansProductsChart', ${idx}, this)" title="${item.name}">
+                    <div style="display: flex; align-items: center; gap: 6px; cursor: pointer; transition: opacity 0.2s; font-size: 14px;" onclick="toggleChartSlice('loansProductsChart', ${idx}, this)" title="${item.name}">
                         <span style="display: inline-block; width: 6px; height: 6px; border-radius: 50%; background-color: ${color}; flex-shrink: 0;"></span>
                         <span style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 160px; color: var(--text-secondary);">${item.name}</span>
                     </div>`;
@@ -4082,7 +4082,7 @@ def main():
                             grid: { display: false },
                             ticks: {
                                 color: colors.textSecondary,
-                                font: { size: 11, family: 'Inter', weight: '500' }
+                                font: { size: 14, family: 'Inter', weight: '500' }
                             }
                         }
                     },
@@ -4155,7 +4155,7 @@ def main():
                             grid: { display: false },
                             ticks: {
                                 color: colors.textSecondary,
-                                font: { size: 11, family: 'Inter', weight: '500' }
+                                font: { size: 14, family: 'Inter', weight: '500' }
                             }
                         }
                     },
@@ -4272,7 +4272,7 @@ def main():
                         legendContainer.innerHTML = categoriesData.map((item, idx) => {
                             const color = chartColors[idx % chartColors.length];
                             return `
-                            <div style="display: flex; align-items: center; gap: 6px; cursor: pointer; transition: opacity 0.2s; font-size: 11px;" onclick="toggleChartSlice('jiraCategoriesChart', ${idx}, this)" title="${item.name}">
+                            <div style="display: flex; align-items: center; gap: 6px; cursor: pointer; transition: opacity 0.2s; font-size: 14px;" onclick="toggleChartSlice('jiraCategoriesChart', ${idx}, this)" title="${item.name}">
                                 <span style="display: inline-block; width: 6px; height: 6px; border-radius: 50%; background-color: ${color}; flex-shrink: 0;"></span>
                                 <span style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 160px; color: var(--text-secondary);">${item.name}</span>
                             </div>`;
@@ -4315,7 +4315,7 @@ def main():
                             const color = chartColors[(idx + 5) % chartColors.length];
                             const valPct = item.value.toFixed(1);
                             return `
-                            <div style="display: flex; align-items: center; gap: 6px; cursor: pointer; transition: opacity 0.2s; font-size: 11px;" onclick="toggleChartSlice('jiraHoursChart', ${idx}, this)" title="${item.name}">
+                            <div style="display: flex; align-items: center; gap: 6px; cursor: pointer; transition: opacity 0.2s; font-size: 14px;" onclick="toggleChartSlice('jiraHoursChart', ${idx}, this)" title="${item.name}">
                                 <span style="display: inline-block; width: 6px; height: 6px; border-radius: 50%; background-color: ${color}; flex-shrink: 0;"></span>
                                 <span style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 160px; color: var(--text-secondary);">${item.name}: ${valPct}%</span>
                             </div>`;
@@ -4609,7 +4609,7 @@ def main():
                             y: {
                                 stacked: true,
                                 grid: { display: false },
-                                ticks: { color: axisColors.textSecondary, font: { size: 11 } }
+                                ticks: { color: axisColors.textSecondary, font: { size: 14 } }
                             }
                         },
                         plugins: {
@@ -4696,7 +4696,7 @@ def main():
                 legendContainer.innerHTML = categoriesData.map((item, idx) => {
                     const color = chartColors[idx % chartColors.length];
                     return `
-                    <div style="display: flex; align-items: center; gap: 6px; cursor: pointer; transition: opacity 0.2s; font-size: 11px;" onclick="toggleChartSlice('jiraCategoriesChart', ${idx}, this)" title="${item.name}">
+                    <div style="display: flex; align-items: center; gap: 6px; cursor: pointer; transition: opacity 0.2s; font-size: 14px;" onclick="toggleChartSlice('jiraCategoriesChart', ${idx}, this)" title="${item.name}">
                         <span style="display: inline-block; width: 6px; height: 6px; border-radius: 50%; background-color: ${color}; flex-shrink: 0;"></span>
                         <span style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 160px; color: var(--text-secondary);">${item.name}</span>
                     </div>`;
@@ -4778,7 +4778,7 @@ def main():
                     const color = chartColors[(idx + 5) % chartColors.length];
                     const valPct = item.value.toFixed(1);
                     return `
-                    <div style="display: flex; align-items: center; gap: 6px; cursor: pointer; transition: opacity 0.2s; font-size: 11px;" onclick="toggleChartSlice('jiraHoursChart', ${idx}, this)" title="${item.name}">
+                    <div style="display: flex; align-items: center; gap: 6px; cursor: pointer; transition: opacity 0.2s; font-size: 14px;" onclick="toggleChartSlice('jiraHoursChart', ${idx}, this)" title="${item.name}">
                         <span style="display: inline-block; width: 6px; height: 6px; border-radius: 50%; background-color: ${color}; flex-shrink: 0;"></span>
                         <span style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 160px; color: var(--text-secondary);">${item.name}: ${valPct}%</span>
                     </div>`;
