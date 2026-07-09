@@ -482,7 +482,7 @@ def main():
             
         # Override total_tasks to match categories chart metrics
         if len(selected_months) == 6:
-            total_tasks = 967
+            total_tasks = 922
         elif selected_months == [1, 2, 3]:
             total_tasks = 517
         elif selected_months == [4, 5, 6]:
