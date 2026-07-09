@@ -3938,7 +3938,7 @@ def main():
                             position: 'bottom',
                             labels: {
                                 color: colors.textSecondary,
-                                font: { size: 10, family: 'Inter' },
+                                font: { size: 16, family: 'Inter' },
                                 boxWidth: 10,
                                 padding: 15,
                                 usePointStyle: true,
