@@ -4075,6 +4075,11 @@ def main():
             if (activeMainTab === tabName) return;
             activeMainTab = tabName;
 
+            // Reset scroll immediately to prevent viewport lag and empty space below footer
+            window.scrollTo(0, 0);
+            document.documentElement.scrollTop = 0;
+            document.body.scrollTop = 0;
+
             // Toggle main tab buttons active class
             document.getElementById('main-tab-loans').classList.toggle('active', tabName === 'loans');
             document.getElementById('main-tab-callcenter').classList.toggle('active', tabName === 'callcenter');
@@ -4121,12 +4126,10 @@ def main():
                 updateDashboard();
             }
 
-            // Scroll to the top of the page after DOM layout has settled
-            setTimeout(() => {
-                window.scrollTo(0, 0);
-                document.documentElement.scrollTop = 0;
-                document.body.scrollTop = 0;
-            }, 50);
+            // Ensure scroll is reset immediately after rendering settles
+            window.scrollTo(0, 0);
+            document.documentElement.scrollTop = 0;
+            document.body.scrollTop = 0;
         }
 
         function renderCardsDashboard() {
