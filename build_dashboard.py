@@ -669,13 +669,14 @@ def main():
 
         q1_months = [1, 2, 3]
         q2_months = [4, 5, 6]
-        all_months = [1, 2, 3, 4, 5, 6, 7]
+        all_months = [1, 2, 3, 4, 5, 6]
 
+        all_kassa = df_kassa[df_kassa['DOC_DELIVERY_DATE'].dt.month.isin(all_months)]
         q1_kassa = df_kassa[df_kassa['DOC_DELIVERY_DATE'].dt.month.isin(q1_months)]
         q2_kassa = df_kassa[df_kassa['DOC_DELIVERY_DATE'].dt.month.isin(q2_months)]
 
         kassa_stats = {
-            'all': get_kassa_period_data(df_kassa, all_months),
+            'all': get_kassa_period_data(all_kassa, all_months),
             'q1': get_kassa_period_data(q1_kassa, q1_months),
             'q2': get_kassa_period_data(q2_kassa, q2_months)
         }
