@@ -991,7 +991,7 @@ def main():
             padding: 0.6rem 1.5rem;
             font-family: 'Inter', sans-serif;
             font-weight: 600;
-            font-size: 16px;
+            font-size: clamp(12px, 0.9vw, 16px);
             border-radius: 9999px;
             cursor: pointer;
             transition: all var(--transition-speed) cubic-bezier(0.4, 0, 0.2, 1);
@@ -1746,7 +1746,7 @@ def main():
                     <button class="main-tab-btn active" id="main-tab-jira" onclick="switchMainTab('jira')">Общие показатели Jira</button>
                     <button class="main-tab-btn" id="main-tab-loans" onclick="switchMainTab('loans')">Кредиты</button>
                     <button class="main-tab-btn" id="main-tab-callcenter" onclick="switchMainTab('callcenter')">Call-центр</button>
-                    <button class="main-tab-btn" id="main-tab-risks" onclick="switchMainTab('risks')">События операционных рисков</button>
+                    <button class="main-tab-btn" id="main-tab-risks" onclick="switchMainTab('risks')">Риски</button>
                     <button class="main-tab-btn" id="main-tab-cards" onclick="switchMainTab('cards')">Карты</button>
                     <button class="main-tab-btn" id="main-tab-cardsv2" onclick="switchMainTab('cardsv2')">Карты v2</button>
                     <button class="main-tab-btn" id="main-tab-scoring" onclick="switchMainTab('scoring')">Скоринг</button>
