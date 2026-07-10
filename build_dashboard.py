@@ -4372,12 +4372,12 @@ def main():
             const data = dashboardData.kassa[activePeriod];
             if (!data) return;
 
-            animateValue('kpi-kassa-bags-value', 0, data.bags, 800, ' шт.');
-            animateValue('kpi-kassa-blocks-value', 0, data.blocks, 800, ' шт.');
-            animateValue('kpi-kassa-uzs-value', 0, data.sum_uzs, 800, ' сум');
-            animateValue('kpi-kassa-usd-value', 0, data.sum_usd, 800, '', '$ ');
-            animateValue('kpi-kassa-eur-value', 0, data.sum_eur, 800, '', '€ ');
-            animateValue('kpi-kassa-rub-value', 0, data.sum_rub, 800, ' ₽');
+            animateValue('kpi-kassa-bags-value', 0, data.bags, 800);
+            animateValue('kpi-kassa-blocks-value', 0, data.blocks, 800);
+            animateValue('kpi-kassa-uzs-value', 0, data.sum_uzs, 800);
+            animateValue('kpi-kassa-usd-value', 0, data.sum_usd, 800);
+            animateValue('kpi-kassa-eur-value', 0, data.sum_eur, 800);
+            animateValue('kpi-kassa-rub-value', 0, data.sum_rub, 800);
         }
 
         function renderRiskDashboard() {
