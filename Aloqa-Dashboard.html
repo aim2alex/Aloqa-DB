@@ -1781,68 +1781,65 @@
                 </div>
             </div>
 
-            <!-- Row 1: Top 4 products with highest indicators -->
+            <!-- Row 1: Aggregated metrics cards -->
             <section class="kpi-grid" id="scoring-top-kpis">
-                <!-- Top 1 Product -->
+                <!-- Total Applications Scored -->
                 <div class="card card-mc-total">
                     <div class="card-header">
-                        <span class="card-title" id="kpi-scoring-top1-title" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: calc(100% - 40px);" title="Топ 1 продукт">Топ 1 продукт</span>
+                        <span class="card-title">Всего отскорено заявок</span>
                         <div class="card-icon" style="background: rgba(59, 130, 246, 0.15); color: #3b82f6;">
-                            <span style="font-weight: 700; font-size: 1.1rem;">#1</span>
+                            <svg class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                                <polyline points="14 2 14 8 20 8"></polyline>
+                                <line x1="16" y1="13" x2="8" y2="13"></line>
+                                <line x1="16" y1="17" x2="8" y2="17"></line>
+                                <polyline points="10 9 9 9 8 9"></polyline>
+                            </svg>
                         </div>
                     </div>
                     <div class="card-body">
-                        <span class="card-value" id="kpi-scoring-top1-value">0</span>
+                        <span class="card-value" id="kpi-scoring-total-value">0</span>
                         <div class="card-meta">
-                            <span id="kpi-scoring-top1-desc">Наивысший показатель</span>
+                            <span>Зарегистрированные заявки</span>
                         </div>
                     </div>
                 </div>
 
-                <!-- Top 2 Product -->
+                <!-- Average Scored per Month -->
                 <div class="card card-mc-completed">
                     <div class="card-header">
-                        <span class="card-title" id="kpi-scoring-top2-title" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: calc(100% - 40px);" title="Топ 2 продукт">Топ 2 продукт</span>
+                        <span class="card-title">В среднем за месяц</span>
                         <div class="card-icon" style="background: rgba(16, 185, 129, 0.15); color: #10b981;">
-                            <span style="font-weight: 700; font-size: 1.1rem;">#2</span>
+                            <svg class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <circle cx="12" cy="12" r="10"></circle>
+                                <polyline points="12 6 12 12 16 14"></polyline>
+                            </svg>
                         </div>
                     </div>
                     <div class="card-body">
-                        <span class="card-value" id="kpi-scoring-top2-value">0</span>
+                        <span class="card-value" id="kpi-scoring-average-value">0</span>
                         <div class="card-meta">
-                            <span id="kpi-scoring-top2-desc">Второй показатель</span>
+                            <span>Среднемесячный показатель</span>
                         </div>
                     </div>
                 </div>
 
-                <!-- Top 3 Product -->
+                <!-- Total Number of Models -->
                 <div class="card card-loans-yellow">
                     <div class="card-header">
-                        <span class="card-title" id="kpi-scoring-top3-title" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: calc(100% - 40px);" title="Топ 3 продукт">Топ 3 продукт</span>
+                        <span class="card-title">Общее кол-во моделей</span>
                         <div class="card-icon" style="background: rgba(245, 158, 11, 0.15); color: #f59e0b;">
-                            <span style="font-weight: 700; font-size: 1.1rem;">#3</span>
+                            <svg class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <ellipse cx="12" cy="5" rx="9" ry="3"></ellipse>
+                                <path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"></path>
+                                <path d="M3 12c0 1.66 4 3 9 3s9-1.34 9-3"></path>
+                            </svg>
                         </div>
                     </div>
                     <div class="card-body">
-                        <span class="card-value" id="kpi-scoring-top3-value">0</span>
+                        <span class="card-value" id="kpi-scoring-models-value">0</span>
                         <div class="card-meta">
-                            <span id="kpi-scoring-top3-desc">Третий показатель</span>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Top 4 Product -->
-                <div class="card card-mc-refused">
-                    <div class="card-header">
-                        <span class="card-title" id="kpi-scoring-top4-title" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: calc(100% - 40px);" title="Топ 4 продукт">Топ 4 продукт</span>
-                        <div class="card-icon" style="background: rgba(239, 68, 68, 0.15); color: #ef4444;">
-                            <span style="font-weight: 700; font-size: 1.1rem;">#4</span>
-                        </div>
-                    </div>
-                    <div class="card-body">
-                        <span class="card-value" id="kpi-scoring-top4-value">0</span>
-                        <div class="card-meta">
-                            <span id="kpi-scoring-top4-desc">Четвертый показатель</span>
+                            <span>Активные скоринговые модели</span>
                         </div>
                     </div>
                 </div>
@@ -9638,28 +9635,18 @@
             const periodData = dashboardData.scoring[activePeriod];
             if (!periodData) return;
 
-            // 1. Render Top 4 KPI Blocks
+            // 1. Calculate aggregated metrics
             const products = periodData.products;
-            
-            // Top 1
-            const top1 = products[0] || { product_code: '-', value: 0 };
-            document.getElementById('kpi-scoring-top1-title').innerText = top1.product_code;
-            animateValue('kpi-scoring-top1-value', 0, top1.value, 800);
-            
-            // Top 2
-            const top2 = products[1] || { product_code: '-', value: 0 };
-            document.getElementById('kpi-scoring-top2-title').innerText = top2.product_code;
-            animateValue('kpi-scoring-top2-value', 0, top2.value, 800);
-            
-            // Top 3
-            const top3 = products[2] || { product_code: '-', value: 0 };
-            document.getElementById('kpi-scoring-top3-title').innerText = top3.product_code;
-            animateValue('kpi-scoring-top3-value', 0, top3.value, 800);
-            
-            // Top 4
-            const top4 = products[3] || { product_code: '-', value: 0 };
-            document.getElementById('kpi-scoring-top4-title').innerText = top4.product_code;
-            animateValue('kpi-scoring-top4-value', 0, top4.value, 800);
+            const months = periodData.months;
+
+            const totalScored = products.reduce((sum, p) => sum + p.value, 0);
+            const avgPerMonth = months.length > 0 ? Math.round(totalScored / months.length) : 0;
+            const totalModels = products.filter(p => p.value > 0).length;
+
+            // 2. Animate and display metrics
+            animateValue('kpi-scoring-total-value', 0, totalScored, 800);
+            animateValue('kpi-scoring-average-value', 0, avgPerMonth, 800);
+            animateValue('kpi-scoring-models-value', 0, totalModels, 800);
 
             // 2. Render Table
             renderScoringTable();
