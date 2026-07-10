@@ -409,6 +409,7 @@
         .card-kassa-usd::before { background: linear-gradient(90deg, #6366f1, #818cf8); }
         .card-kassa-eur::before { background: linear-gradient(90deg, #06b6d4, #22d3ee); }
         .card-kassa-rub::before { background: linear-gradient(90deg, #ef4444, #f87171); }
+        .card-kassa-sent::before { background: linear-gradient(90deg, #8b5cf6, #ec4899); }
 
         .card-total-risks::before { background: linear-gradient(90deg, #8b5cf6, #3b82f6); }
         .card-open-risks::before { background: linear-gradient(90deg, #f59e0b, #eab308); }
@@ -1954,6 +1955,25 @@
                     </div>
                 </div>
 
+                <!-- Bags Sent Count -->
+                <div class="card card-kassa-sent">
+                    <div class="card-header">
+                        <span class="card-title">Отправлено сумок</span>
+                        <div class="card-icon" style="background: rgba(139, 92, 246, 0.15); color: #8b5cf6;">
+                            <svg class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <line x1="22" y1="2" x2="11" y2="13"></line>
+                                <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+                            </svg>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <span class="card-value" id="kpi-kassa-sent-bags-value">0</span>
+                        <div class="card-meta">
+                            <span>Кассы ЦКУ / РЦКУ</span>
+                        </div>
+                    </div>
+                </div>
+
                 <!-- Blocks Count -->
                 <div class="card card-mc-completed">
                     <div class="card-header">
@@ -2042,6 +2062,18 @@
                         <div class="card-meta">
                             <span>Российский рубль</span>
                         </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Row 3: Vertical Grouped Bar Chart -->
+            <section class="charts-row" style="margin-top: 2rem;">
+                <div class="card chart-card" style="padding: 1.5rem 2rem;">
+                    <div class="chart-card-header" style="margin-bottom: 1rem;">
+                        <span class="chart-card-title">Динамика отправки сумок по направлениям</span>
+                    </div>
+                    <div class="chart-container-bar" style="height: 380px; position: relative; margin-top: 1rem;">
+                        <canvas id="chart-kassa-sent-bags"></canvas>
                     </div>
                 </div>
             </section>
@@ -8574,27 +8606,87 @@
   "kassa": {
     "all": {
       "bags": 779,
+      "sent_bags": 779,
       "blocks": 16791,
       "sum_uzs": 650668011600.0,
       "sum_usd": 121259195.0,
       "sum_eur": 8173842.4,
-      "sum_rub": 16167250.0
+      "sum_rub": 16167250.0,
+      "months": [
+        "Январь",
+        "Февраль",
+        "Март",
+        "Апрель",
+        "Май",
+        "Июнь",
+        "Июль"
+      ],
+      "type1_data": [
+        72,
+        103,
+        94,
+        58,
+        49,
+        66,
+        21
+      ],
+      "type2_data": [
+        42,
+        60,
+        60,
+        36,
+        38,
+        63,
+        17
+      ]
     },
     "q1": {
       "bags": 431,
+      "sent_bags": 431,
       "blocks": 9574,
       "sum_uzs": 360521935600.0,
       "sum_usd": 60834690.0,
       "sum_eur": 4076705.0,
-      "sum_rub": 10118080.0
+      "sum_rub": 10118080.0,
+      "months": [
+        "Январь",
+        "Февраль",
+        "Март"
+      ],
+      "type1_data": [
+        72,
+        103,
+        94
+      ],
+      "type2_data": [
+        42,
+        60,
+        60
+      ]
     },
     "q2": {
       "bags": 310,
+      "sent_bags": 310,
       "blocks": 6462,
       "sum_uzs": 254886510000.0,
       "sum_usd": 54780809.0,
       "sum_eur": 3634367.4,
-      "sum_rub": 5852170.0
+      "sum_rub": 5852170.0,
+      "months": [
+        "Апрель",
+        "Май",
+        "Июнь"
+      ],
+      "type1_data": [
+        58,
+        49,
+        66
+      ],
+      "type2_data": [
+        36,
+        38,
+        63
+      ]
     }
   }
 };
@@ -8682,6 +8774,9 @@
         let cardsIssuedChart = null;
         let cardsBalanceChart = null;
         let cardsCreditChart = null;
+
+        // Kassa Chart instances
+        let kassaSentBagsChart = null;
 
         // Chart instances
         let typesChart = null;
@@ -9316,6 +9411,7 @@
             updateRiskChartsTheme();
             updateLoansChartsTheme();
             updateJiraChartsTheme();
+            updateKassaChartsTheme();
         }
 
         // --- Main Tab Switcher and Risks Dashboard Rendering Logic ---
@@ -9707,11 +9803,87 @@
             if (!data) return;
 
             animateValue('kpi-kassa-bags-value', 0, data.bags, 800);
+            animateValue('kpi-kassa-sent-bags-value', 0, data.sent_bags, 800);
             animateValue('kpi-kassa-blocks-value', 0, data.blocks, 800);
             animateValue('kpi-kassa-uzs-value', 0, data.sum_uzs, 800);
             animateValue('kpi-kassa-usd-value', 0, data.sum_usd, 800);
             animateValue('kpi-kassa-eur-value', 0, data.sum_eur, 800);
             animateValue('kpi-kassa-rub-value', 0, data.sum_rub, 800);
+
+            // Render vertical grouped bar chart
+            const themeColors = getThemeColors();
+            const ctx = document.getElementById('chart-kassa-sent-bags').getContext('2d');
+            if (kassaSentBagsChart) {
+                kassaSentBagsChart.destroy();
+            }
+
+            kassaSentBagsChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: data.months,
+                    datasets: [
+                        {
+                            label: 'Передача из ЦКУ в РЦКУ (удалённая касса)',
+                            data: data.type1_data,
+                            backgroundColor: '#8b5cf6',
+                            borderColor: '#8b5cf6',
+                            borderWidth: 1,
+                            borderRadius: 6,
+                            barPercentage: 0.6,
+                            categoryPercentage: 0.6
+                        },
+                        {
+                            label: 'Передача из РЦКУ в ЦКУ',
+                            data: data.type2_data,
+                            backgroundColor: '#ec4899',
+                            borderColor: '#ec4899',
+                            borderWidth: 1,
+                            borderRadius: 6,
+                            barPercentage: 0.6,
+                            categoryPercentage: 0.6
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        x: {
+                            grid: { display: false },
+                            ticks: { color: themeColors.textSecondary, font: { size: 14 } }
+                        },
+                        y: {
+                            grid: { color: themeColors.gridColor },
+                            ticks: { color: themeColors.textSecondary, font: { size: 14 } }
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            position: 'bottom',
+                            labels: {
+                                color: themeColors.textSecondary,
+                                font: { size: 14 },
+                                padding: 20
+                            }
+                        },
+                        tooltip: {
+                            enabled: false,
+                            external: externalTooltipHandler
+                        }
+                    }
+                }
+            });
+        }
+
+        function updateKassaChartsTheme() {
+            const colors = getThemeColors();
+            if (kassaSentBagsChart) {
+                kassaSentBagsChart.options.scales.x.ticks.color = colors.textSecondary;
+                kassaSentBagsChart.options.scales.y.ticks.color = colors.textSecondary;
+                kassaSentBagsChart.options.scales.y.grid.color = colors.gridColor;
+                kassaSentBagsChart.options.plugins.legend.labels.color = colors.textSecondary;
+                kassaSentBagsChart.update();
+            }
         }
 
         function renderRiskDashboard() {

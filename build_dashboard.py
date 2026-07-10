@@ -594,7 +594,7 @@ def main():
         df_kassa = pd.read_excel("Kassa_doc.xlsx", sheet_name="SQL Results")
         df_kassa['DOC_DELIVERY_DATE'] = pd.to_datetime(df_kassa['DOC_DELIVERY_DATE'])
 
-        def get_kassa_period_data(df_period):
+        def get_kassa_period_data(df_period, months_to_include):
             bags = len(df_period)
             
             def get_sum(col):
@@ -614,29 +614,58 @@ def main():
             sum_eur = get_sum('COLLECTION_DETAIL_AMOUNT_EUR')
             sum_rub = get_sum('COLLECTION_DETAIL_AMOUNT_RUB')
 
+            # Calculate "Отправлено сумок"
+            type1 = 'UZ. Передача из ЦКУ в РЦКУ (удалённая касса)'
+            type2 = 'UZ. Передача из РЦКУ в ЦКУ'
+            sent_bags = len(df_period[df_period['ORDDSC_NAME'].isin([type1, type2])])
+
+            # Calculate monthly values for the chart
+            months_names = {
+                1: 'Январь', 2: 'Февраль', 3: 'Март',
+                4: 'Апрель', 5: 'Май', 6: 'Июнь', 7: 'Июль'
+            }
+            
+            chart_months = []
+            t1_counts = []
+            t2_counts = []
+            
+            for m in months_to_include:
+                df_m = df_period[df_period['DOC_DELIVERY_DATE'].dt.month == m]
+                chart_months.append(months_names[m])
+                t1_counts.append(len(df_m[df_m['ORDDSC_NAME'] == type1]))
+                t2_counts.append(len(df_m[df_m['ORDDSC_NAME'] == type2]))
+
             return {
                 'bags': int(bags),
+                'sent_bags': int(sent_bags),
                 'blocks': int(blocks),
                 'sum_uzs': float(sum_uzs),
                 'sum_usd': float(sum_usd),
                 'sum_eur': float(sum_eur),
-                'sum_rub': float(sum_rub)
+                'sum_rub': float(sum_rub),
+                'months': chart_months,
+                'type1_data': t1_counts,
+                'type2_data': t2_counts
             }
 
-        q1_kassa = df_kassa[(df_kassa['DOC_DELIVERY_DATE'] >= '2026-01-01') & (df_kassa['DOC_DELIVERY_DATE'] <= '2026-03-31')]
-        q2_kassa = df_kassa[(df_kassa['DOC_DELIVERY_DATE'] >= '2026-04-01') & (df_kassa['DOC_DELIVERY_DATE'] <= '2026-06-30')]
+        q1_months = [1, 2, 3]
+        q2_months = [4, 5, 6]
+        all_months = [1, 2, 3, 4, 5, 6, 7]
+
+        q1_kassa = df_kassa[df_kassa['DOC_DELIVERY_DATE'].dt.month.isin(q1_months)]
+        q2_kassa = df_kassa[df_kassa['DOC_DELIVERY_DATE'].dt.month.isin(q2_months)]
 
         kassa_stats = {
-            'all': get_kassa_period_data(df_kassa),
-            'q1': get_kassa_period_data(q1_kassa),
-            'q2': get_kassa_period_data(q2_kassa)
+            'all': get_kassa_period_data(df_kassa, all_months),
+            'q1': get_kassa_period_data(q1_kassa, q1_months),
+            'q2': get_kassa_period_data(q2_kassa, q2_months)
         }
     except Exception as e:
         print(f"Error parsing Kassa_doc.xlsx: {e}")
         kassa_stats = {
-            'all': {'bags': 0, 'blocks': 0, 'sum_uzs': 0.0, 'sum_usd': 0.0, 'sum_eur': 0.0, 'sum_rub': 0.0},
-            'q1': {'bags': 0, 'blocks': 0, 'sum_uzs': 0.0, 'sum_usd': 0.0, 'sum_eur': 0.0, 'sum_rub': 0.0},
-            'q2': {'bags': 0, 'blocks': 0, 'sum_uzs': 0.0, 'sum_usd': 0.0, 'sum_eur': 0.0, 'sum_rub': 0.0}
+            'all': {'bags': 0, 'sent_bags': 0, 'blocks': 0, 'sum_uzs': 0.0, 'sum_usd': 0.0, 'sum_eur': 0.0, 'sum_rub': 0.0, 'months': [], 'type1_data': [], 'type2_data': []},
+            'q1': {'bags': 0, 'sent_bags': 0, 'blocks': 0, 'sum_uzs': 0.0, 'sum_usd': 0.0, 'sum_eur': 0.0, 'sum_rub': 0.0, 'months': [], 'type1_data': [], 'type2_data': []},
+            'q2': {'bags': 0, 'sent_bags': 0, 'blocks': 0, 'sum_uzs': 0.0, 'sum_usd': 0.0, 'sum_eur': 0.0, 'sum_rub': 0.0, 'months': [], 'type1_data': [], 'type2_data': []}
         }
 
     print("Reading and aggregating Jira data...")
@@ -1155,6 +1184,7 @@ def main():
         .card-kassa-usd::before { background: linear-gradient(90deg, #6366f1, #818cf8); }
         .card-kassa-eur::before { background: linear-gradient(90deg, #06b6d4, #22d3ee); }
         .card-kassa-rub::before { background: linear-gradient(90deg, #ef4444, #f87171); }
+        .card-kassa-sent::before { background: linear-gradient(90deg, #8b5cf6, #ec4899); }
 
         .card-total-risks::before { background: linear-gradient(90deg, #8b5cf6, #3b82f6); }
         .card-open-risks::before { background: linear-gradient(90deg, #f59e0b, #eab308); }
@@ -2700,6 +2730,25 @@ def main():
                     </div>
                 </div>
 
+                <!-- Bags Sent Count -->
+                <div class="card card-kassa-sent">
+                    <div class="card-header">
+                        <span class="card-title">Отправлено сумок</span>
+                        <div class="card-icon" style="background: rgba(139, 92, 246, 0.15); color: #8b5cf6;">
+                            <svg class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <line x1="22" y1="2" x2="11" y2="13"></line>
+                                <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+                            </svg>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <span class="card-value" id="kpi-kassa-sent-bags-value">0</span>
+                        <div class="card-meta">
+                            <span>Кассы ЦКУ / РЦКУ</span>
+                        </div>
+                    </div>
+                </div>
+
                 <!-- Blocks Count -->
                 <div class="card card-mc-completed">
                     <div class="card-header">
@@ -2788,6 +2837,18 @@ def main():
                         <div class="card-meta">
                             <span>Российский рубль</span>
                         </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Row 3: Vertical Grouped Bar Chart -->
+            <section class="charts-row" style="margin-top: 2rem;">
+                <div class="card chart-card" style="padding: 1.5rem 2rem;">
+                    <div class="chart-card-header" style="margin-bottom: 1rem;">
+                        <span class="chart-card-title">Динамика отправки сумок по направлениям</span>
+                    </div>
+                    <div class="chart-container-bar" style="height: 380px; position: relative; margin-top: 1rem;">
+                        <canvas id="chart-kassa-sent-bags"></canvas>
                     </div>
                 </div>
             </section>
@@ -3352,6 +3413,9 @@ def main():
         let cardsIssuedChart = null;
         let cardsBalanceChart = null;
         let cardsCreditChart = null;
+
+        // Kassa Chart instances
+        let kassaSentBagsChart = null;
 
         // Chart instances
         let typesChart = null;
@@ -3986,6 +4050,7 @@ def main():
             updateRiskChartsTheme();
             updateLoansChartsTheme();
             updateJiraChartsTheme();
+            updateKassaChartsTheme();
         }
 
         // --- Main Tab Switcher and Risks Dashboard Rendering Logic ---
@@ -4377,11 +4442,87 @@ def main():
             if (!data) return;
 
             animateValue('kpi-kassa-bags-value', 0, data.bags, 800);
+            animateValue('kpi-kassa-sent-bags-value', 0, data.sent_bags, 800);
             animateValue('kpi-kassa-blocks-value', 0, data.blocks, 800);
             animateValue('kpi-kassa-uzs-value', 0, data.sum_uzs, 800);
             animateValue('kpi-kassa-usd-value', 0, data.sum_usd, 800);
             animateValue('kpi-kassa-eur-value', 0, data.sum_eur, 800);
             animateValue('kpi-kassa-rub-value', 0, data.sum_rub, 800);
+
+            // Render vertical grouped bar chart
+            const themeColors = getThemeColors();
+            const ctx = document.getElementById('chart-kassa-sent-bags').getContext('2d');
+            if (kassaSentBagsChart) {
+                kassaSentBagsChart.destroy();
+            }
+
+            kassaSentBagsChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: data.months,
+                    datasets: [
+                        {
+                            label: 'Передача из ЦКУ в РЦКУ (удалённая касса)',
+                            data: data.type1_data,
+                            backgroundColor: '#8b5cf6',
+                            borderColor: '#8b5cf6',
+                            borderWidth: 1,
+                            borderRadius: 6,
+                            barPercentage: 0.6,
+                            categoryPercentage: 0.6
+                        },
+                        {
+                            label: 'Передача из РЦКУ в ЦКУ',
+                            data: data.type2_data,
+                            backgroundColor: '#ec4899',
+                            borderColor: '#ec4899',
+                            borderWidth: 1,
+                            borderRadius: 6,
+                            barPercentage: 0.6,
+                            categoryPercentage: 0.6
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        x: {
+                            grid: { display: false },
+                            ticks: { color: themeColors.textSecondary, font: { size: 14 } }
+                        },
+                        y: {
+                            grid: { color: themeColors.gridColor },
+                            ticks: { color: themeColors.textSecondary, font: { size: 14 } }
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            position: 'bottom',
+                            labels: {
+                                color: themeColors.textSecondary,
+                                font: { size: 14 },
+                                padding: 20
+                            }
+                        },
+                        tooltip: {
+                            enabled: false,
+                            external: externalTooltipHandler
+                        }
+                    }
+                }
+            });
+        }
+
+        function updateKassaChartsTheme() {
+            const colors = getThemeColors();
+            if (kassaSentBagsChart) {
+                kassaSentBagsChart.options.scales.x.ticks.color = colors.textSecondary;
+                kassaSentBagsChart.options.scales.y.ticks.color = colors.textSecondary;
+                kassaSentBagsChart.options.scales.y.grid.color = colors.gridColor;
+                kassaSentBagsChart.options.plugins.legend.labels.color = colors.textSecondary;
+                kassaSentBagsChart.update();
+            }
         }
 
         function renderRiskDashboard() {
