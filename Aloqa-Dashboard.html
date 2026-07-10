@@ -406,6 +406,10 @@
         .card-loans-yellow::before { background: linear-gradient(90deg, #eab308, #facc15); }
         .card-loans-orange::before { background: linear-gradient(90deg, #f97316, #ea580c); }
 
+        .card-kassa-usd::before { background: linear-gradient(90deg, #6366f1, #818cf8); }
+        .card-kassa-eur::before { background: linear-gradient(90deg, #06b6d4, #22d3ee); }
+        .card-kassa-rub::before { background: linear-gradient(90deg, #ef4444, #f87171); }
+
         .card-total-risks::before { background: linear-gradient(90deg, #8b5cf6, #3b82f6); }
         .card-open-risks::before { background: linear-gradient(90deg, #f59e0b, #eab308); }
         .card-confirmed-risks::before { background: linear-gradient(90deg, #10b981, #059669); }
@@ -1994,7 +1998,7 @@
             <!-- Row 2: Foreign Currencies sum metrics -->
             <section class="kpi-grid" id="kassa-row2-kpis">
                 <!-- Sum USD -->
-                <div class="card card-mc-total">
+                <div class="card card-kassa-usd">
                     <div class="card-header">
                         <span class="card-title">Общая сумма USD</span>
                         <div class="card-icon" style="background: rgba(99, 102, 241, 0.15); color: #6366f1; display: flex; align-items: center; justify-content: center; width: 42px; height: 42px; border-radius: 10px;">
@@ -2010,7 +2014,7 @@
                 </div>
 
                 <!-- Sum EUR -->
-                <div class="card card-mc-completed">
+                <div class="card card-kassa-eur">
                     <div class="card-header">
                         <span class="card-title">Общая сумма EUR</span>
                         <div class="card-icon" style="background: rgba(6, 182, 212, 0.15); color: #06b6d4; display: flex; align-items: center; justify-content: center; width: 42px; height: 42px; border-radius: 10px;">
@@ -2026,7 +2030,7 @@
                 </div>
 
                 <!-- Sum RUB -->
-                <div class="card card-loans-yellow">
+                <div class="card card-kassa-rub">
                     <div class="card-header">
                         <span class="card-title">Общая сумма RUB</span>
                         <div class="card-icon" style="background: rgba(239, 68, 68, 0.15); color: #ef4444; display: flex; align-items: center; justify-content: center; width: 42px; height: 42px; border-radius: 10px;">
