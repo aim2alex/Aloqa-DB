@@ -588,6 +588,56 @@ def main():
             'q1': {'months': [], 'products': []},
             'q2': {'months': [], 'products': []}
         }
+    print("Reading and aggregating Kassa data...")
+    kassa_stats = {}
+    try:
+        df_kassa = pd.read_excel("Kassa_doc.xlsx", sheet_name="SQL Results")
+        df_kassa['DOC_DELIVERY_DATE'] = pd.to_datetime(df_kassa['DOC_DELIVERY_DATE'])
+
+        def get_kassa_period_data(df_period):
+            bags = len(df_period)
+            
+            def get_sum(col):
+                if col in df_period.columns:
+                    return float(df_period[col].fillna(0).sum())
+                return 0.0
+
+            blocks = (
+                get_sum('COLLECTION_DETAIL_COUNT_USD') +
+                get_sum('COLLECTION_DETAIL_COUNT_EUR') +
+                get_sum('COLLECTION_DETAIL_COUNT_RUB') +
+                get_sum('COLLECTION_DETAIL_COUNT_UZS')
+            )
+
+            sum_uzs = get_sum('COLLECTION_DETAIL_AMOUNT_UZS')
+            sum_usd = get_sum('COLLECTION_DETAIL_AMOUNT_USD')
+            sum_eur = get_sum('COLLECTION_DETAIL_AMOUNT_EUR')
+            sum_rub = get_sum('COLLECTION_DETAIL_AMOUNT_RUB')
+
+            return {
+                'bags': int(bags),
+                'blocks': int(blocks),
+                'sum_uzs': float(sum_uzs),
+                'sum_usd': float(sum_usd),
+                'sum_eur': float(sum_eur),
+                'sum_rub': float(sum_rub)
+            }
+
+        q1_kassa = df_kassa[(df_kassa['DOC_DELIVERY_DATE'] >= '2026-01-01') & (df_kassa['DOC_DELIVERY_DATE'] <= '2026-03-31')]
+        q2_kassa = df_kassa[(df_kassa['DOC_DELIVERY_DATE'] >= '2026-04-01') & (df_kassa['DOC_DELIVERY_DATE'] <= '2026-06-30')]
+
+        kassa_stats = {
+            'all': get_kassa_period_data(df_kassa),
+            'q1': get_kassa_period_data(q1_kassa),
+            'q2': get_kassa_period_data(q2_kassa)
+        }
+    except Exception as e:
+        print(f"Error parsing Kassa_doc.xlsx: {e}")
+        kassa_stats = {
+            'all': {'bags': 0, 'blocks': 0, 'sum_uzs': 0.0, 'sum_usd': 0.0, 'sum_eur': 0.0, 'sum_rub': 0.0},
+            'q1': {'bags': 0, 'blocks': 0, 'sum_uzs': 0.0, 'sum_usd': 0.0, 'sum_eur': 0.0, 'sum_rub': 0.0},
+            'q2': {'bags': 0, 'blocks': 0, 'sum_uzs': 0.0, 'sum_usd': 0.0, 'sum_eur': 0.0, 'sum_rub': 0.0}
+        }
 
     print("Reading and aggregating Jira data...")
     df_jira = pd.read_excel(jira_file, header=None)
@@ -688,7 +738,8 @@ def main():
         'jira': jira_stats,
         'cards': cards_stats,
         'cardsv2': cardsv2_stats,
-        'scoring': scoring_stats
+        'scoring': scoring_stats,
+        'kassa': kassa_stats
     }
     
     print("Generating HTML dashboard Aloqa-Dashboard.html...")
@@ -1645,6 +1696,7 @@ def main():
                     <button class="main-tab-btn" id="main-tab-cards" onclick="switchMainTab('cards')">Карты</button>
                     <button class="main-tab-btn" id="main-tab-cardsv2" onclick="switchMainTab('cardsv2')">Карты v2</button>
                     <button class="main-tab-btn" id="main-tab-scoring" onclick="switchMainTab('scoring')">Скоринг</button>
+                    <button class="main-tab-btn" id="main-tab-kassa" onclick="switchMainTab('kassa')">Кассы</button>
                 </div>
             </div>
             
@@ -2608,6 +2660,135 @@ def main():
             </section>
         </div><!-- Closing #panel-scoring -->
 
+        <!-- Panel Kassa -->
+        <div id="panel-kassa" class="main-panel" style="display: none;">
+            <div class="panel-header">
+                <div class="header-title">
+                    <h1 class="title-kassa" style="background: linear-gradient(135deg, var(--text-primary) 30%, #38bdf8 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Инкассация и Кассы</h1>
+                    <p>Анализ операций инкассации и касс • Данные по кварталам</p>
+                </div>
+                
+                <div class="tabs-container">
+                    <button class="tab-btn active" onclick="switchTab('all', this)">Все</button>
+                    <button class="tab-btn" onclick="switchTab('q1', this)">1 Квартал</button>
+                    <button class="tab-btn" onclick="switchTab('q2', this)">2 Квартал</button>
+                </div>
+            </div>
+
+            <!-- Row 1: Aggregated count metrics -->
+            <section class="kpi-grid" id="kassa-row1-kpis" style="margin-bottom: 2rem;">
+                <!-- Bags Count -->
+                <div class="card card-mc-total">
+                    <div class="card-header">
+                        <span class="card-title">Всего сумок</span>
+                        <div class="card-icon" style="background: rgba(59, 130, 246, 0.15); color: #3b82f6;">
+                            <svg class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="3" y="11" width="18" height="10" rx="2" ry="2"></rect>
+                                <path d="M12 2a5 5 0 0 0-5 5v4h10V7a5 5 0 0 0-5-5z"></path>
+                            </svg>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <span class="card-value" id="kpi-kassa-bags-value">0</span>
+                        <div class="card-meta">
+                            <span>Количество доставленных сумок</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Blocks Count -->
+                <div class="card card-mc-completed">
+                    <div class="card-header">
+                        <span class="card-title">Всего блоков</span>
+                        <div class="card-icon" style="background: rgba(16, 185, 129, 0.15); color: #10b981;">
+                            <svg class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="3" y="3" width="7" height="9"></rect>
+                                <rect x="14" y="3" width="7" height="5"></rect>
+                                <rect x="14" y="12" width="7" height="9"></rect>
+                                <rect x="3" y="16" width="7" height="5"></rect>
+                            </svg>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <span class="card-value" id="kpi-kassa-blocks-value">0</span>
+                        <div class="card-meta">
+                            <span>Общее количество блоков валют</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Sum UZS -->
+                <div class="card card-loans-yellow">
+                    <div class="card-header">
+                        <span class="card-title">Общая сумма UZS</span>
+                        <div class="card-icon" style="background: rgba(245, 158, 11, 0.15); color: #f59e0b;">
+                            <svg class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <line x1="12" y1="1" x2="12" y2="23"></line>
+                                <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+                            </svg>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <span class="card-value" id="kpi-kassa-uzs-value" style="font-size: 2.25rem;">0</span>
+                        <div class="card-meta">
+                            <span>Узбекский сум</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Row 2: Foreign Currencies sum metrics -->
+            <section class="kpi-grid" id="kassa-row2-kpis">
+                <!-- Sum USD -->
+                <div class="card card-mc-total">
+                    <div class="card-header">
+                        <span class="card-title">Общая сумма USD</span>
+                        <div class="card-icon" style="background: rgba(99, 102, 241, 0.15); color: #6366f1; display: flex; align-items: center; justify-content: center; width: 42px; height: 42px; border-radius: 10px;">
+                            <span style="font-weight: 700; font-size: 1.4rem; font-family: 'Outfit', sans-serif;">$</span>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <span class="card-value" id="kpi-kassa-usd-value">0</span>
+                        <div class="card-meta">
+                            <span>Доллар США</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Sum EUR -->
+                <div class="card card-mc-completed">
+                    <div class="card-header">
+                        <span class="card-title">Общая сумма EUR</span>
+                        <div class="card-icon" style="background: rgba(6, 182, 212, 0.15); color: #06b6d4; display: flex; align-items: center; justify-content: center; width: 42px; height: 42px; border-radius: 10px;">
+                            <span style="font-weight: 700; font-size: 1.4rem; font-family: 'Outfit', sans-serif;">€</span>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <span class="card-value" id="kpi-kassa-eur-value">0</span>
+                        <div class="card-meta">
+                            <span>Евро</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Sum RUB -->
+                <div class="card card-loans-yellow">
+                    <div class="card-header">
+                        <span class="card-title">Общая сумма RUB</span>
+                        <div class="card-icon" style="background: rgba(239, 68, 68, 0.15); color: #ef4444; display: flex; align-items: center; justify-content: center; width: 42px; height: 42px; border-radius: 10px;">
+                            <span style="font-weight: 700; font-size: 1.4rem; font-family: 'Outfit', sans-serif;">₽</span>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <span class="card-value" id="kpi-kassa-rub-value">0</span>
+                        <div class="card-meta">
+                            <span>Российский рубль</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div><!-- Closing #panel-kassa -->
+
         <!-- Panel Jira -->
         <div id="panel-jira" class="main-panel">
             <div class="panel-header">
@@ -3209,9 +3390,9 @@ def main():
         }
 
         // Count up animation for numbers
-        function animateValue(id, start, end, duration, suffix = '') {
+        function animateValue(id, start, end, duration, suffix = '', prefix = '') {
             if (start === end) {
-                document.getElementById(id).innerText = formatNumber(end) + suffix;
+                document.getElementById(id).innerText = prefix + formatNumber(end) + suffix;
                 return;
             }
             const range = end - start;
@@ -3224,11 +3405,11 @@ def main():
                 const now = new Date().getTime();
                 const remaining = Math.max((endTime - now) / duration, 0);
                 const value = Math.round(end - (remaining * range));
-                obj.innerText = formatNumber(value) + suffix;
+                obj.innerText = prefix + formatNumber(value) + suffix;
                 if (value != end) {
                     requestAnimationFrame(run);
                 } else {
-                    obj.innerText = formatNumber(end) + suffix;
+                    obj.innerText = prefix + formatNumber(end) + suffix;
                 }
             }
             requestAnimationFrame(run);
@@ -3316,6 +3497,8 @@ def main():
                 renderCardsV2Dashboard();
             } else if (activeMainTab === 'scoring') {
                 renderScoringDashboard();
+            } else if (activeMainTab === 'kassa') {
+                renderKassaDashboard();
             }
         }
 
@@ -3815,6 +3998,8 @@ def main():
             if (cardsv2TabBtn) cardsv2TabBtn.classList.toggle('active', tabName === 'cardsv2');
             const scoringTabBtn = document.getElementById('main-tab-scoring');
             if (scoringTabBtn) scoringTabBtn.classList.toggle('active', tabName === 'scoring');
+            const kassaTabBtn = document.getElementById('main-tab-kassa');
+            if (kassaTabBtn) kassaTabBtn.classList.toggle('active', tabName === 'kassa');
             const jiraTabBtn = document.getElementById('main-tab-jira');
             if (jiraTabBtn) jiraTabBtn.classList.toggle('active', tabName === 'jira');
 
@@ -3827,6 +4012,8 @@ def main():
             if (cardsv2Panel) cardsv2Panel.style.display = tabName === 'cardsv2' ? 'flex' : 'none';
             const scoringPanel = document.getElementById('panel-scoring');
             if (scoringPanel) scoringPanel.style.display = tabName === 'scoring' ? 'flex' : 'none';
+            const kassaPanel = document.getElementById('panel-kassa');
+            if (kassaPanel) kassaPanel.style.display = tabName === 'kassa' ? 'flex' : 'none';
             const jiraPanel = document.getElementById('panel-jira');
             if (jiraPanel) jiraPanel.style.display = tabName === 'jira' ? 'flex' : 'none';
 
@@ -3842,6 +4029,8 @@ def main():
                 renderCardsV2Dashboard();
             } else if (tabName === 'scoring') {
                 renderScoringDashboard();
+            } else if (tabName === 'kassa') {
+                renderKassaDashboard();
             } else {
                 updateDashboard();
             }
@@ -4177,6 +4366,18 @@ def main():
 
         function handleScoringSliderChange(val) {
             renderScoringTable();
+        }
+
+        function renderKassaDashboard() {
+            const data = dashboardData.kassa[activePeriod];
+            if (!data) return;
+
+            animateValue('kpi-kassa-bags-value', 0, data.bags, 800, ' шт.');
+            animateValue('kpi-kassa-blocks-value', 0, data.blocks, 800, ' шт.');
+            animateValue('kpi-kassa-uzs-value', 0, data.sum_uzs, 800, ' сум');
+            animateValue('kpi-kassa-usd-value', 0, data.sum_usd, 800, '', '$ ');
+            animateValue('kpi-kassa-eur-value', 0, data.sum_eur, 800, '', '€ ');
+            animateValue('kpi-kassa-rub-value', 0, data.sum_rub, 800, ' ₽');
         }
 
         function renderRiskDashboard() {
