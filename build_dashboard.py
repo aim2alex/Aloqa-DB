@@ -565,6 +565,50 @@ def main():
         }
     }
 
+    print("Reading and aggregating Scoring data...")
+    scoring_stats = {}
+    try:
+        df_scoring = pd.read_excel("scoring.xlsx", sheet_name="Лист2")
+        months_cols = ['01', '02', '03', '04', '05', '06']
+        for col in months_cols:
+            df_scoring[col] = pd.to_numeric(df_scoring[col].fillna(0))
+        
+        def get_scoring_period_data(cols):
+            data_list = []
+            for _, row in df_scoring.iterrows():
+                product_code = row['product_code']
+                monthly_vals = [int(row[col]) for col in cols]
+                total_val = sum(monthly_vals)
+                data_list.append({
+                    'product_code': product_code,
+                    'value': total_val,
+                    'monthly': monthly_vals
+                })
+            data_list.sort(key=lambda x: x['value'], reverse=True)
+            return data_list
+
+        scoring_stats = {
+            'all': {
+                'months': ["Январь", "Февраль", "Март", "Апрель", "Май", "Июнь"],
+                'products': get_scoring_period_data(months_cols)
+            },
+            'q1': {
+                'months': ["Январь", "Февраль", "Март"],
+                'products': get_scoring_period_data(months_cols[:3])
+            },
+            'q2': {
+                'months': ["Апрель", "Май", "Июнь"],
+                'products': get_scoring_period_data(months_cols[3:])
+            }
+        }
+    except Exception as e:
+        print(f"Error parsing scoring.xlsx: {e}")
+        scoring_stats = {
+            'all': {'months': [], 'products': []},
+            'q1': {'months': [], 'products': []},
+            'q2': {'months': [], 'products': []}
+        }
+
     print("Reading and aggregating Jira data...")
     df_jira = pd.read_excel(jira_file, header=None)
 
@@ -663,7 +707,8 @@ def main():
         'loans': loans_stats,
         'jira': jira_stats,
         'cards': cards_stats,
-        'cardsv2': cardsv2_stats
+        'cardsv2': cardsv2_stats,
+        'scoring': scoring_stats
     }
     
     print("Generating HTML dashboard Aloqa-Dashboard.html...")
@@ -1619,6 +1664,7 @@ def main():
                     <button class="main-tab-btn" id="main-tab-risks" onclick="switchMainTab('risks')">События операционных рисков</button>
                     <button class="main-tab-btn" id="main-tab-cards" onclick="switchMainTab('cards')">Карты</button>
                     <button class="main-tab-btn" id="main-tab-cardsv2" onclick="switchMainTab('cardsv2')">Карты v2</button>
+                    <button class="main-tab-btn" id="main-tab-scoring" onclick="switchMainTab('scoring')">Скоринг</button>
                 </div>
             </div>
             
@@ -2435,6 +2481,122 @@ def main():
             </section>
         </div><!-- Closing #panel-cardsv2 -->
 
+        <!-- Panel Scoring -->
+        <div id="panel-scoring" class="main-panel" style="display: none;">
+            <div class="panel-header">
+                <div class="header-title">
+                    <h1 class="title-scoring" style="background: linear-gradient(135deg, var(--text-primary) 30%, #a5b4fc 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Скоринг продуктов</h1>
+                    <p>Анализ показателей скоринга продуктов • Январь - Июнь 2026 г.</p>
+                </div>
+                
+                <div class="tabs-container">
+                    <button class="tab-btn active" onclick="switchTab('all', this)">Все</button>
+                    <button class="tab-btn" onclick="switchTab('q1', this)">1 Квартал</button>
+                    <button class="tab-btn" onclick="switchTab('q2', this)">2 Квартал</button>
+                </div>
+            </div>
+
+            <!-- Row 1: Top 4 products with highest indicators -->
+            <section class="kpi-grid" id="scoring-top-kpis">
+                <!-- Top 1 Product -->
+                <div class="card card-mc-total">
+                    <div class="card-header">
+                        <span class="card-title" id="kpi-scoring-top1-title" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: calc(100% - 40px);" title="Топ 1 продукт">Топ 1 продукт</span>
+                        <div class="card-icon" style="background: rgba(59, 130, 246, 0.15); color: #3b82f6;">
+                            <span style="font-weight: 700; font-size: 1.1rem;">#1</span>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <span class="card-value" id="kpi-scoring-top1-value">0</span>
+                        <div class="card-meta">
+                            <span id="kpi-scoring-top1-desc">Наивысший показатель</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Top 2 Product -->
+                <div class="card card-mc-completed">
+                    <div class="card-header">
+                        <span class="card-title" id="kpi-scoring-top2-title" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: calc(100% - 40px);" title="Топ 2 продукт">Топ 2 продукт</span>
+                        <div class="card-icon" style="background: rgba(16, 185, 129, 0.15); color: #10b981;">
+                            <span style="font-weight: 700; font-size: 1.1rem;">#2</span>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <span class="card-value" id="kpi-scoring-top2-value">0</span>
+                        <div class="card-meta">
+                            <span id="kpi-scoring-top2-desc">Второй показатель</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Top 3 Product -->
+                <div class="card card-loans-yellow">
+                    <div class="card-header">
+                        <span class="card-title" id="kpi-scoring-top3-title" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: calc(100% - 40px);" title="Топ 3 продукт">Топ 3 продукт</span>
+                        <div class="card-icon" style="background: rgba(245, 158, 11, 0.15); color: #f59e0b;">
+                            <span style="font-weight: 700; font-size: 1.1rem;">#3</span>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <span class="card-value" id="kpi-scoring-top3-value">0</span>
+                        <div class="card-meta">
+                            <span id="kpi-scoring-top3-desc">Третий показатель</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Top 4 Product -->
+                <div class="card card-mc-refused">
+                    <div class="card-header">
+                        <span class="card-title" id="kpi-scoring-top4-title" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: calc(100% - 40px);" title="Топ 4 продукт">Топ 4 продукт</span>
+                        <div class="card-icon" style="background: rgba(239, 68, 68, 0.15); color: #ef4444;">
+                            <span style="font-weight: 700; font-size: 1.1rem;">#4</span>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <span class="card-value" id="kpi-scoring-top4-value">0</span>
+                        <div class="card-meta">
+                            <span id="kpi-scoring-top4-desc">Четвертый показатель</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Row 2: Table block "Все продукты скоринга" -->
+            <section class="card" style="padding: 1.5rem 2rem; margin-top: 1rem; display: flex; flex-direction: column; gap: 1rem;">
+                <div class="chart-card-header bar-controls" style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
+                    <div>
+                        <div style="font-family: 'Outfit', sans-serif; font-size: 1.3rem; font-weight: 700; color: var(--text-primary);">Все продукты скоринга</div>
+                        <div style="font-size: 0.8rem; color: var(--text-secondary); margin-top: 2px;">Показатели по продуктам, шт.</div>
+                    </div>
+                    
+                    <div class="slider-wrapper">
+                        <span>Показать Топ:</span>
+                        <input type="range" id="scoring-top-slider" class="top-slider" min="5" max="35" value="10" step="5" oninput="handleScoringSliderChange(this.value)">
+                        <span id="scoring-slider-val" style="font-weight: 700; width: 25px; text-align: right; color: var(--accent-purple);">10</span>
+                    </div>
+                </div>
+                
+                <div style="overflow-x: auto; margin-top: 0.5rem;">
+                    <table style="width: 100%; border-collapse: collapse; text-align: left; font-size: 0.9rem;">
+                        <thead>
+                            <tr style="border-bottom: 1px solid var(--card-border); color: var(--text-secondary); font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.05em;">
+                                <th style="padding: 10px 16px; font-weight: 600; text-align: left; color: var(--text-secondary);">Код продукта</th>
+                                <th style="padding: 10px 16px; font-weight: 600; text-align: right; color: var(--text-secondary);">Месяц 1</th>
+                                <th style="padding: 10px 16px; font-weight: 600; text-align: right; color: var(--text-secondary);">Месяц 2</th>
+                                <th style="padding: 10px 16px; font-weight: 600; text-align: right; color: var(--text-secondary);">Месяц 3</th>
+                                <th style="padding: 10px 16px; font-weight: 600; text-align: right; color: var(--text-secondary);">ОБЩЕЕ</th>
+                            </tr>
+                        </thead>
+                        <tbody id="scoring-table-body">
+                            <!-- Rendered dynamically -->
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+        </div><!-- Closing #panel-scoring -->
+
         <!-- Panel Jira -->
         <div id="panel-jira" class="main-panel">
             <div class="panel-header">
@@ -3146,6 +3308,8 @@ def main():
                 renderCardsDashboard();
             } else if (activeMainTab === 'cardsv2') {
                 renderCardsV2Dashboard();
+            } else if (activeMainTab === 'scoring') {
+                renderScoringDashboard();
             }
         }
 
@@ -3644,6 +3808,8 @@ def main():
             document.getElementById('main-tab-cards').classList.toggle('active', tabName === 'cards');
             const cardsv2TabBtn = document.getElementById('main-tab-cardsv2');
             if (cardsv2TabBtn) cardsv2TabBtn.classList.toggle('active', tabName === 'cardsv2');
+            const scoringTabBtn = document.getElementById('main-tab-scoring');
+            if (scoringTabBtn) scoringTabBtn.classList.toggle('active', tabName === 'scoring');
             const jiraTabBtn = document.getElementById('main-tab-jira');
             if (jiraTabBtn) jiraTabBtn.classList.toggle('active', tabName === 'jira');
 
@@ -3654,6 +3820,8 @@ def main():
             document.getElementById('panel-cards').style.display = tabName === 'cards' ? 'flex' : 'none';
             const cardsv2Panel = document.getElementById('panel-cardsv2');
             if (cardsv2Panel) cardsv2Panel.style.display = tabName === 'cardsv2' ? 'flex' : 'none';
+            const scoringPanel = document.getElementById('panel-scoring');
+            if (scoringPanel) scoringPanel.style.display = tabName === 'scoring' ? 'flex' : 'none';
             const jiraPanel = document.getElementById('panel-jira');
             if (jiraPanel) jiraPanel.style.display = tabName === 'jira' ? 'flex' : 'none';
 
@@ -3667,6 +3835,8 @@ def main():
                 renderCardsDashboard();
             } else if (tabName === 'cardsv2') {
                 renderCardsV2Dashboard();
+            } else if (tabName === 'scoring') {
+                renderScoringDashboard();
             } else {
                 updateDashboard();
             }
@@ -4127,6 +4297,79 @@ def main():
                 cardsV2TopupsChart.options.plugins.legend.labels.color = colors.textSecondary;
                 cardsV2TopupsChart.update();
             }
+        }
+
+        function renderScoringDashboard() {
+            const periodData = dashboardData.scoring[activePeriod];
+            if (!periodData) return;
+
+            // 1. Render Top 4 KPI Blocks
+            const products = periodData.products;
+            
+            // Top 1
+            const top1 = products[0] || { product_code: '-', value: 0 };
+            document.getElementById('kpi-scoring-top1-title').innerText = top1.product_code;
+            animateValue('kpi-scoring-top1-value', 0, top1.value, 800);
+            
+            // Top 2
+            const top2 = products[1] || { product_code: '-', value: 0 };
+            document.getElementById('kpi-scoring-top2-title').innerText = top2.product_code;
+            animateValue('kpi-scoring-top2-value', 0, top2.value, 800);
+            
+            // Top 3
+            const top3 = products[2] || { product_code: '-', value: 0 };
+            document.getElementById('kpi-scoring-top3-title').innerText = top3.product_code;
+            animateValue('kpi-scoring-top3-value', 0, top3.value, 800);
+            
+            // Top 4
+            const top4 = products[3] || { product_code: '-', value: 0 };
+            document.getElementById('kpi-scoring-top4-title').innerText = top4.product_code;
+            animateValue('kpi-scoring-top4-value', 0, top4.value, 800);
+
+            // 2. Render Table
+            renderScoringTable();
+        }
+
+        function renderScoringTable() {
+            const tableBody = document.getElementById('scoring-table-body');
+            if (!tableBody) return;
+
+            const slider = document.getElementById('scoring-top-slider');
+            const sliderVal = document.getElementById('scoring-slider-val');
+            const topN = parseInt(slider.value);
+            sliderVal.innerText = topN;
+
+            const periodData = dashboardData.scoring[activePeriod];
+            const months = periodData.months;
+            const products = periodData.products;
+
+            // Update the table headers dynamically!
+            const thead = tableBody.closest('table').querySelector('thead tr');
+            if (thead) {
+                let headersHTML = `<th style="padding: 10px 16px; font-weight: 600; text-align: left; color: var(--text-secondary);">Код продукта</th>`;
+                months.forEach(m => {
+                    headersHTML += `<th style="padding: 10px 16px; font-weight: 600; text-align: right; color: var(--text-secondary);">${m}</th>`;
+                });
+                headersHTML += `<th style="padding: 10px 16px; font-weight: 600; text-align: right; color: var(--text-secondary);">ОБЩЕЕ</th>`;
+                thead.innerHTML = headersHTML;
+            }
+
+            const sortedProducts = [...products]
+                .filter(p => p.value > 0)
+                .slice(0, topN);
+
+            tableBody.innerHTML = sortedProducts.map(p => {
+                let rowCells = `<td style="padding: 12px 16px; color: var(--text-primary); font-weight: 500; word-break: break-all;">${p.product_code}</td>`;
+                p.monthly.forEach(val => {
+                    rowCells += `<td style="padding: 12px 16px; text-align: right; color: var(--text-secondary);">${formatNumber(val)}</td>`;
+                });
+                rowCells += `<td style="padding: 12px 16px; text-align: right; color: var(--text-primary); font-weight: 700;">${formatNumber(p.value)}</td>`;
+                return `<tr style="border-bottom: 1px solid var(--card-border); transition: background-color 0.2s; cursor: default;" class="table-hover-row">${rowCells}</tr>`;
+            }).join('');
+        }
+
+        function handleScoringSliderChange(val) {
+            renderScoringTable();
         }
 
         function renderRiskDashboard() {

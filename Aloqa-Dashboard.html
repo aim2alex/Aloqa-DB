@@ -949,6 +949,7 @@
                     <button class="main-tab-btn" id="main-tab-risks" onclick="switchMainTab('risks')">События операционных рисков</button>
                     <button class="main-tab-btn" id="main-tab-cards" onclick="switchMainTab('cards')">Карты</button>
                     <button class="main-tab-btn" id="main-tab-cardsv2" onclick="switchMainTab('cardsv2')">Карты v2</button>
+                    <button class="main-tab-btn" id="main-tab-scoring" onclick="switchMainTab('scoring')">Скоринг</button>
                 </div>
             </div>
             
@@ -1764,6 +1765,122 @@
                 </div>
             </section>
         </div><!-- Closing #panel-cardsv2 -->
+
+        <!-- Panel Scoring -->
+        <div id="panel-scoring" class="main-panel" style="display: none;">
+            <div class="panel-header">
+                <div class="header-title">
+                    <h1 class="title-scoring" style="background: linear-gradient(135deg, var(--text-primary) 30%, #a5b4fc 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Скоринг продуктов</h1>
+                    <p>Анализ показателей скоринга продуктов • Январь - Июнь 2026 г.</p>
+                </div>
+                
+                <div class="tabs-container">
+                    <button class="tab-btn active" onclick="switchTab('all', this)">Все</button>
+                    <button class="tab-btn" onclick="switchTab('q1', this)">1 Квартал</button>
+                    <button class="tab-btn" onclick="switchTab('q2', this)">2 Квартал</button>
+                </div>
+            </div>
+
+            <!-- Row 1: Top 4 products with highest indicators -->
+            <section class="kpi-grid" id="scoring-top-kpis">
+                <!-- Top 1 Product -->
+                <div class="card card-mc-total">
+                    <div class="card-header">
+                        <span class="card-title" id="kpi-scoring-top1-title" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: calc(100% - 40px);" title="Топ 1 продукт">Топ 1 продукт</span>
+                        <div class="card-icon" style="background: rgba(59, 130, 246, 0.15); color: #3b82f6;">
+                            <span style="font-weight: 700; font-size: 1.1rem;">#1</span>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <span class="card-value" id="kpi-scoring-top1-value">0</span>
+                        <div class="card-meta">
+                            <span id="kpi-scoring-top1-desc">Наивысший показатель</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Top 2 Product -->
+                <div class="card card-mc-completed">
+                    <div class="card-header">
+                        <span class="card-title" id="kpi-scoring-top2-title" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: calc(100% - 40px);" title="Топ 2 продукт">Топ 2 продукт</span>
+                        <div class="card-icon" style="background: rgba(16, 185, 129, 0.15); color: #10b981;">
+                            <span style="font-weight: 700; font-size: 1.1rem;">#2</span>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <span class="card-value" id="kpi-scoring-top2-value">0</span>
+                        <div class="card-meta">
+                            <span id="kpi-scoring-top2-desc">Второй показатель</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Top 3 Product -->
+                <div class="card card-loans-yellow">
+                    <div class="card-header">
+                        <span class="card-title" id="kpi-scoring-top3-title" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: calc(100% - 40px);" title="Топ 3 продукт">Топ 3 продукт</span>
+                        <div class="card-icon" style="background: rgba(245, 158, 11, 0.15); color: #f59e0b;">
+                            <span style="font-weight: 700; font-size: 1.1rem;">#3</span>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <span class="card-value" id="kpi-scoring-top3-value">0</span>
+                        <div class="card-meta">
+                            <span id="kpi-scoring-top3-desc">Третий показатель</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Top 4 Product -->
+                <div class="card card-mc-refused">
+                    <div class="card-header">
+                        <span class="card-title" id="kpi-scoring-top4-title" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: calc(100% - 40px);" title="Топ 4 продукт">Топ 4 продукт</span>
+                        <div class="card-icon" style="background: rgba(239, 68, 68, 0.15); color: #ef4444;">
+                            <span style="font-weight: 700; font-size: 1.1rem;">#4</span>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <span class="card-value" id="kpi-scoring-top4-value">0</span>
+                        <div class="card-meta">
+                            <span id="kpi-scoring-top4-desc">Четвертый показатель</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Row 2: Table block "Все продукты скоринга" -->
+            <section class="card" style="padding: 1.5rem 2rem; margin-top: 1rem; display: flex; flex-direction: column; gap: 1rem;">
+                <div class="chart-card-header bar-controls" style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
+                    <div>
+                        <div style="font-family: 'Outfit', sans-serif; font-size: 1.3rem; font-weight: 700; color: var(--text-primary);">Все продукты скоринга</div>
+                        <div style="font-size: 0.8rem; color: var(--text-secondary); margin-top: 2px;">Показатели по продуктам, шт.</div>
+                    </div>
+                    
+                    <div class="slider-wrapper">
+                        <span>Показать Топ:</span>
+                        <input type="range" id="scoring-top-slider" class="top-slider" min="5" max="35" value="10" step="5" oninput="handleScoringSliderChange(this.value)">
+                        <span id="scoring-slider-val" style="font-weight: 700; width: 25px; text-align: right; color: var(--accent-purple);">10</span>
+                    </div>
+                </div>
+                
+                <div style="overflow-x: auto; margin-top: 0.5rem;">
+                    <table style="width: 100%; border-collapse: collapse; text-align: left; font-size: 0.9rem;">
+                        <thead>
+                            <tr style="border-bottom: 1px solid var(--card-border); color: var(--text-secondary); font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.05em;">
+                                <th style="padding: 10px 16px; font-weight: 600; text-align: left; color: var(--text-secondary);">Код продукта</th>
+                                <th style="padding: 10px 16px; font-weight: 600; text-align: right; color: var(--text-secondary);">Месяц 1</th>
+                                <th style="padding: 10px 16px; font-weight: 600; text-align: right; color: var(--text-secondary);">Месяц 2</th>
+                                <th style="padding: 10px 16px; font-weight: 600; text-align: right; color: var(--text-secondary);">Месяц 3</th>
+                                <th style="padding: 10px 16px; font-weight: 600; text-align: right; color: var(--text-secondary);">ОБЩЕЕ</th>
+                            </tr>
+                        </thead>
+                        <tbody id="scoring-table-body">
+                            <!-- Rendered dynamically -->
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+        </div><!-- Closing #panel-scoring -->
 
         <!-- Panel Jira -->
         <div id="panel-jira" class="main-panel">
@@ -7086,6 +7203,1208 @@
         ]
       }
     }
+  },
+  "scoring": {
+    "all": {
+      "months": [
+        "Январь",
+        "Февраль",
+        "Март",
+        "Апрель",
+        "Май",
+        "Июнь"
+      ],
+      "products": [
+        {
+          "product_code": "UZ.FL.S.ONLINE.UNIVER",
+          "value": 241529,
+          "monthly": [
+            59149,
+            28683,
+            16404,
+            45614,
+            47755,
+            43924
+          ]
+        },
+        {
+          "product_code": "UZ.FL.S.ONLINE.SALARY",
+          "value": 137069,
+          "monthly": [
+            25383,
+            22421,
+            22171,
+            23756,
+            22618,
+            20720
+          ]
+        },
+        {
+          "product_code": "UZ.FL.S.MICRO.SELF.EMP",
+          "value": 26631,
+          "monthly": [
+            7665,
+            4810,
+            4552,
+            3630,
+            2398,
+            3576
+          ]
+        },
+        {
+          "product_code": "UZ.FL.S.SUBS.MIN.FIN.ALL",
+          "value": 17074,
+          "monthly": [
+            0,
+            3,
+            15331,
+            1341,
+            292,
+            107
+          ]
+        },
+        {
+          "product_code": "UZ.FL.S2.ONLINE.SALARY",
+          "value": 8810,
+          "monthly": [
+            4271,
+            2219,
+            1902,
+            418,
+            0,
+            0
+          ]
+        },
+        {
+          "product_code": "UZ.FL.S.WEB.SELF.EMP.YOUTH",
+          "value": 7711,
+          "monthly": [
+            1191,
+            1581,
+            2433,
+            1187,
+            653,
+            666
+          ]
+        },
+        {
+          "product_code": "UZ.FL.S.WEB.SELF.SECURE",
+          "value": 4965,
+          "monthly": [
+            0,
+            0,
+            10,
+            1483,
+            1750,
+            1722
+          ]
+        },
+        {
+          "product_code": "UZ.FL.S.WEB.SELF.EMP.OTHER",
+          "value": 4889,
+          "monthly": [
+            52,
+            1433,
+            3404,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "product_code": "UZ.FL.S2.ONLINE.UNIVER",
+          "value": 4832,
+          "monthly": [
+            2935,
+            976,
+            676,
+            245,
+            0,
+            0
+          ]
+        },
+        {
+          "product_code": "UZ.FL.S.IP.MINFIN.WORKING",
+          "value": 3651,
+          "monthly": [
+            734,
+            592,
+            677,
+            813,
+            423,
+            412
+          ]
+        },
+        {
+          "product_code": "UZ.FL.S.AUTO.WORKING",
+          "value": 2227,
+          "monthly": [
+            912,
+            535,
+            254,
+            175,
+            163,
+            188
+          ]
+        },
+        {
+          "product_code": "UZ.FL.S2.WEB.SELF.SECURE",
+          "value": 2170,
+          "monthly": [
+            0,
+            0,
+            0,
+            508,
+            835,
+            827
+          ]
+        },
+        {
+          "product_code": "UZ.FL.S.OFLINE.MICRO.WORKING",
+          "value": 2115,
+          "monthly": [
+            419,
+            364,
+            437,
+            363,
+            227,
+            305
+          ]
+        },
+        {
+          "product_code": "UZ.FL.S2.WEB.SELF.EMP.YOUTH",
+          "value": 1843,
+          "monthly": [
+            299,
+            358,
+            517,
+            277,
+            220,
+            172
+          ]
+        },
+        {
+          "product_code": "UZ.FL.S.OFLINE.MICRO.SELF.EMP",
+          "value": 1837,
+          "monthly": [
+            435,
+            308,
+            443,
+            272,
+            204,
+            175
+          ]
+        },
+        {
+          "product_code": "UZ.FL.S.SUBS.MIN.FIN.SUR",
+          "value": 1688,
+          "monthly": [
+            0,
+            0,
+            1546,
+            133,
+            9,
+            0
+          ]
+        },
+        {
+          "product_code": "UZ.FL.S.IP.MINFIN.SELF.EMP",
+          "value": 1379,
+          "monthly": [
+            270,
+            324,
+            227,
+            209,
+            187,
+            162
+          ]
+        },
+        {
+          "product_code": "UZ.FL.S.AUTO.MICRO.WORKING",
+          "value": 982,
+          "monthly": [
+            0,
+            0,
+            274,
+            251,
+            191,
+            266
+          ]
+        },
+        {
+          "product_code": "UZ.FL.S.MICROCRED",
+          "value": 899,
+          "monthly": [
+            1,
+            15,
+            120,
+            271,
+            256,
+            236
+          ]
+        },
+        {
+          "product_code": "UZ.FL.S.EDUCATION",
+          "value": 735,
+          "monthly": [
+            321,
+            108,
+            89,
+            101,
+            83,
+            33
+          ]
+        },
+        {
+          "product_code": "UZ.FL.S.IP.COMMERS.WORKING",
+          "value": 627,
+          "monthly": [
+            98,
+            110,
+            97,
+            93,
+            99,
+            130
+          ]
+        },
+        {
+          "product_code": "UZ.FL.S.MICRO.WORKING",
+          "value": 261,
+          "monthly": [
+            91,
+            54,
+            45,
+            24,
+            33,
+            14
+          ]
+        },
+        {
+          "product_code": "UZ.FL.S.CONSUMER.WORKING",
+          "value": 191,
+          "monthly": [
+            32,
+            25,
+            24,
+            49,
+            35,
+            26
+          ]
+        },
+        {
+          "product_code": "UZ.FL.S.AUTO.SELF.EMP",
+          "value": 176,
+          "monthly": [
+            48,
+            46,
+            15,
+            32,
+            17,
+            18
+          ]
+        },
+        {
+          "product_code": "UZ.FL.S.IP.HYBRID.WORKING",
+          "value": 170,
+          "monthly": [
+            42,
+            25,
+            24,
+            14,
+            15,
+            50
+          ]
+        },
+        {
+          "product_code": "UZ.FL.S.NOMIB.SELF.EMP",
+          "value": 147,
+          "monthly": [
+            0,
+            0,
+            24,
+            42,
+            27,
+            54
+          ]
+        },
+        {
+          "product_code": "UZ.FL.S.IP.HYBRID.SELF.EMP",
+          "value": 105,
+          "monthly": [
+            18,
+            45,
+            10,
+            12,
+            8,
+            12
+          ]
+        },
+        {
+          "product_code": "UZ.FL.S.AUTO.WORKING.TEST",
+          "value": 44,
+          "monthly": [
+            12,
+            18,
+            14,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "product_code": "UZ.FL.S.IP.OTHER.SELF.EMP",
+          "value": 41,
+          "monthly": [
+            28,
+            1,
+            3,
+            1,
+            2,
+            6
+          ]
+        },
+        {
+          "product_code": "UZ.FL.S.FUTURE.STEP.SELF.EMP",
+          "value": 39,
+          "monthly": [
+            0,
+            0,
+            0,
+            22,
+            9,
+            8
+          ]
+        },
+        {
+          "product_code": "UZ.FL.S.RE.IP.MINFIN.WORKING",
+          "value": 35,
+          "monthly": [
+            0,
+            0,
+            3,
+            14,
+            17,
+            1
+          ]
+        },
+        {
+          "product_code": "UZ.FL.S.IP.COMMERS.SELF.EMP",
+          "value": 23,
+          "monthly": [
+            0,
+            7,
+            0,
+            0,
+            9,
+            7
+          ]
+        },
+        {
+          "product_code": "UZ.FL.S.RE.IP.HYBRID.WORKING",
+          "value": 21,
+          "monthly": [
+            0,
+            0,
+            0,
+            0,
+            11,
+            10
+          ]
+        },
+        {
+          "product_code": "UZ.FL.S.CONSUMER.SELF.EMP",
+          "value": 19,
+          "monthly": [
+            19,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "product_code": "UZ.FL.S.IP.OTHER.WORKING",
+          "value": 6,
+          "monthly": [
+            1,
+            1,
+            3,
+            1,
+            0,
+            0
+          ]
+        },
+        {
+          "product_code": "UZ.FL.S.IP.HYBRID.WORKING.DEBT",
+          "value": 5,
+          "monthly": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            5
+          ]
+        },
+        {
+          "product_code": "UZ.FL.S.IP.COM.DEBT.SELF.EMP",
+          "value": 4,
+          "monthly": [
+            0,
+            4,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "product_code": "UZ.FL.S.IP.COM.WORK.90.PLUS",
+          "value": 3,
+          "monthly": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            3
+          ]
+        },
+        {
+          "product_code": "UZ.FL.S.IP.ITPARK.COMMERS.WORKING",
+          "value": 2,
+          "monthly": [
+            2,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        }
+      ]
+    },
+    "q1": {
+      "months": [
+        "Январь",
+        "Февраль",
+        "Март"
+      ],
+      "products": [
+        {
+          "product_code": "UZ.FL.S.ONLINE.UNIVER",
+          "value": 104236,
+          "monthly": [
+            59149,
+            28683,
+            16404
+          ]
+        },
+        {
+          "product_code": "UZ.FL.S.ONLINE.SALARY",
+          "value": 69975,
+          "monthly": [
+            25383,
+            22421,
+            22171
+          ]
+        },
+        {
+          "product_code": "UZ.FL.S.MICRO.SELF.EMP",
+          "value": 17027,
+          "monthly": [
+            7665,
+            4810,
+            4552
+          ]
+        },
+        {
+          "product_code": "UZ.FL.S.SUBS.MIN.FIN.ALL",
+          "value": 15334,
+          "monthly": [
+            0,
+            3,
+            15331
+          ]
+        },
+        {
+          "product_code": "UZ.FL.S2.ONLINE.SALARY",
+          "value": 8392,
+          "monthly": [
+            4271,
+            2219,
+            1902
+          ]
+        },
+        {
+          "product_code": "UZ.FL.S.WEB.SELF.EMP.YOUTH",
+          "value": 5205,
+          "monthly": [
+            1191,
+            1581,
+            2433
+          ]
+        },
+        {
+          "product_code": "UZ.FL.S.WEB.SELF.EMP.OTHER",
+          "value": 4889,
+          "monthly": [
+            52,
+            1433,
+            3404
+          ]
+        },
+        {
+          "product_code": "UZ.FL.S2.ONLINE.UNIVER",
+          "value": 4587,
+          "monthly": [
+            2935,
+            976,
+            676
+          ]
+        },
+        {
+          "product_code": "UZ.FL.S.IP.MINFIN.WORKING",
+          "value": 2003,
+          "monthly": [
+            734,
+            592,
+            677
+          ]
+        },
+        {
+          "product_code": "UZ.FL.S.AUTO.WORKING",
+          "value": 1701,
+          "monthly": [
+            912,
+            535,
+            254
+          ]
+        },
+        {
+          "product_code": "UZ.FL.S.SUBS.MIN.FIN.SUR",
+          "value": 1546,
+          "monthly": [
+            0,
+            0,
+            1546
+          ]
+        },
+        {
+          "product_code": "UZ.FL.S.OFLINE.MICRO.WORKING",
+          "value": 1220,
+          "monthly": [
+            419,
+            364,
+            437
+          ]
+        },
+        {
+          "product_code": "UZ.FL.S.OFLINE.MICRO.SELF.EMP",
+          "value": 1186,
+          "monthly": [
+            435,
+            308,
+            443
+          ]
+        },
+        {
+          "product_code": "UZ.FL.S2.WEB.SELF.EMP.YOUTH",
+          "value": 1174,
+          "monthly": [
+            299,
+            358,
+            517
+          ]
+        },
+        {
+          "product_code": "UZ.FL.S.IP.MINFIN.SELF.EMP",
+          "value": 821,
+          "monthly": [
+            270,
+            324,
+            227
+          ]
+        },
+        {
+          "product_code": "UZ.FL.S.EDUCATION",
+          "value": 518,
+          "monthly": [
+            321,
+            108,
+            89
+          ]
+        },
+        {
+          "product_code": "UZ.FL.S.IP.COMMERS.WORKING",
+          "value": 305,
+          "monthly": [
+            98,
+            110,
+            97
+          ]
+        },
+        {
+          "product_code": "UZ.FL.S.AUTO.MICRO.WORKING",
+          "value": 274,
+          "monthly": [
+            0,
+            0,
+            274
+          ]
+        },
+        {
+          "product_code": "UZ.FL.S.MICRO.WORKING",
+          "value": 190,
+          "monthly": [
+            91,
+            54,
+            45
+          ]
+        },
+        {
+          "product_code": "UZ.FL.S.MICROCRED",
+          "value": 136,
+          "monthly": [
+            1,
+            15,
+            120
+          ]
+        },
+        {
+          "product_code": "UZ.FL.S.AUTO.SELF.EMP",
+          "value": 109,
+          "monthly": [
+            48,
+            46,
+            15
+          ]
+        },
+        {
+          "product_code": "UZ.FL.S.IP.HYBRID.WORKING",
+          "value": 91,
+          "monthly": [
+            42,
+            25,
+            24
+          ]
+        },
+        {
+          "product_code": "UZ.FL.S.CONSUMER.WORKING",
+          "value": 81,
+          "monthly": [
+            32,
+            25,
+            24
+          ]
+        },
+        {
+          "product_code": "UZ.FL.S.IP.HYBRID.SELF.EMP",
+          "value": 73,
+          "monthly": [
+            18,
+            45,
+            10
+          ]
+        },
+        {
+          "product_code": "UZ.FL.S.AUTO.WORKING.TEST",
+          "value": 44,
+          "monthly": [
+            12,
+            18,
+            14
+          ]
+        },
+        {
+          "product_code": "UZ.FL.S.IP.OTHER.SELF.EMP",
+          "value": 32,
+          "monthly": [
+            28,
+            1,
+            3
+          ]
+        },
+        {
+          "product_code": "UZ.FL.S.NOMIB.SELF.EMP",
+          "value": 24,
+          "monthly": [
+            0,
+            0,
+            24
+          ]
+        },
+        {
+          "product_code": "UZ.FL.S.CONSUMER.SELF.EMP",
+          "value": 19,
+          "monthly": [
+            19,
+            0,
+            0
+          ]
+        },
+        {
+          "product_code": "UZ.FL.S.WEB.SELF.SECURE",
+          "value": 10,
+          "monthly": [
+            0,
+            0,
+            10
+          ]
+        },
+        {
+          "product_code": "UZ.FL.S.IP.COMMERS.SELF.EMP",
+          "value": 7,
+          "monthly": [
+            0,
+            7,
+            0
+          ]
+        },
+        {
+          "product_code": "UZ.FL.S.IP.OTHER.WORKING",
+          "value": 5,
+          "monthly": [
+            1,
+            1,
+            3
+          ]
+        },
+        {
+          "product_code": "UZ.FL.S.IP.COM.DEBT.SELF.EMP",
+          "value": 4,
+          "monthly": [
+            0,
+            4,
+            0
+          ]
+        },
+        {
+          "product_code": "UZ.FL.S.RE.IP.MINFIN.WORKING",
+          "value": 3,
+          "monthly": [
+            0,
+            0,
+            3
+          ]
+        },
+        {
+          "product_code": "UZ.FL.S.IP.ITPARK.COMMERS.WORKING",
+          "value": 2,
+          "monthly": [
+            2,
+            0,
+            0
+          ]
+        },
+        {
+          "product_code": "UZ.FL.S2.WEB.SELF.SECURE",
+          "value": 0,
+          "monthly": [
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "product_code": "UZ.FL.S.FUTURE.STEP.SELF.EMP",
+          "value": 0,
+          "monthly": [
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "product_code": "UZ.FL.S.RE.IP.HYBRID.WORKING",
+          "value": 0,
+          "monthly": [
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "product_code": "UZ.FL.S.IP.HYBRID.WORKING.DEBT",
+          "value": 0,
+          "monthly": [
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "product_code": "UZ.FL.S.IP.COM.WORK.90.PLUS",
+          "value": 0,
+          "monthly": [
+            0,
+            0,
+            0
+          ]
+        }
+      ]
+    },
+    "q2": {
+      "months": [
+        "Апрель",
+        "Май",
+        "Июнь"
+      ],
+      "products": [
+        {
+          "product_code": "UZ.FL.S.ONLINE.UNIVER",
+          "value": 137293,
+          "monthly": [
+            45614,
+            47755,
+            43924
+          ]
+        },
+        {
+          "product_code": "UZ.FL.S.ONLINE.SALARY",
+          "value": 67094,
+          "monthly": [
+            23756,
+            22618,
+            20720
+          ]
+        },
+        {
+          "product_code": "UZ.FL.S.MICRO.SELF.EMP",
+          "value": 9604,
+          "monthly": [
+            3630,
+            2398,
+            3576
+          ]
+        },
+        {
+          "product_code": "UZ.FL.S.WEB.SELF.SECURE",
+          "value": 4955,
+          "monthly": [
+            1483,
+            1750,
+            1722
+          ]
+        },
+        {
+          "product_code": "UZ.FL.S.WEB.SELF.EMP.YOUTH",
+          "value": 2506,
+          "monthly": [
+            1187,
+            653,
+            666
+          ]
+        },
+        {
+          "product_code": "UZ.FL.S2.WEB.SELF.SECURE",
+          "value": 2170,
+          "monthly": [
+            508,
+            835,
+            827
+          ]
+        },
+        {
+          "product_code": "UZ.FL.S.SUBS.MIN.FIN.ALL",
+          "value": 1740,
+          "monthly": [
+            1341,
+            292,
+            107
+          ]
+        },
+        {
+          "product_code": "UZ.FL.S.IP.MINFIN.WORKING",
+          "value": 1648,
+          "monthly": [
+            813,
+            423,
+            412
+          ]
+        },
+        {
+          "product_code": "UZ.FL.S.OFLINE.MICRO.WORKING",
+          "value": 895,
+          "monthly": [
+            363,
+            227,
+            305
+          ]
+        },
+        {
+          "product_code": "UZ.FL.S.MICROCRED",
+          "value": 763,
+          "monthly": [
+            271,
+            256,
+            236
+          ]
+        },
+        {
+          "product_code": "UZ.FL.S.AUTO.MICRO.WORKING",
+          "value": 708,
+          "monthly": [
+            251,
+            191,
+            266
+          ]
+        },
+        {
+          "product_code": "UZ.FL.S2.WEB.SELF.EMP.YOUTH",
+          "value": 669,
+          "monthly": [
+            277,
+            220,
+            172
+          ]
+        },
+        {
+          "product_code": "UZ.FL.S.OFLINE.MICRO.SELF.EMP",
+          "value": 651,
+          "monthly": [
+            272,
+            204,
+            175
+          ]
+        },
+        {
+          "product_code": "UZ.FL.S.IP.MINFIN.SELF.EMP",
+          "value": 558,
+          "monthly": [
+            209,
+            187,
+            162
+          ]
+        },
+        {
+          "product_code": "UZ.FL.S.AUTO.WORKING",
+          "value": 526,
+          "monthly": [
+            175,
+            163,
+            188
+          ]
+        },
+        {
+          "product_code": "UZ.FL.S2.ONLINE.SALARY",
+          "value": 418,
+          "monthly": [
+            418,
+            0,
+            0
+          ]
+        },
+        {
+          "product_code": "UZ.FL.S.IP.COMMERS.WORKING",
+          "value": 322,
+          "monthly": [
+            93,
+            99,
+            130
+          ]
+        },
+        {
+          "product_code": "UZ.FL.S2.ONLINE.UNIVER",
+          "value": 245,
+          "monthly": [
+            245,
+            0,
+            0
+          ]
+        },
+        {
+          "product_code": "UZ.FL.S.EDUCATION",
+          "value": 217,
+          "monthly": [
+            101,
+            83,
+            33
+          ]
+        },
+        {
+          "product_code": "UZ.FL.S.SUBS.MIN.FIN.SUR",
+          "value": 142,
+          "monthly": [
+            133,
+            9,
+            0
+          ]
+        },
+        {
+          "product_code": "UZ.FL.S.NOMIB.SELF.EMP",
+          "value": 123,
+          "monthly": [
+            42,
+            27,
+            54
+          ]
+        },
+        {
+          "product_code": "UZ.FL.S.CONSUMER.WORKING",
+          "value": 110,
+          "monthly": [
+            49,
+            35,
+            26
+          ]
+        },
+        {
+          "product_code": "UZ.FL.S.IP.HYBRID.WORKING",
+          "value": 79,
+          "monthly": [
+            14,
+            15,
+            50
+          ]
+        },
+        {
+          "product_code": "UZ.FL.S.MICRO.WORKING",
+          "value": 71,
+          "monthly": [
+            24,
+            33,
+            14
+          ]
+        },
+        {
+          "product_code": "UZ.FL.S.AUTO.SELF.EMP",
+          "value": 67,
+          "monthly": [
+            32,
+            17,
+            18
+          ]
+        },
+        {
+          "product_code": "UZ.FL.S.FUTURE.STEP.SELF.EMP",
+          "value": 39,
+          "monthly": [
+            22,
+            9,
+            8
+          ]
+        },
+        {
+          "product_code": "UZ.FL.S.IP.HYBRID.SELF.EMP",
+          "value": 32,
+          "monthly": [
+            12,
+            8,
+            12
+          ]
+        },
+        {
+          "product_code": "UZ.FL.S.RE.IP.MINFIN.WORKING",
+          "value": 32,
+          "monthly": [
+            14,
+            17,
+            1
+          ]
+        },
+        {
+          "product_code": "UZ.FL.S.RE.IP.HYBRID.WORKING",
+          "value": 21,
+          "monthly": [
+            0,
+            11,
+            10
+          ]
+        },
+        {
+          "product_code": "UZ.FL.S.IP.COMMERS.SELF.EMP",
+          "value": 16,
+          "monthly": [
+            0,
+            9,
+            7
+          ]
+        },
+        {
+          "product_code": "UZ.FL.S.IP.OTHER.SELF.EMP",
+          "value": 9,
+          "monthly": [
+            1,
+            2,
+            6
+          ]
+        },
+        {
+          "product_code": "UZ.FL.S.IP.HYBRID.WORKING.DEBT",
+          "value": 5,
+          "monthly": [
+            0,
+            0,
+            5
+          ]
+        },
+        {
+          "product_code": "UZ.FL.S.IP.COM.WORK.90.PLUS",
+          "value": 3,
+          "monthly": [
+            0,
+            0,
+            3
+          ]
+        },
+        {
+          "product_code": "UZ.FL.S.IP.OTHER.WORKING",
+          "value": 1,
+          "monthly": [
+            1,
+            0,
+            0
+          ]
+        },
+        {
+          "product_code": "UZ.FL.S.WEB.SELF.EMP.OTHER",
+          "value": 0,
+          "monthly": [
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "product_code": "UZ.FL.S.AUTO.WORKING.TEST",
+          "value": 0,
+          "monthly": [
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "product_code": "UZ.FL.S.CONSUMER.SELF.EMP",
+          "value": 0,
+          "monthly": [
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "product_code": "UZ.FL.S.IP.COM.DEBT.SELF.EMP",
+          "value": 0,
+          "monthly": [
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "product_code": "UZ.FL.S.IP.ITPARK.COMMERS.WORKING",
+          "value": 0,
+          "monthly": [
+            0,
+            0,
+            0
+          ]
+        }
+      ]
+    }
   }
 };
 
@@ -7324,6 +8643,8 @@
                 renderCardsDashboard();
             } else if (activeMainTab === 'cardsv2') {
                 renderCardsV2Dashboard();
+            } else if (activeMainTab === 'scoring') {
+                renderScoringDashboard();
             }
         }
 
@@ -7822,6 +9143,8 @@
             document.getElementById('main-tab-cards').classList.toggle('active', tabName === 'cards');
             const cardsv2TabBtn = document.getElementById('main-tab-cardsv2');
             if (cardsv2TabBtn) cardsv2TabBtn.classList.toggle('active', tabName === 'cardsv2');
+            const scoringTabBtn = document.getElementById('main-tab-scoring');
+            if (scoringTabBtn) scoringTabBtn.classList.toggle('active', tabName === 'scoring');
             const jiraTabBtn = document.getElementById('main-tab-jira');
             if (jiraTabBtn) jiraTabBtn.classList.toggle('active', tabName === 'jira');
 
@@ -7832,6 +9155,8 @@
             document.getElementById('panel-cards').style.display = tabName === 'cards' ? 'flex' : 'none';
             const cardsv2Panel = document.getElementById('panel-cardsv2');
             if (cardsv2Panel) cardsv2Panel.style.display = tabName === 'cardsv2' ? 'flex' : 'none';
+            const scoringPanel = document.getElementById('panel-scoring');
+            if (scoringPanel) scoringPanel.style.display = tabName === 'scoring' ? 'flex' : 'none';
             const jiraPanel = document.getElementById('panel-jira');
             if (jiraPanel) jiraPanel.style.display = tabName === 'jira' ? 'flex' : 'none';
 
@@ -7845,6 +9170,8 @@
                 renderCardsDashboard();
             } else if (tabName === 'cardsv2') {
                 renderCardsV2Dashboard();
+            } else if (tabName === 'scoring') {
+                renderScoringDashboard();
             } else {
                 updateDashboard();
             }
@@ -8305,6 +9632,79 @@
                 cardsV2TopupsChart.options.plugins.legend.labels.color = colors.textSecondary;
                 cardsV2TopupsChart.update();
             }
+        }
+
+        function renderScoringDashboard() {
+            const periodData = dashboardData.scoring[activePeriod];
+            if (!periodData) return;
+
+            // 1. Render Top 4 KPI Blocks
+            const products = periodData.products;
+            
+            // Top 1
+            const top1 = products[0] || { product_code: '-', value: 0 };
+            document.getElementById('kpi-scoring-top1-title').innerText = top1.product_code;
+            animateValue('kpi-scoring-top1-value', 0, top1.value, 800);
+            
+            // Top 2
+            const top2 = products[1] || { product_code: '-', value: 0 };
+            document.getElementById('kpi-scoring-top2-title').innerText = top2.product_code;
+            animateValue('kpi-scoring-top2-value', 0, top2.value, 800);
+            
+            // Top 3
+            const top3 = products[2] || { product_code: '-', value: 0 };
+            document.getElementById('kpi-scoring-top3-title').innerText = top3.product_code;
+            animateValue('kpi-scoring-top3-value', 0, top3.value, 800);
+            
+            // Top 4
+            const top4 = products[3] || { product_code: '-', value: 0 };
+            document.getElementById('kpi-scoring-top4-title').innerText = top4.product_code;
+            animateValue('kpi-scoring-top4-value', 0, top4.value, 800);
+
+            // 2. Render Table
+            renderScoringTable();
+        }
+
+        function renderScoringTable() {
+            const tableBody = document.getElementById('scoring-table-body');
+            if (!tableBody) return;
+
+            const slider = document.getElementById('scoring-top-slider');
+            const sliderVal = document.getElementById('scoring-slider-val');
+            const topN = parseInt(slider.value);
+            sliderVal.innerText = topN;
+
+            const periodData = dashboardData.scoring[activePeriod];
+            const months = periodData.months;
+            const products = periodData.products;
+
+            // Update the table headers dynamically!
+            const thead = tableBody.closest('table').querySelector('thead tr');
+            if (thead) {
+                let headersHTML = `<th style="padding: 10px 16px; font-weight: 600; text-align: left; color: var(--text-secondary);">Код продукта</th>`;
+                months.forEach(m => {
+                    headersHTML += `<th style="padding: 10px 16px; font-weight: 600; text-align: right; color: var(--text-secondary);">${m}</th>`;
+                });
+                headersHTML += `<th style="padding: 10px 16px; font-weight: 600; text-align: right; color: var(--text-secondary);">ОБЩЕЕ</th>`;
+                thead.innerHTML = headersHTML;
+            }
+
+            const sortedProducts = [...products]
+                .filter(p => p.value > 0)
+                .slice(0, topN);
+
+            tableBody.innerHTML = sortedProducts.map(p => {
+                let rowCells = `<td style="padding: 12px 16px; color: var(--text-primary); font-weight: 500; word-break: break-all;">${p.product_code}</td>`;
+                p.monthly.forEach(val => {
+                    rowCells += `<td style="padding: 12px 16px; text-align: right; color: var(--text-secondary);">${formatNumber(val)}</td>`;
+                });
+                rowCells += `<td style="padding: 12px 16px; text-align: right; color: var(--text-primary); font-weight: 700;">${formatNumber(p.value)}</td>`;
+                return `<tr style="border-bottom: 1px solid var(--card-border); transition: background-color 0.2s; cursor: default;" class="table-hover-row">${rowCells}</tr>`;
+            }).join('');
+        }
+
+        function handleScoringSliderChange(val) {
+            renderScoringTable();
         }
 
         function renderRiskDashboard() {
