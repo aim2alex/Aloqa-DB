@@ -552,7 +552,6 @@ def main():
         months_cols = ['01', '02', '03', '04', '05', '06']
         for col in months_cols:
             df_scoring[col] = pd.to_numeric(df_scoring[col].fillna(0))
-        df_scoring = df_scoring.sort_values(by='всего', ascending=False).head(35)
         
         def get_scoring_period_data(cols):
             data_list = []
@@ -4127,7 +4126,7 @@ def main():
 
             const totalScored = products.reduce((sum, p) => sum + p.value, 0);
             const avgPerMonth = months.length > 0 ? Math.round(totalScored / months.length) : 0;
-            const totalModels = 35;
+            const totalModels = activePeriod === 'all' ? 35 : products.filter(p => p.value > 0).length;
 
             // 2. Animate and display metrics
             animateValue('kpi-scoring-total-value', 0, totalScored, 800);
