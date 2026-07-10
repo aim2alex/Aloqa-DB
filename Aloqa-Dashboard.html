@@ -7665,54 +7665,6 @@
             0,
             0
           ]
-        },
-        {
-          "product_code": "UZ.FL.S.IP.HYBRID.WORKING.DEBT",
-          "value": 5,
-          "monthly": [
-            0,
-            0,
-            0,
-            0,
-            0,
-            5
-          ]
-        },
-        {
-          "product_code": "UZ.FL.S.IP.COM.DEBT.SELF.EMP",
-          "value": 4,
-          "monthly": [
-            0,
-            4,
-            0,
-            0,
-            0,
-            0
-          ]
-        },
-        {
-          "product_code": "UZ.FL.S.IP.COM.WORK.90.PLUS",
-          "value": 3,
-          "monthly": [
-            0,
-            0,
-            0,
-            0,
-            0,
-            3
-          ]
-        },
-        {
-          "product_code": "UZ.FL.S.IP.ITPARK.COMMERS.WORKING",
-          "value": 2,
-          "monthly": [
-            2,
-            0,
-            0,
-            0,
-            0,
-            0
-          ]
         }
       ]
     },
@@ -8003,30 +7955,12 @@
           ]
         },
         {
-          "product_code": "UZ.FL.S.IP.COM.DEBT.SELF.EMP",
-          "value": 4,
-          "monthly": [
-            0,
-            4,
-            0
-          ]
-        },
-        {
           "product_code": "UZ.FL.S.RE.IP.MINFIN.WORKING",
           "value": 3,
           "monthly": [
             0,
             0,
             3
-          ]
-        },
-        {
-          "product_code": "UZ.FL.S.IP.ITPARK.COMMERS.WORKING",
-          "value": 2,
-          "monthly": [
-            2,
-            0,
-            0
           ]
         },
         {
@@ -8049,24 +7983,6 @@
         },
         {
           "product_code": "UZ.FL.S.RE.IP.HYBRID.WORKING",
-          "value": 0,
-          "monthly": [
-            0,
-            0,
-            0
-          ]
-        },
-        {
-          "product_code": "UZ.FL.S.IP.HYBRID.WORKING.DEBT",
-          "value": 0,
-          "monthly": [
-            0,
-            0,
-            0
-          ]
-        },
-        {
-          "product_code": "UZ.FL.S.IP.COM.WORK.90.PLUS",
           "value": 0,
           "monthly": [
             0,
@@ -8363,24 +8279,6 @@
           ]
         },
         {
-          "product_code": "UZ.FL.S.IP.HYBRID.WORKING.DEBT",
-          "value": 5,
-          "monthly": [
-            0,
-            0,
-            5
-          ]
-        },
-        {
-          "product_code": "UZ.FL.S.IP.COM.WORK.90.PLUS",
-          "value": 3,
-          "monthly": [
-            0,
-            0,
-            3
-          ]
-        },
-        {
           "product_code": "UZ.FL.S.IP.OTHER.WORKING",
           "value": 1,
           "monthly": [
@@ -8409,24 +8307,6 @@
         },
         {
           "product_code": "UZ.FL.S.CONSUMER.SELF.EMP",
-          "value": 0,
-          "monthly": [
-            0,
-            0,
-            0
-          ]
-        },
-        {
-          "product_code": "UZ.FL.S.IP.COM.DEBT.SELF.EMP",
-          "value": 0,
-          "monthly": [
-            0,
-            0,
-            0
-          ]
-        },
-        {
-          "product_code": "UZ.FL.S.IP.ITPARK.COMMERS.WORKING",
           "value": 0,
           "monthly": [
             0,
@@ -9481,7 +9361,7 @@
 
             const totalScored = products.reduce((sum, p) => sum + p.value, 0);
             const avgPerMonth = months.length > 0 ? Math.round(totalScored / months.length) : 0;
-            const totalModels = products.filter(p => p.value > 0).length;
+            const totalModels = 35;
 
             // 2. Animate and display metrics
             animateValue('kpi-scoring-total-value', 0, totalScored, 800);
