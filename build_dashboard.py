@@ -490,80 +490,60 @@ def main():
             'q2': {'total_issued': 0, 'avg_balance': 0.0, 'total_credit': 0.0, 'counts': [], 'balances': [], 'credits': [], 'months': []}
         }
 
-    cardsv2_stats = {
-        "all": {
-            "months": ["Январь", "Февраль", "Март", "Апрель", "Май", "Июнь"],
-            "openCards": {
-                "DIDOX": [0, 2, 3, 15, 6, 6],
-                "Sello": [338, 247, 328, 432, 105, 12],
-                "Алименты": [9024, 152, 1, 1701, 1, 2729],
-                "Социальные карты": [4839, 24498, 511, 1063, 459, 13087],
-                "Депозиты сиротам": [1638, 6, 3, 0, 1479, 291]
+    print("Reading and aggregating Cards v2 data from Выгрузка по FDD-5577 (Свод).xlsx...")
+    cardsv2_stats = {}
+    try:
+        df_fdd = pd.read_excel("Выгрузка по FDD-5577 (Свод).xlsx", sheet_name="SQL Results")
+        months_fdd = ['январь', 'февраль', 'март', 'апрель', 'май', 'июнь']
+        
+        def extract_section_data(start_row, end_row, col_name):
+            data_dict = {}
+            for r in range(start_row, end_row + 1):
+                row = df_fdd.iloc[r]
+                product_name = str(row[col_name]).strip()
+                vals = []
+                for m in months_fdd:
+                    val = row[m]
+                    if pd.isna(val):
+                        vals.append(0.0)
+                    else:
+                        vals.append(float(val))
+                data_dict[product_name] = vals
+            return data_dict
+
+        open_cards_data = extract_section_data(0, 4, 'Кол-во открытых карт')
+        daily_balance_data = extract_section_data(7, 11, 'Кол-во открытых карт')
+        topups_data = extract_section_data(14, 18, 'Кол-во открытых карт')
+        
+        months_ru = ["Январь", "Февраль", "Март", "Апрель", "Май", "Июнь"]
+        
+        cardsv2_stats = {
+            'all': {
+                'months': months_ru,
+                'openCards': open_cards_data,
+                'dailyBalance': daily_balance_data,
+                'topups': topups_data
             },
-            "dailyBalance": {
-                "DIDOX": [0, 142.86, 3741.94, 10533.34, 2888054.78, 1626206.94],
-                "Sello": [212618.11, 984207.25, 1583080.54, 3912273.18, 1248060.49, 2469852.33],
-                "Алименты": [74170991.16, 110092778.99, 100830715.44, 280384524.67, 293002964.19, 425982433.46],
-                "Социальные карты": [67835284.33, 81746708.63, 66973609.72, 67313648.52, 69115318.62, 5997429367.27],
-                "Депозиты сиротам": [644584695.3, 709274780.78, 653380925.27, 664734057.75, 1039115278.98, 1175492425.91]
+            'q1': {
+                'months': months_ru[:3],
+                'openCards': {k: v[:3] for k, v in open_cards_data.items()},
+                'dailyBalance': {k: v[:3] for k, v in daily_balance_data.items()},
+                'topups': {k: v[:3] for k, v in topups_data.items()}
             },
-            "topups": {
-                "DIDOX": [0, 2000, 56000, 100000, 113588295, 106218056],
-                "Sello": [255190118.47, 488566292.07, 990421608.19, 821316449.29, 614522021.94, 319973506.56],
-                "Алименты": [2469838450.56, 3141895877.41, 3557992398.84, 6800217643.25, 4179912865.94, 6558683332.18],
-                "Социальные карты": [1637068470.46, 1746703350.89, 1861614176.23, 2185094381.48, 2029278930.42, 118487265221.35],
-                "Депозиты сиротам": [9932401880, 38931569.49, 161285834.88, 76478313.6, 6134444384.33, 1554845952.72]
-            }
-        },
-        "q1": {
-            "months": ["Январь", "Февраль", "Март"],
-            "openCards": {
-                "DIDOX": [0, 2, 3],
-                "Sello": [338, 247, 328],
-                "Алименты": [9024, 152, 1],
-                "Социальные карты": [4839, 24498, 511],
-                "Депозиты сиротам": [1638, 6, 3]
-            },
-            "dailyBalance": {
-                "DIDOX": [0, 142.86, 3741.94],
-                "Sello": [212618.11, 984207.25, 1583080.54],
-                "Алименты": [74170991.16, 110092778.99, 100830715.44],
-                "Социальные карты": [67835284.33, 81746708.63, 66973609.72],
-                "Депозиты сиротам": [644584695.3, 709274780.78, 653380925.27]
-            },
-            "topups": {
-                "DIDOX": [0, 2000, 56000],
-                "Sello": [255190118.47, 488566292.07, 990421608.19],
-                "Алименты": [2469838450.56, 3141895877.41, 3557992398.84],
-                "Социальные карты": [1637068470.46, 1746703350.89, 1861614176.23],
-                "Депозиты сиротам": [9932401880, 38931569.49, 161285834.88]
-            }
-        },
-        "q2": {
-            "months": ["Апрель", "Май", "Июнь"],
-            "openCards": {
-                "DIDOX": [15, 6, 6],
-                "Sello": [432, 105, 12],
-                "Алименты": [1701, 1, 2729],
-                "Социальные карты": [1063, 459, 13087],
-                "Депозиты сиротам": [0, 1479, 291]
-            },
-            "dailyBalance": {
-                "DIDOX": [10533.34, 2888054.78, 1626206.94],
-                "Sello": [3912273.18, 1248060.49, 2469852.33],
-                "Алименты": [280384524.67, 293002964.19, 425982433.46],
-                "Социальные карты": [67313648.52, 69115318.62, 5997429367.27],
-                "Депозиты сиротам": [664734057.75, 1039115278.98, 1175492425.91]
-            },
-            "topups": {
-                "DIDOX": [100000, 113588295, 106218056],
-                "Sello": [821316449.29, 614522021.94, 319973506.56],
-                "Алименты": [6800217643.25, 4179912865.94, 6558683332.18],
-                "Социальные карты": [2185094381.48, 2029278930.42, 118487265221.35],
-                "Депозиты сиротам": [76478313.6, 6134444384.33, 1554845952.72]
+            'q2': {
+                'months': months_ru[3:],
+                'openCards': {k: v[3:] for k, v in open_cards_data.items()},
+                'dailyBalance': {k: v[3:] for k, v in daily_balance_data.items()},
+                'topups': {k: v[3:] for k, v in topups_data.items()}
             }
         }
-    }
+    except Exception as e:
+        print(f"Error parsing Выгрузка по FDD-5577 (Свод).xlsx: {e}")
+        cardsv2_stats = {
+            'all': {'months': [], 'openCards': {}, 'dailyBalance': {}, 'topups': {}},
+            'q1': {'months': [], 'openCards': {}, 'dailyBalance': {}, 'topups': {}},
+            'q2': {'months': [], 'openCards': {}, 'dailyBalance': {}, 'topups': {}}
+        }
 
     print("Reading and aggregating Scoring data...")
     scoring_stats = {}
@@ -2444,38 +2424,68 @@ def main():
                 </div>
             </div>
 
-            <!-- Row: Charts -->
+            <!-- Row: Tables -->
             <section class="charts-row-vertical" style="display: flex; flex-direction: column; gap: 2rem;">
                 <!-- Card 1: Кол-во открытых карт -->
-                <div class="card chart-card">
-                    <div class="chart-card-header">
+                <div class="card chart-card" style="padding: 1.5rem 2rem;">
+                    <div class="chart-card-header" style="margin-bottom: 1rem;">
                         <span class="chart-card-title">Кол-во открытых карт</span>
                     </div>
-                    <div class="cardsv2-legend-grid" id="cardsv2-open-legend-grid"></div>
-                    <div class="chart-container-bar" style="height: 380px; position: relative; margin-top: 1rem;">
-                        <canvas id="chart-cardsv2-open"></canvas>
+                    <div style="overflow-x: auto;">
+                        <table style="width: 100%; border-collapse: collapse; text-align: left; font-size: 0.95rem;">
+                            <thead>
+                                <tr style="border-bottom: 1px solid var(--card-border); color: var(--text-secondary); font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.05em;">
+                                    <th style="padding: 12px 16px; font-weight: 600; text-align: left; color: var(--text-secondary);">Продукт</th>
+                                    <!-- Rendered dynamically -->
+                                    <th style="padding: 12px 16px; font-weight: 600; text-align: right; color: var(--text-secondary);">ОБЩЕЕ</th>
+                                </tr>
+                            </thead>
+                            <tbody id="cardsv2-open-table-body">
+                                <!-- Rendered dynamically -->
+                            </tbody>
+                        </table>
                     </div>
                 </div>
 
                 <!-- Card 2: Дневной остаток -->
-                <div class="card chart-card">
-                    <div class="chart-card-header">
+                <div class="card chart-card" style="padding: 1.5rem 2rem;">
+                    <div class="chart-card-header" style="margin-bottom: 1rem;">
                         <span class="chart-card-title">Дневной остаток</span>
                     </div>
-                    <div class="cardsv2-legend-grid" id="cardsv2-balance-legend-grid"></div>
-                    <div class="chart-container-bar" style="height: 380px; position: relative; margin-top: 1rem;">
-                        <canvas id="chart-cardsv2-balance"></canvas>
+                    <div style="overflow-x: auto;">
+                        <table style="width: 100%; border-collapse: collapse; text-align: left; font-size: 0.95rem;">
+                            <thead>
+                                <tr style="border-bottom: 1px solid var(--card-border); color: var(--text-secondary); font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.05em;">
+                                    <th style="padding: 12px 16px; font-weight: 600; text-align: left; color: var(--text-secondary);">Продукт</th>
+                                    <!-- Rendered dynamically -->
+                                    <th style="padding: 12px 16px; font-weight: 600; text-align: right; color: var(--text-secondary);">СРЕДНЕЕ</th>
+                                </tr>
+                            </thead>
+                            <tbody id="cardsv2-balance-table-body">
+                                <!-- Rendered dynamically -->
+                            </tbody>
+                        </table>
                     </div>
                 </div>
 
                 <!-- Card 3: Пополнения -->
-                <div class="card chart-card">
-                    <div class="chart-card-header">
+                <div class="card chart-card" style="padding: 1.5rem 2rem;">
+                    <div class="chart-card-header" style="margin-bottom: 1rem;">
                         <span class="chart-card-title">Пополнения</span>
                     </div>
-                    <div class="cardsv2-legend-grid" id="cardsv2-topups-legend-grid"></div>
-                    <div class="chart-container-bar" style="height: 380px; position: relative; margin-top: 1rem;">
-                        <canvas id="chart-cardsv2-topups"></canvas>
+                    <div style="overflow-x: auto;">
+                        <table style="width: 100%; border-collapse: collapse; text-align: left; font-size: 0.95rem;">
+                            <thead>
+                                <tr style="border-bottom: 1px solid var(--card-border); color: var(--text-secondary); font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.05em;">
+                                    <th style="padding: 12px 16px; font-weight: 600; text-align: left; color: var(--text-secondary);">Продукт</th>
+                                    <!-- Rendered dynamically -->
+                                    <th style="padding: 12px 16px; font-weight: 600; text-align: right; color: var(--text-secondary);">ОБЩЕЕ</th>
+                                </tr>
+                            </thead>
+                            <tbody id="cardsv2-topups-table-body">
+                                <!-- Rendered dynamically -->
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </section>
@@ -3154,11 +3164,6 @@ def main():
         let cardsBalanceChart = null;
         let cardsCreditChart = null;
 
-        // Cards v2 Chart instances
-        let cardsV2OpenChart = null;
-        let cardsV2BalanceChart = null;
-        let cardsV2TopupsChart = null;
-
         // Chart instances
         let typesChart = null;
         let themesChart = null;
@@ -3790,7 +3795,6 @@ def main():
             updateRiskChartsTheme();
             updateLoansChartsTheme();
             updateJiraChartsTheme();
-            updateCardsV2ChartsTheme();
         }
 
         // --- Main Tab Switcher and Risks Dashboard Rendering Logic ---
@@ -4015,285 +4019,53 @@ def main():
             const data = dashboardData.cardsv2[activePeriod];
             if (!data) return;
 
-            const themeColors = getThemeColors();
-            
-            // Define colors for each product
-            const productColors = {
-                "DIDOX": "#8b5cf6",
-                "Sello": "#3b82f6",
-                "Алименты": "#ef4444",
-                "Социальные карты": "#10b981",
-                "Депозиты сиротам": "#f59e0b"
-            };
-
-            // Helper to generate line datasets
-            function generateDatasets(chartData) {
-                return Object.keys(chartData).map(productName => {
-                    const color = productColors[productName] || "#ffffff";
-                    return {
-                        label: productName,
-                        data: chartData[productName],
-                        borderColor: color,
-                        backgroundColor: color + "1a", // very subtle transparent background fill
-                        fill: false,
-                        borderWidth: 3,
-                        tension: 0.3,
-                        pointBackgroundColor: color,
-                        pointHoverBackgroundColor: color,
-                        pointRadius: 4,
-                        pointHoverRadius: 6
-                    };
-                });
-            }
-
-            // Helper to format values in legend
-            function formatV2Value(value, isCount) {
+            function formatV2Val(value, isCount) {
                 if (isCount) {
-                    return formatNumber(Math.round(value)) + ' шт.';
+                    return formatNumber(Math.round(value));
                 }
-                if (value === 0) return '0 сум';
-                if (value >= 1e9) return (value / 1e9).toFixed(1) + ' млрд сум';
-                if (value >= 1e6) return (value / 1e6).toFixed(1) + ' млн сум';
-                if (value >= 1e3) return (value / 1e3).toFixed(1) + ' тыс. сум';
-                return value.toFixed(0) + ' сум';
+                return formatNumber(Math.round(value)) + ' сум';
             }
 
-            // 1. Render Open Cards Chart
-            const openCtx = document.getElementById('chart-cardsv2-open').getContext('2d');
-            if (cardsV2OpenChart) {
-                cardsV2OpenChart.destroy();
-            }
-            cardsV2OpenChart = new Chart(openCtx, {
-                type: 'line',
-                data: {
-                    labels: data.months,
-                    datasets: generateDatasets(data.openCards)
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    scales: {
-                        x: {
-                            grid: { display: false },
-                            ticks: { color: themeColors.textSecondary, font: { size: 13 } }
-                        },
-                        y: {
-                            grid: { color: themeColors.gridColor },
-                            ticks: { color: themeColors.textSecondary, font: { size: 13 } }
-                        }
-                    },
-                    plugins: {
-                        legend: {
-                            display: false,
-                            labels: {
-                                color: themeColors.textSecondary
-                            }
-                        },
-                        tooltip: {
-                            enabled: false,
-                            external: externalTooltipHandler
-                        }
-                    }
+            function populateTable(tableId, sectionData, isCount, isAverage) {
+                const tableBody = document.getElementById(tableId);
+                if (!tableBody) return;
+
+                const table = tableBody.closest('table');
+                const thead = table.querySelector('thead tr');
+                const months = data.months;
+
+                // 1. Update Table Headers dynamically
+                if (thead) {
+                    let headersHTML = `<th style="padding: 12px 16px; font-weight: 600; text-align: left; color: var(--text-secondary);">Продукт</th>`;
+                    months.forEach(m => {
+                        headersHTML += `<th style="padding: 12px 16px; font-weight: 600; text-align: right; color: var(--text-secondary);">${m}</th>`;
+                    });
+                    headersHTML += `<th style="padding: 12px 16px; font-weight: 600; text-align: right; color: var(--text-secondary);">${isAverage ? 'СРЕДНЕЕ' : 'ОБЩЕЕ'}</th>`;
+                    thead.innerHTML = headersHTML;
                 }
-            });
 
-            // 2. Render Daily Balance Chart
-            const balanceCtx = document.getElementById('chart-cardsv2-balance').getContext('2d');
-            if (cardsV2BalanceChart) {
-                cardsV2BalanceChart.destroy();
-            }
-            cardsV2BalanceChart = new Chart(balanceCtx, {
-                type: 'line',
-                data: {
-                    labels: data.months,
-                    datasets: generateDatasets(data.dailyBalance)
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    scales: {
-                        x: {
-                            grid: { display: false },
-                            ticks: { color: themeColors.textSecondary, font: { size: 13 } }
-                        },
-                        y: {
-                            grid: { color: themeColors.gridColor },
-                            ticks: { 
-                                color: themeColors.textSecondary, 
-                                font: { size: 13 },
-                                callback: function(value) {
-                                    if (value >= 1e9) return (value / 1e9).toFixed(1) + ' млрд';
-                                    if (value >= 1e6) return (value / 1e6).toFixed(0) + ' млн';
-                                    return value;
-                                }
-                            }
-                        }
-                    },
-                    plugins: {
-                        legend: {
-                            display: false,
-                            labels: {
-                                color: themeColors.textSecondary
-                            }
-                        },
-                        tooltip: {
-                            enabled: false,
-                            external: externalTooltipHandler
-                        }
-                    }
-                }
-            });
-
-            // 3. Render Top-ups Chart
-            const topupsCtx = document.getElementById('chart-cardsv2-topups').getContext('2d');
-            if (cardsV2TopupsChart) {
-                cardsV2TopupsChart.destroy();
-            }
-            cardsV2TopupsChart = new Chart(topupsCtx, {
-                type: 'line',
-                data: {
-                    labels: data.months,
-                    datasets: generateDatasets(data.topups)
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    scales: {
-                        x: {
-                            grid: { display: false },
-                            ticks: { color: themeColors.textSecondary, font: { size: 13 } }
-                        },
-                        y: {
-                            grid: { color: themeColors.gridColor },
-                            ticks: { 
-                                color: themeColors.textSecondary, 
-                                font: { size: 13 },
-                                callback: function(value) {
-                                    if (value >= 1e9) return (value / 1e9).toFixed(1) + ' млрд';
-                                    if (value >= 1e6) return (value / 1e6).toFixed(0) + ' млн';
-                                    return value;
-                                }
-                            }
-                        }
-                    },
-                    plugins: {
-                        legend: {
-                            display: false,
-                            labels: {
-                                color: themeColors.textSecondary
-                            }
-                        },
-                        tooltip: {
-                            enabled: false,
-                            external: externalTooltipHandler
-                        }
-                    }
-                }
-            });
-
-            // Populate custom HTML legends above the charts
-            populateCardsV2Legends(data);
-        }
-
-        function populateCardsV2Legends(data) {
-            const productColors = {
-                "DIDOX": "#8b5cf6",
-                "Sello": "#3b82f6",
-                "Алименты": "#ef4444",
-                "Социальные карты": "#10b981",
-                "Депозиты сиротам": "#f59e0b"
-            };
-
-            function formatV2ValueLocal(value, isCount) {
-                if (isCount) {
-                    return formatNumber(Math.round(value)) + ' шт.';
-                }
-                if (value === 0) return '0 сум';
-                if (value >= 1e9) return (value / 1e9).toFixed(1) + ' млрд сум';
-                if (value >= 1e6) return (value / 1e6).toFixed(1) + ' млн сум';
-                if (value >= 1e3) return (value / 1e3).toFixed(1) + ' тыс. сум';
-                return value.toFixed(0) + ' сум';
-            }
-
-            function updateGrid(containerId, chartObjName, chartData, isCount, isAverage) {
-                const container = document.getElementById(containerId);
-                if (!container) return;
-
-                container.innerHTML = Object.keys(chartData).map((productName, idx) => {
-                    const values = chartData[productName] || [];
-                    const sum = values.reduce((a, b) => a + b, 0);
-                    const val = isAverage ? (values.length > 0 ? sum / values.length : 0) : sum;
-                    const formattedVal = formatV2ValueLocal(val, isCount);
-                    const color = productColors[productName] || "#ffffff";
+                // 2. Populate rows
+                tableBody.innerHTML = Object.keys(sectionData).map(productName => {
+                    const monthlyVals = sectionData[productName] || [];
+                    const totalSum = monthlyVals.reduce((a, b) => a + b, 0);
+                    const finalVal = isAverage ? (monthlyVals.length > 0 ? totalSum / monthlyVals.length : 0) : totalSum;
                     
-                    let chart = null;
-                    if (chartObjName === 'cardsV2OpenChart') chart = cardsV2OpenChart;
-                    else if (chartObjName === 'cardsV2BalanceChart') chart = cardsV2BalanceChart;
-                    else if (chartObjName === 'cardsV2TopupsChart') chart = cardsV2TopupsChart;
-
-                    const isHidden = chart ? !chart.isDatasetVisible(idx) : false;
-                    const hiddenClass = isHidden ? ' hidden-dataset' : '';
+                    let cells = `<td style="padding: 12px 16px; color: var(--text-primary); font-weight: 500;">${productName}</td>`;
+                    monthlyVals.forEach(val => {
+                        cells += `<td style="padding: 12px 16px; text-align: right; color: var(--text-secondary);">${formatV2Val(val, isCount)}</td>`;
+                    });
+                    cells += `<td style="padding: 12px 16px; text-align: right; color: var(--text-primary); font-weight: 700;">${formatV2Val(finalVal, isCount)}</td>`;
 
                     return `
-                        <div class="cardsv2-legend-card${hiddenClass}" 
-                             style="--product-color: ${color};" 
-                             onclick="toggleCardsV2Dataset('${chartObjName}', ${idx}, this)">
-                            <span class="legend-label">${productName}</span>
-                            <span class="legend-value">${formattedVal}</span>
-                        </div>
-                    `;
+                    <tr style="border-bottom: 1px solid var(--card-border); transition: background-color 0.2s; cursor: default;" class="table-hover-row">
+                        ${cells}
+                    </tr>`;
                 }).join('');
             }
 
-            updateGrid('cardsv2-open-legend-grid', 'cardsV2OpenChart', data.openCards, true, false);
-            updateGrid('cardsv2-balance-legend-grid', 'cardsV2BalanceChart', data.dailyBalance, false, true);
-            updateGrid('cardsv2-topups-legend-grid', 'cardsV2TopupsChart', data.topups, false, false);
-        }
-
-        function toggleCardsV2Dataset(chartName, datasetIdx, element) {
-            let chart = null;
-            if (chartName === 'cardsV2OpenChart') chart = cardsV2OpenChart;
-            else if (chartName === 'cardsV2BalanceChart') chart = cardsV2BalanceChart;
-            else if (chartName === 'cardsV2TopupsChart') chart = cardsV2TopupsChart;
-            
-            if (!chart) return;
-
-            const isVisible = chart.isDatasetVisible(datasetIdx);
-            if (isVisible) {
-                chart.hide(datasetIdx);
-                element.classList.add('hidden-dataset');
-            } else {
-                chart.show(datasetIdx);
-                element.classList.remove('hidden-dataset');
-            }
-        }
-
-        function updateCardsV2ChartsTheme() {
-            const colors = getThemeColors();
-            
-            if (cardsV2OpenChart) {
-                cardsV2OpenChart.options.scales.x.ticks.color = colors.textSecondary;
-                cardsV2OpenChart.options.scales.y.ticks.color = colors.textSecondary;
-                cardsV2OpenChart.options.scales.y.grid.color = colors.gridColor;
-                cardsV2OpenChart.options.plugins.legend.labels.color = colors.textSecondary;
-                cardsV2OpenChart.update();
-            }
-            
-            if (cardsV2BalanceChart) {
-                cardsV2BalanceChart.options.scales.x.ticks.color = colors.textSecondary;
-                cardsV2BalanceChart.options.scales.y.ticks.color = colors.textSecondary;
-                cardsV2BalanceChart.options.scales.y.grid.color = colors.gridColor;
-                cardsV2BalanceChart.options.plugins.legend.labels.color = colors.textSecondary;
-                cardsV2BalanceChart.update();
-            }
-
-            if (cardsV2TopupsChart) {
-                cardsV2TopupsChart.options.scales.x.ticks.color = colors.textSecondary;
-                cardsV2TopupsChart.options.scales.y.ticks.color = colors.textSecondary;
-                cardsV2TopupsChart.options.scales.y.grid.color = colors.gridColor;
-                cardsV2TopupsChart.options.plugins.legend.labels.color = colors.textSecondary;
-                cardsV2TopupsChart.update();
-            }
+            populateTable('cardsv2-open-table-body', data.openCards, true, false);
+            populateTable('cardsv2-balance-table-body', data.dailyBalance, false, true);
+            populateTable('cardsv2-topups-table-body', data.topups, false, false);
         }
 
         function renderScoringDashboard() {
