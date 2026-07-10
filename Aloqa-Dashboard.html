@@ -410,6 +410,7 @@
         .card-kassa-eur::before { background: linear-gradient(90deg, #06b6d4, #22d3ee); }
         .card-kassa-rub::before { background: linear-gradient(90deg, #ef4444, #f87171); }
         .card-kassa-sent::before { background: linear-gradient(90deg, #8b5cf6, #ec4899); }
+        .card-kassa-qr::before { background: linear-gradient(90deg, #10b981, #06b6d4); }
 
         .card-total-risks::before { background: linear-gradient(90deg, #8b5cf6, #3b82f6); }
         .card-open-risks::before { background: linear-gradient(90deg, #f59e0b, #eab308); }
@@ -1995,6 +1996,31 @@
                     </div>
                 </div>
 
+                <!-- QR Blocks Count -->
+                <div class="card card-kassa-qr">
+                    <div class="card-header">
+                        <span class="card-title">Собрано блоков с QR</span>
+                        <div class="card-icon" style="background: rgba(16, 185, 129, 0.15); color: #10b981;">
+                            <svg class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                                <rect x="7" y="7" width="3" height="3"></rect>
+                                <rect x="14" y="7" width="3" height="3"></rect>
+                                <rect x="7" y="14" width="3" height="3"></rect>
+                                <rect x="14" y="14" width="3" height="3"></rect>
+                            </svg>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <span class="card-value" id="kpi-kassa-qr-blocks-value">0</span>
+                        <div class="card-meta">
+                            <span>Всего блоков по QR</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Row 2: UZS and Foreign Currencies sum metrics -->
+            <section class="kpi-grid" id="kassa-row2-kpis">
                 <!-- Sum UZS -->
                 <div class="card card-loans-yellow">
                     <div class="card-header">
@@ -2007,16 +2033,13 @@
                         </div>
                     </div>
                     <div class="card-body">
-                        <span class="card-value" id="kpi-kassa-uzs-value" style="font-size: 2.25rem;">0</span>
+                        <span class="card-value" id="kpi-kassa-uzs-value" style="font-size: 2.0rem;">0</span>
                         <div class="card-meta">
                             <span>Узбекский сум</span>
                         </div>
                     </div>
                 </div>
-            </section>
 
-            <!-- Row 2: Foreign Currencies sum metrics -->
-            <section class="kpi-grid" id="kassa-row2-kpis">
                 <!-- Sum USD -->
                 <div class="card card-kassa-usd">
                     <div class="card-header">
@@ -2066,14 +2089,25 @@
                 </div>
             </section>
 
-            <!-- Row 3: Vertical Grouped Bar Chart -->
-            <section class="charts-row" style="margin-top: 2rem;">
+            <!-- Row 3: Vertical Grouped Bar Charts -->
+            <section class="charts-row" style="margin-top: 2rem; display: grid; grid-template-columns: repeat(auto-fit, minmax(450px, 1fr)); gap: 1.5rem;">
+                <!-- Chart 1: Bags sent -->
                 <div class="card chart-card" style="padding: 1.5rem 2rem;">
                     <div class="chart-card-header" style="margin-bottom: 1rem;">
                         <span class="chart-card-title">Динамика отправки сумок по направлениям</span>
                     </div>
                     <div class="chart-container-bar" style="height: 380px; position: relative; margin-top: 1rem;">
                         <canvas id="chart-kassa-sent-bags"></canvas>
+                    </div>
+                </div>
+
+                <!-- Chart 2: Blocks QR collected -->
+                <div class="card chart-card" style="padding: 1.5rem 2rem;">
+                    <div class="chart-card-header" style="margin-bottom: 1rem;">
+                        <span class="chart-card-title">Динамика сбора блоков с QR по направлениям</span>
+                    </div>
+                    <div class="chart-container-bar" style="height: 380px; position: relative; margin-top: 1rem;">
+                        <canvas id="chart-kassa-qr-blocks"></canvas>
                     </div>
                 </div>
             </section>
@@ -8638,6 +8672,24 @@
         38,
         63,
         17
+      ],
+      "type1_qr_data": [
+        1716,
+        2272,
+        1749,
+        1054,
+        947,
+        1242,
+        335
+      ],
+      "type2_qr_data": [
+        1074,
+        1616,
+        1147,
+        783,
+        944,
+        1492,
+        420
       ]
     },
     "q1": {
@@ -8662,6 +8714,16 @@
         42,
         60,
         60
+      ],
+      "type1_qr_data": [
+        1716,
+        2272,
+        1749
+      ],
+      "type2_qr_data": [
+        1074,
+        1616,
+        1147
       ]
     },
     "q2": {
@@ -8686,6 +8748,16 @@
         36,
         38,
         63
+      ],
+      "type1_qr_data": [
+        1054,
+        947,
+        1242
+      ],
+      "type2_qr_data": [
+        783,
+        944,
+        1492
       ]
     }
   }
@@ -8777,6 +8849,7 @@
 
         // Kassa Chart instances
         let kassaSentBagsChart = null;
+        let kassaQrBlocksChart = null;
 
         // Chart instances
         let typesChart = null;
@@ -9805,19 +9878,22 @@
             animateValue('kpi-kassa-bags-value', 0, data.bags, 800);
             animateValue('kpi-kassa-sent-bags-value', 0, data.sent_bags, 800);
             animateValue('kpi-kassa-blocks-value', 0, data.blocks, 800);
+            animateValue('kpi-kassa-qr-blocks-value', 0, data.blocks, 800);
             animateValue('kpi-kassa-uzs-value', 0, data.sum_uzs, 800);
             animateValue('kpi-kassa-usd-value', 0, data.sum_usd, 800);
             animateValue('kpi-kassa-eur-value', 0, data.sum_eur, 800);
             animateValue('kpi-kassa-rub-value', 0, data.sum_rub, 800);
 
-            // Render vertical grouped bar chart
+            // Render vertical grouped charts
             const themeColors = getThemeColors();
-            const ctx = document.getElementById('chart-kassa-sent-bags').getContext('2d');
+
+            // 1. Bags sent chart
+            const ctxBags = document.getElementById('chart-kassa-sent-bags').getContext('2d');
             if (kassaSentBagsChart) {
                 kassaSentBagsChart.destroy();
             }
 
-            kassaSentBagsChart = new Chart(ctx, {
+            kassaSentBagsChart = new Chart(ctxBags, {
                 type: 'bar',
                 data: {
                     labels: data.months,
@@ -9873,6 +9949,69 @@
                     }
                 }
             });
+
+            // 2. QR Blocks collected chart
+            const ctxQR = document.getElementById('chart-kassa-qr-blocks').getContext('2d');
+            if (kassaQrBlocksChart) {
+                kassaQrBlocksChart.destroy();
+            }
+
+            kassaQrBlocksChart = new Chart(ctxQR, {
+                type: 'bar',
+                data: {
+                    labels: data.months,
+                    datasets: [
+                        {
+                            label: 'Передача из ЦКУ в РЦКУ (удалённая касса)',
+                            data: data.type1_qr_data,
+                            backgroundColor: '#06b6d4',
+                            borderColor: '#06b6d4',
+                            borderWidth: 1,
+                            borderRadius: 6,
+                            barPercentage: 0.6,
+                            categoryPercentage: 0.6
+                        },
+                        {
+                            label: 'Передача из РЦКУ в ЦКУ',
+                            data: data.type2_qr_data,
+                            backgroundColor: '#10b981',
+                            borderColor: '#10b981',
+                            borderWidth: 1,
+                            borderRadius: 6,
+                            barPercentage: 0.6,
+                            categoryPercentage: 0.6
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        x: {
+                            grid: { display: false },
+                            ticks: { color: themeColors.textSecondary, font: { size: 14 } }
+                        },
+                        y: {
+                            grid: { color: themeColors.gridColor },
+                            ticks: { color: themeColors.textSecondary, font: { size: 14 } }
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            position: 'bottom',
+                            labels: {
+                                color: themeColors.textSecondary,
+                                font: { size: 14 },
+                                padding: 20
+                            }
+                        },
+                        tooltip: {
+                            enabled: false,
+                            external: externalTooltipHandler
+                        }
+                    }
+                }
+            });
         }
 
         function updateKassaChartsTheme() {
@@ -9883,6 +10022,13 @@
                 kassaSentBagsChart.options.scales.y.grid.color = colors.gridColor;
                 kassaSentBagsChart.options.plugins.legend.labels.color = colors.textSecondary;
                 kassaSentBagsChart.update();
+            }
+            if (kassaQrBlocksChart) {
+                kassaQrBlocksChart.options.scales.x.ticks.color = colors.textSecondary;
+                kassaQrBlocksChart.options.scales.y.ticks.color = colors.textSecondary;
+                kassaQrBlocksChart.options.scales.y.grid.color = colors.gridColor;
+                kassaQrBlocksChart.options.plugins.legend.labels.color = colors.textSecondary;
+                kassaQrBlocksChart.update();
             }
         }
 
