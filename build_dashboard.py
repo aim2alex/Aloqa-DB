@@ -2750,25 +2750,6 @@ def main():
                     </div>
                 </div>
 
-                <!-- Bags Sent Count -->
-                <div class="card card-kassa-sent">
-                    <div class="card-header">
-                        <span class="card-title">Отправлено сумок</span>
-                        <div class="card-icon" style="background: rgba(139, 92, 246, 0.15); color: #8b5cf6;">
-                            <svg class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <line x1="22" y1="2" x2="11" y2="13"></line>
-                                <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
-                            </svg>
-                        </div>
-                    </div>
-                    <div class="card-body">
-                        <span class="card-value" id="kpi-kassa-sent-bags-value">0</span>
-                        <div class="card-meta">
-                            <span>Кассы ЦКУ / РЦКУ</span>
-                        </div>
-                    </div>
-                </div>
-
                 <!-- Blocks Count -->
                 <div class="card card-mc-completed">
                     <div class="card-header">
@@ -2790,31 +2771,6 @@ def main():
                     </div>
                 </div>
 
-                <!-- QR Blocks Count -->
-                <div class="card card-kassa-qr">
-                    <div class="card-header">
-                        <span class="card-title">Собрано блоков с QR</span>
-                        <div class="card-icon" style="background: rgba(16, 185, 129, 0.15); color: #10b981;">
-                            <svg class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
-                                <rect x="7" y="7" width="3" height="3"></rect>
-                                <rect x="14" y="7" width="3" height="3"></rect>
-                                <rect x="7" y="14" width="3" height="3"></rect>
-                                <rect x="14" y="14" width="3" height="3"></rect>
-                            </svg>
-                        </div>
-                    </div>
-                    <div class="card-body">
-                        <span class="card-value" id="kpi-kassa-qr-blocks-value">0</span>
-                        <div class="card-meta">
-                            <span>Всего блоков по QR</span>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <!-- Row 2: UZS and Foreign Currencies sum metrics -->
-            <section class="kpi-grid" id="kassa-row2-kpis">
                 <!-- Sum UZS -->
                 <div class="card card-loans-yellow">
                     <div class="card-header">
@@ -2827,13 +2783,16 @@ def main():
                         </div>
                     </div>
                     <div class="card-body">
-                        <span class="card-value" id="kpi-kassa-uzs-value" style="font-size: 2.0rem;">0</span>
+                        <span class="card-value" id="kpi-kassa-uzs-value" style="font-size: 2.25rem;">0</span>
                         <div class="card-meta">
                             <span>Узбекский сум</span>
                         </div>
                     </div>
                 </div>
+            </section>
 
+            <!-- Row 2: Foreign Currencies sum metrics -->
+            <section class="kpi-grid" id="kassa-row2-kpis">
                 <!-- Sum USD -->
                 <div class="card card-kassa-usd">
                     <div class="card-header">
@@ -4496,9 +4455,7 @@ def main():
             if (!data) return;
 
             animateValue('kpi-kassa-bags-value', 0, data.bags, 800);
-            animateValue('kpi-kassa-sent-bags-value', 0, data.sent_bags, 800);
             animateValue('kpi-kassa-blocks-value', 0, data.blocks, 800);
-            animateValue('kpi-kassa-qr-blocks-value', 0, data.blocks, 800);
             animateValue('kpi-kassa-uzs-value', 0, data.sum_uzs, 800);
             animateValue('kpi-kassa-usd-value', 0, data.sum_usd, 800);
             animateValue('kpi-kassa-eur-value', 0, data.sum_eur, 800);
