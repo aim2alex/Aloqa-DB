@@ -2427,11 +2427,13 @@ def main():
             <!-- Row: Tables -->
             <section class="charts-row-vertical" style="display: flex; flex-direction: column; gap: 2rem;">
                 <!-- Card 1: Кол-во открытых карт -->
+                <!-- Card 1: Кол-во открытых карт -->
                 <div class="card chart-card" style="padding: 1.5rem 2rem;">
                     <div class="chart-card-header" style="margin-bottom: 1rem;">
                         <span class="chart-card-title">Кол-во открытых карт</span>
                     </div>
-                    <div style="overflow-x: auto;">
+                    <div class="cardsv2-legend-grid" id="cardsv2-open-legend-grid"></div>
+                    <div style="overflow-x: auto; margin-top: 1rem;">
                         <table style="width: 100%; border-collapse: collapse; text-align: left; font-size: 0.95rem;">
                             <thead>
                                 <tr style="border-bottom: 1px solid var(--card-border); color: var(--text-secondary); font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.05em;">
@@ -2452,7 +2454,8 @@ def main():
                     <div class="chart-card-header" style="margin-bottom: 1rem;">
                         <span class="chart-card-title">Дневной остаток</span>
                     </div>
-                    <div style="overflow-x: auto;">
+                    <div class="cardsv2-legend-grid" id="cardsv2-balance-legend-grid"></div>
+                    <div style="overflow-x: auto; margin-top: 1rem;">
                         <table style="width: 100%; border-collapse: collapse; text-align: left; font-size: 0.95rem;">
                             <thead>
                                 <tr style="border-bottom: 1px solid var(--card-border); color: var(--text-secondary); font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.05em;">
@@ -2473,7 +2476,8 @@ def main():
                     <div class="chart-card-header" style="margin-bottom: 1rem;">
                         <span class="chart-card-title">Пополнения</span>
                     </div>
-                    <div style="overflow-x: auto;">
+                    <div class="cardsv2-legend-grid" id="cardsv2-topups-legend-grid"></div>
+                    <div style="overflow-x: auto; margin-top: 1rem;">
                         <table style="width: 100%; border-collapse: collapse; text-align: left; font-size: 0.95rem;">
                             <thead>
                                 <tr style="border-bottom: 1px solid var(--card-border); color: var(--text-secondary); font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.05em;">
@@ -4026,6 +4030,44 @@ def main():
                 return formatNumber(Math.round(value)) + ' сум';
             }
 
+            function formatV2LegendVal(value, isCount) {
+                if (isCount) {
+                    return formatNumber(Math.round(value)) + ' шт.';
+                }
+                if (value === 0) return '0 сум';
+                if (value >= 1e9) return (value / 1e9).toFixed(1) + ' млрд сум';
+                if (value >= 1e6) return (value / 1e6).toFixed(1) + ' млн сум';
+                if (value >= 1e3) return (value / 1e3).toFixed(1) + ' тыс. сум';
+                return value.toFixed(0) + ' сум';
+            }
+
+            const productColors = {
+                "DIDOX": "#8b5cf6",
+                "Sello": "#3b82f6",
+                "Алименты": "#ef4444",
+                "Социальные карты": "#10b981",
+                "Депозиты сиротам": "#f59e0b"
+            };
+
+            function populateLegendGrid(containerId, sectionData, isCount, isAverage) {
+                const container = document.getElementById(containerId);
+                if (!container) return;
+
+                container.innerHTML = Object.keys(sectionData).map(productName => {
+                    const monthlyVals = sectionData[productName] || [];
+                    const totalSum = monthlyVals.reduce((a, b) => a + b, 0);
+                    const finalVal = isAverage ? (monthlyVals.length > 0 ? totalSum / monthlyVals.length : 0) : totalSum;
+                    const color = productColors[productName] || "#ffffff";
+                    
+                    return `
+                        <div class="cardsv2-legend-card" style="--product-color: ${color}; cursor: default;">
+                            <span class="legend-label" style="text-transform: uppercase;">${productName}</span>
+                            <span class="legend-value">${formatV2LegendVal(finalVal, isCount)}</span>
+                        </div>
+                    `;
+                }).join('');
+            }
+
             function populateTable(tableId, sectionData, isCount, isAverage) {
                 const tableBody = document.getElementById(tableId);
                 if (!tableBody) return;
@@ -4063,6 +4105,12 @@ def main():
                 }).join('');
             }
 
+            // Populate Legend Grids
+            populateLegendGrid('cardsv2-open-legend-grid', data.openCards, true, false);
+            populateLegendGrid('cardsv2-balance-legend-grid', data.dailyBalance, false, true);
+            populateLegendGrid('cardsv2-topups-legend-grid', data.topups, false, false);
+
+            // Populate Tables
             populateTable('cardsv2-open-table-body', data.openCards, true, false);
             populateTable('cardsv2-balance-table-body', data.dailyBalance, false, true);
             populateTable('cardsv2-topups-table-body', data.topups, false, false);
