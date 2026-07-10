@@ -1157,6 +1157,12 @@ def main():
             gap: 1.5rem;
         }
 
+        @media (min-width: 1024px) {
+            .kassa-kpi-grid {
+                grid-template-columns: repeat(3, 1fr) !important;
+            }
+        }
+
         .card {
             background: var(--card-bg);
             border: 1px solid var(--card-border);
@@ -2730,8 +2736,8 @@ def main():
                 </div>
             </div>
 
-            <!-- Row 1: Aggregated count metrics -->
-            <section class="kpi-grid" id="kassa-row1-kpis" style="margin-bottom: 0.75rem;">
+            <!-- Aggregated count and sum metrics -->
+            <section class="kpi-grid kassa-kpi-grid">
                 <!-- Bags Count -->
                 <div class="card card-mc-total">
                     <div class="card-header">
@@ -2790,10 +2796,7 @@ def main():
                         </div>
                     </div>
                 </div>
-            </section>
 
-            <!-- Row 2: Foreign Currencies sum metrics -->
-            <section class="kpi-grid" id="kassa-row2-kpis">
                 <!-- Sum USD -->
                 <div class="card card-kassa-usd">
                     <div class="card-header">
