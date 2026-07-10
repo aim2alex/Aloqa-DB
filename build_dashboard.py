@@ -2731,7 +2731,7 @@ def main():
             </div>
 
             <!-- Row 1: Aggregated count metrics -->
-            <section class="kpi-grid" id="kassa-row1-kpis" style="margin-bottom: 2rem;">
+            <section class="kpi-grid" id="kassa-row1-kpis" style="margin-bottom: 0.75rem;">
                 <!-- Bags Count -->
                 <div class="card card-mc-total">
                     <div class="card-header">
