@@ -490,6 +490,81 @@ def main():
             'q2': {'total_issued': 0, 'avg_balance': 0.0, 'total_credit': 0.0, 'counts': [], 'balances': [], 'credits': [], 'months': []}
         }
 
+    cardsv2_stats = {
+        "all": {
+            "months": ["Январь", "Февраль", "Март", "Апрель", "Май", "Июнь"],
+            "openCards": {
+                "DIDOX": [0, 2, 3, 15, 6, 6],
+                "Sello": [338, 247, 328, 432, 105, 12],
+                "Алименты": [9024, 152, 1, 1701, 1, 2729],
+                "Социальные карты": [4839, 24498, 511, 1063, 459, 13087],
+                "Депозиты сиротам": [1638, 6, 3, 0, 1479, 291]
+            },
+            "dailyBalance": {
+                "DIDOX": [0, 142.86, 3741.94, 10533.34, 2888054.78, 1626206.94],
+                "Sello": [212618.11, 984207.25, 1583080.54, 3912273.18, 1248060.49, 2469852.33],
+                "Алименты": [74170991.16, 110092778.99, 100830715.44, 280384524.67, 293002964.19, 425982433.46],
+                "Социальные карты": [67835284.33, 81746708.63, 66973609.72, 67313648.52, 69115318.62, 5997429367.27],
+                "Депозиты сиротам": [644584695.3, 709274780.78, 653380925.27, 664734057.75, 1039115278.98, 1175492425.91]
+            },
+            "topups": {
+                "DIDOX": [0, 2000, 56000, 100000, 113588295, 106218056],
+                "Sello": [255190118.47, 488566292.07, 990421608.19, 821316449.29, 614522021.94, 319973506.56],
+                "Алименты": [2469838450.56, 3141895877.41, 3557992398.84, 6800217643.25, 4179912865.94, 6558683332.18],
+                "Социальные карты": [1637068470.46, 1746703350.89, 1861614176.23, 2185094381.48, 2029278930.42, 118487265221.35],
+                "Депозиты сиротам": [9932401880, 38931569.49, 161285834.88, 76478313.6, 6134444384.33, 1554845952.72]
+            }
+        },
+        "q1": {
+            "months": ["Январь", "Февраль", "Март"],
+            "openCards": {
+                "DIDOX": [0, 2, 3],
+                "Sello": [338, 247, 328],
+                "Алименты": [9024, 152, 1],
+                "Социальные карты": [4839, 24498, 511],
+                "Депозиты сиротам": [1638, 6, 3]
+            },
+            "dailyBalance": {
+                "DIDOX": [0, 142.86, 3741.94],
+                "Sello": [212618.11, 984207.25, 1583080.54],
+                "Алименты": [74170991.16, 110092778.99, 100830715.44],
+                "Социальные карты": [67835284.33, 81746708.63, 66973609.72],
+                "Депозиты сиротам": [644584695.3, 709274780.78, 653380925.27]
+            },
+            "topups": {
+                "DIDOX": [0, 2000, 56000],
+                "Sello": [255190118.47, 488566292.07, 990421608.19],
+                "Алименты": [2469838450.56, 3141895877.41, 3557992398.84],
+                "Социальные карты": [1637068470.46, 1746703350.89, 1861614176.23],
+                "Депозиты сиротам": [9932401880, 38931569.49, 161285834.88]
+            }
+        },
+        "q2": {
+            "months": ["Апрель", "Май", "Июнь"],
+            "openCards": {
+                "DIDOX": [15, 6, 6],
+                "Sello": [432, 105, 12],
+                "Алименты": [1701, 1, 2729],
+                "Социальные карты": [1063, 459, 13087],
+                "Депозиты сиротам": [0, 1479, 291]
+            },
+            "dailyBalance": {
+                "DIDOX": [10533.34, 2888054.78, 1626206.94],
+                "Sello": [3912273.18, 1248060.49, 2469852.33],
+                "Алименты": [280384524.67, 293002964.19, 425982433.46],
+                "Социальные карты": [67313648.52, 69115318.62, 5997429367.27],
+                "Депозиты сиротам": [664734057.75, 1039115278.98, 1175492425.91]
+            },
+            "topups": {
+                "DIDOX": [100000, 113588295, 106218056],
+                "Sello": [821316449.29, 614522021.94, 319973506.56],
+                "Алименты": [6800217643.25, 4179912865.94, 6558683332.18],
+                "Социальные карты": [2185094381.48, 2029278930.42, 118487265221.35],
+                "Депозиты сиротам": [76478313.6, 6134444384.33, 1554845952.72]
+            }
+        }
+    }
+
     print("Reading and aggregating Jira data...")
     df_jira = pd.read_excel(jira_file, header=None)
 
@@ -587,7 +662,8 @@ def main():
         'risks': risk_stats,
         'loans': loans_stats,
         'jira': jira_stats,
-        'cards': cards_stats
+        'cards': cards_stats,
+        'cardsv2': cardsv2_stats
     }
     
     print("Generating HTML dashboard Aloqa-Dashboard.html...")
@@ -661,6 +737,7 @@ def main():
             line-height: 1.5;
             padding: 2rem 1.5rem;
             overflow-x: hidden;
+            overflow-anchor: none;
             transition: background-color var(--transition-speed) ease, color var(--transition-speed) ease;
         }
 
@@ -713,6 +790,7 @@ def main():
             flex-direction: column;
             gap: 2.25rem;
             padding: 0 1.5rem;
+            min-height: calc(100vh - 4rem);
             transition: max-width var(--transition-speed) ease;
         }
 
@@ -832,6 +910,7 @@ def main():
             display: flex;
             flex-direction: column;
             gap: 2.25rem;
+            flex: 1;
         }
 
         .header-title h1 {
@@ -1399,7 +1478,7 @@ def main():
             text-align: center;
             color: var(--text-secondary);
             font-size: 0.85rem;
-            margin-top: 1rem;
+            margin-top: 36px;
             border-top: 1px solid rgba(255, 255, 255, 0.05);
             padding-top: 1.5rem;
         }
@@ -1434,6 +1513,70 @@ def main():
         }
         body.light-theme .glow-2 {
             opacity: 0.2;
+        }
+
+        /* Cards V2 Custom Legend Grid */
+        .cardsv2-legend-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 1rem;
+            margin-bottom: 0.5rem;
+            margin-top: 0.5rem;
+        }
+        @media (max-width: 1024px) {
+            .cardsv2-legend-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+        @media (max-width: 600px) {
+            .cardsv2-legend-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        .cardsv2-legend-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--card-border);
+            border-radius: 12px;
+            padding: 0.65rem 0.85rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.2rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            user-select: none;
+            border-left: 4px solid var(--product-color);
+        }
+        body.light-theme .cardsv2-legend-card {
+            background: rgba(0, 0, 0, 0.02);
+        }
+        .cardsv2-legend-card:hover {
+            background: rgba(255, 255, 255, 0.06);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+        body.light-theme .cardsv2-legend-card:hover {
+            background: rgba(0, 0, 0, 0.04);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+        }
+        .cardsv2-legend-card.hidden-dataset {
+            opacity: 0.35;
+            border-left-color: #64748b !important;
+        }
+        .cardsv2-legend-card.hidden-dataset .legend-value {
+            text-decoration: line-through;
+        }
+        .legend-label {
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.03em;
+        }
+        .legend-value {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.15rem;
+            font-weight: 700;
+            color: var(--text-primary);
         }
     </style>
 </head>
@@ -1475,6 +1618,7 @@ def main():
                     <button class="main-tab-btn" id="main-tab-callcenter" onclick="switchMainTab('callcenter')">Call-центр</button>
                     <button class="main-tab-btn" id="main-tab-risks" onclick="switchMainTab('risks')">События операционных рисков</button>
                     <button class="main-tab-btn" id="main-tab-cards" onclick="switchMainTab('cards')">Карты</button>
+                    <button class="main-tab-btn" id="main-tab-cardsv2" onclick="switchMainTab('cardsv2')">Карты v2</button>
                 </div>
             </div>
             
@@ -2239,6 +2383,58 @@ def main():
             </section>
         </div><!-- Closing #panel-cards -->
 
+        <!-- Panel Cards v2 -->
+        <div id="panel-cardsv2" class="main-panel" style="display: none;">
+            <div class="panel-header">
+                <div class="header-title">
+                    <h1 class="title-cardsv2" style="background: linear-gradient(135deg, var(--text-primary) 30%, #3b82f6 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Карты v2</h1>
+                    <p>Анализ по картам (DIDOX, Sello, Алименты, Социальные карты, Депозиты сиротам) • Январь - Июнь 2026 г.</p>
+                </div>
+                
+                <div class="tabs-container">
+                    <button class="tab-btn active" onclick="switchTab('all', this)">Все</button>
+                    <button class="tab-btn" onclick="switchTab('q1', this)">1 Квартал</button>
+                    <button class="tab-btn" onclick="switchTab('q2', this)">2 Квартал</button>
+                </div>
+            </div>
+
+            <!-- Row: Charts -->
+            <section class="charts-row-vertical" style="display: flex; flex-direction: column; gap: 2rem;">
+                <!-- Card 1: Кол-во открытых карт -->
+                <div class="card chart-card">
+                    <div class="chart-card-header">
+                        <span class="chart-card-title">Кол-во открытых карт</span>
+                    </div>
+                    <div class="cardsv2-legend-grid" id="cardsv2-open-legend-grid"></div>
+                    <div class="chart-container-bar" style="height: 380px; position: relative; margin-top: 1rem;">
+                        <canvas id="chart-cardsv2-open"></canvas>
+                    </div>
+                </div>
+
+                <!-- Card 2: Дневной остаток -->
+                <div class="card chart-card">
+                    <div class="chart-card-header">
+                        <span class="chart-card-title">Дневной остаток</span>
+                    </div>
+                    <div class="cardsv2-legend-grid" id="cardsv2-balance-legend-grid"></div>
+                    <div class="chart-container-bar" style="height: 380px; position: relative; margin-top: 1rem;">
+                        <canvas id="chart-cardsv2-balance"></canvas>
+                    </div>
+                </div>
+
+                <!-- Card 3: Пополнения -->
+                <div class="card chart-card">
+                    <div class="chart-card-header">
+                        <span class="chart-card-title">Пополнения</span>
+                    </div>
+                    <div class="cardsv2-legend-grid" id="cardsv2-topups-legend-grid"></div>
+                    <div class="chart-container-bar" style="height: 380px; position: relative; margin-top: 1rem;">
+                        <canvas id="chart-cardsv2-topups"></canvas>
+                    </div>
+                </div>
+            </section>
+        </div><!-- Closing #panel-cardsv2 -->
+
         <!-- Panel Jira -->
         <div id="panel-jira" class="main-panel">
             <div class="panel-header">
@@ -2799,6 +2995,11 @@ def main():
         let cardsBalanceChart = null;
         let cardsCreditChart = null;
 
+        // Cards v2 Chart instances
+        let cardsV2OpenChart = null;
+        let cardsV2BalanceChart = null;
+        let cardsV2TopupsChart = null;
+
         // Chart instances
         let typesChart = null;
         let themesChart = null;
@@ -2943,6 +3144,8 @@ def main():
                 renderJiraDashboard();
             } else if (activeMainTab === 'cards') {
                 renderCardsDashboard();
+            } else if (activeMainTab === 'cardsv2') {
+                renderCardsV2Dashboard();
             }
         }
 
@@ -3426,6 +3629,7 @@ def main():
             updateRiskChartsTheme();
             updateLoansChartsTheme();
             updateJiraChartsTheme();
+            updateCardsV2ChartsTheme();
         }
 
         // --- Main Tab Switcher and Risks Dashboard Rendering Logic ---
@@ -3438,6 +3642,8 @@ def main():
             document.getElementById('main-tab-callcenter').classList.toggle('active', tabName === 'callcenter');
             document.getElementById('main-tab-risks').classList.toggle('active', tabName === 'risks');
             document.getElementById('main-tab-cards').classList.toggle('active', tabName === 'cards');
+            const cardsv2TabBtn = document.getElementById('main-tab-cardsv2');
+            if (cardsv2TabBtn) cardsv2TabBtn.classList.toggle('active', tabName === 'cardsv2');
             const jiraTabBtn = document.getElementById('main-tab-jira');
             if (jiraTabBtn) jiraTabBtn.classList.toggle('active', tabName === 'jira');
 
@@ -3446,6 +3652,8 @@ def main():
             document.getElementById('panel-callcenter').style.display = tabName === 'callcenter' ? 'flex' : 'none';
             document.getElementById('panel-risks').style.display = tabName === 'risks' ? 'flex' : 'none';
             document.getElementById('panel-cards').style.display = tabName === 'cards' ? 'flex' : 'none';
+            const cardsv2Panel = document.getElementById('panel-cardsv2');
+            if (cardsv2Panel) cardsv2Panel.style.display = tabName === 'cardsv2' ? 'flex' : 'none';
             const jiraPanel = document.getElementById('panel-jira');
             if (jiraPanel) jiraPanel.style.display = tabName === 'jira' ? 'flex' : 'none';
 
@@ -3457,9 +3665,18 @@ def main():
                 renderJiraDashboard();
             } else if (tabName === 'cards') {
                 renderCardsDashboard();
+            } else if (tabName === 'cardsv2') {
+                renderCardsV2Dashboard();
             } else {
                 updateDashboard();
             }
+
+            // Scroll to the top of the page after DOM layout has settled
+            setTimeout(() => {
+                window.scrollTo(0, 0);
+                document.documentElement.scrollTop = 0;
+                document.body.scrollTop = 0;
+            }, 50);
         }
 
         function renderCardsDashboard() {
@@ -3625,6 +3842,291 @@ def main():
                     }
                 }
             });
+        }
+
+        function renderCardsV2Dashboard() {
+            const data = dashboardData.cardsv2[activePeriod];
+            if (!data) return;
+
+            const themeColors = getThemeColors();
+            
+            // Define colors for each product
+            const productColors = {
+                "DIDOX": "#8b5cf6",
+                "Sello": "#3b82f6",
+                "Алименты": "#ef4444",
+                "Социальные карты": "#10b981",
+                "Депозиты сиротам": "#f59e0b"
+            };
+
+            // Helper to generate line datasets
+            function generateDatasets(chartData) {
+                return Object.keys(chartData).map(productName => {
+                    const color = productColors[productName] || "#ffffff";
+                    return {
+                        label: productName,
+                        data: chartData[productName],
+                        borderColor: color,
+                        backgroundColor: color + "1a", // very subtle transparent background fill
+                        fill: false,
+                        borderWidth: 3,
+                        tension: 0.3,
+                        pointBackgroundColor: color,
+                        pointHoverBackgroundColor: color,
+                        pointRadius: 4,
+                        pointHoverRadius: 6
+                    };
+                });
+            }
+
+            // Helper to format values in legend
+            function formatV2Value(value, isCount) {
+                if (isCount) {
+                    return formatNumber(Math.round(value)) + ' шт.';
+                }
+                if (value === 0) return '0 сум';
+                if (value >= 1e9) return (value / 1e9).toFixed(1) + ' млрд сум';
+                if (value >= 1e6) return (value / 1e6).toFixed(1) + ' млн сум';
+                if (value >= 1e3) return (value / 1e3).toFixed(1) + ' тыс. сум';
+                return value.toFixed(0) + ' сум';
+            }
+
+            // 1. Render Open Cards Chart
+            const openCtx = document.getElementById('chart-cardsv2-open').getContext('2d');
+            if (cardsV2OpenChart) {
+                cardsV2OpenChart.destroy();
+            }
+            cardsV2OpenChart = new Chart(openCtx, {
+                type: 'line',
+                data: {
+                    labels: data.months,
+                    datasets: generateDatasets(data.openCards)
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        x: {
+                            grid: { display: false },
+                            ticks: { color: themeColors.textSecondary, font: { size: 13 } }
+                        },
+                        y: {
+                            grid: { color: themeColors.gridColor },
+                            ticks: { color: themeColors.textSecondary, font: { size: 13 } }
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            display: false,
+                            labels: {
+                                color: themeColors.textSecondary
+                            }
+                        },
+                        tooltip: {
+                            enabled: false,
+                            external: externalTooltipHandler
+                        }
+                    }
+                }
+            });
+
+            // 2. Render Daily Balance Chart
+            const balanceCtx = document.getElementById('chart-cardsv2-balance').getContext('2d');
+            if (cardsV2BalanceChart) {
+                cardsV2BalanceChart.destroy();
+            }
+            cardsV2BalanceChart = new Chart(balanceCtx, {
+                type: 'line',
+                data: {
+                    labels: data.months,
+                    datasets: generateDatasets(data.dailyBalance)
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        x: {
+                            grid: { display: false },
+                            ticks: { color: themeColors.textSecondary, font: { size: 13 } }
+                        },
+                        y: {
+                            grid: { color: themeColors.gridColor },
+                            ticks: { 
+                                color: themeColors.textSecondary, 
+                                font: { size: 13 },
+                                callback: function(value) {
+                                    if (value >= 1e9) return (value / 1e9).toFixed(1) + ' млрд';
+                                    if (value >= 1e6) return (value / 1e6).toFixed(0) + ' млн';
+                                    return value;
+                                }
+                            }
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            display: false,
+                            labels: {
+                                color: themeColors.textSecondary
+                            }
+                        },
+                        tooltip: {
+                            enabled: false,
+                            external: externalTooltipHandler
+                        }
+                    }
+                }
+            });
+
+            // 3. Render Top-ups Chart
+            const topupsCtx = document.getElementById('chart-cardsv2-topups').getContext('2d');
+            if (cardsV2TopupsChart) {
+                cardsV2TopupsChart.destroy();
+            }
+            cardsV2TopupsChart = new Chart(topupsCtx, {
+                type: 'line',
+                data: {
+                    labels: data.months,
+                    datasets: generateDatasets(data.topups)
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        x: {
+                            grid: { display: false },
+                            ticks: { color: themeColors.textSecondary, font: { size: 13 } }
+                        },
+                        y: {
+                            grid: { color: themeColors.gridColor },
+                            ticks: { 
+                                color: themeColors.textSecondary, 
+                                font: { size: 13 },
+                                callback: function(value) {
+                                    if (value >= 1e9) return (value / 1e9).toFixed(1) + ' млрд';
+                                    if (value >= 1e6) return (value / 1e6).toFixed(0) + ' млн';
+                                    return value;
+                                }
+                            }
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            display: false,
+                            labels: {
+                                color: themeColors.textSecondary
+                            }
+                        },
+                        tooltip: {
+                            enabled: false,
+                            external: externalTooltipHandler
+                        }
+                    }
+                }
+            });
+
+            // Populate custom HTML legends above the charts
+            populateCardsV2Legends(data);
+        }
+
+        function populateCardsV2Legends(data) {
+            const productColors = {
+                "DIDOX": "#8b5cf6",
+                "Sello": "#3b82f6",
+                "Алименты": "#ef4444",
+                "Социальные карты": "#10b981",
+                "Депозиты сиротам": "#f59e0b"
+            };
+
+            function formatV2ValueLocal(value, isCount) {
+                if (isCount) {
+                    return formatNumber(Math.round(value)) + ' шт.';
+                }
+                if (value === 0) return '0 сум';
+                if (value >= 1e9) return (value / 1e9).toFixed(1) + ' млрд сум';
+                if (value >= 1e6) return (value / 1e6).toFixed(1) + ' млн сум';
+                if (value >= 1e3) return (value / 1e3).toFixed(1) + ' тыс. сум';
+                return value.toFixed(0) + ' сум';
+            }
+
+            function updateGrid(containerId, chartObjName, chartData, isCount, isAverage) {
+                const container = document.getElementById(containerId);
+                if (!container) return;
+
+                container.innerHTML = Object.keys(chartData).map((productName, idx) => {
+                    const values = chartData[productName] || [];
+                    const sum = values.reduce((a, b) => a + b, 0);
+                    const val = isAverage ? (values.length > 0 ? sum / values.length : 0) : sum;
+                    const formattedVal = formatV2ValueLocal(val, isCount);
+                    const color = productColors[productName] || "#ffffff";
+                    
+                    let chart = null;
+                    if (chartObjName === 'cardsV2OpenChart') chart = cardsV2OpenChart;
+                    else if (chartObjName === 'cardsV2BalanceChart') chart = cardsV2BalanceChart;
+                    else if (chartObjName === 'cardsV2TopupsChart') chart = cardsV2TopupsChart;
+
+                    const isHidden = chart ? !chart.isDatasetVisible(idx) : false;
+                    const hiddenClass = isHidden ? ' hidden-dataset' : '';
+
+                    return `
+                        <div class="cardsv2-legend-card${hiddenClass}" 
+                             style="--product-color: ${color};" 
+                             onclick="toggleCardsV2Dataset('${chartObjName}', ${idx}, this)">
+                            <span class="legend-label">${productName}</span>
+                            <span class="legend-value">${formattedVal}</span>
+                        </div>
+                    `;
+                }).join('');
+            }
+
+            updateGrid('cardsv2-open-legend-grid', 'cardsV2OpenChart', data.openCards, true, false);
+            updateGrid('cardsv2-balance-legend-grid', 'cardsV2BalanceChart', data.dailyBalance, false, true);
+            updateGrid('cardsv2-topups-legend-grid', 'cardsV2TopupsChart', data.topups, false, false);
+        }
+
+        function toggleCardsV2Dataset(chartName, datasetIdx, element) {
+            let chart = null;
+            if (chartName === 'cardsV2OpenChart') chart = cardsV2OpenChart;
+            else if (chartName === 'cardsV2BalanceChart') chart = cardsV2BalanceChart;
+            else if (chartName === 'cardsV2TopupsChart') chart = cardsV2TopupsChart;
+            
+            if (!chart) return;
+
+            const isVisible = chart.isDatasetVisible(datasetIdx);
+            if (isVisible) {
+                chart.hide(datasetIdx);
+                element.classList.add('hidden-dataset');
+            } else {
+                chart.show(datasetIdx);
+                element.classList.remove('hidden-dataset');
+            }
+        }
+
+        function updateCardsV2ChartsTheme() {
+            const colors = getThemeColors();
+            
+            if (cardsV2OpenChart) {
+                cardsV2OpenChart.options.scales.x.ticks.color = colors.textSecondary;
+                cardsV2OpenChart.options.scales.y.ticks.color = colors.textSecondary;
+                cardsV2OpenChart.options.scales.y.grid.color = colors.gridColor;
+                cardsV2OpenChart.options.plugins.legend.labels.color = colors.textSecondary;
+                cardsV2OpenChart.update();
+            }
+            
+            if (cardsV2BalanceChart) {
+                cardsV2BalanceChart.options.scales.x.ticks.color = colors.textSecondary;
+                cardsV2BalanceChart.options.scales.y.ticks.color = colors.textSecondary;
+                cardsV2BalanceChart.options.scales.y.grid.color = colors.gridColor;
+                cardsV2BalanceChart.options.plugins.legend.labels.color = colors.textSecondary;
+                cardsV2BalanceChart.update();
+            }
+
+            if (cardsV2TopupsChart) {
+                cardsV2TopupsChart.options.scales.x.ticks.color = colors.textSecondary;
+                cardsV2TopupsChart.options.scales.y.ticks.color = colors.textSecondary;
+                cardsV2TopupsChart.options.scales.y.grid.color = colors.gridColor;
+                cardsV2TopupsChart.options.plugins.legend.labels.color = colors.textSecondary;
+                cardsV2TopupsChart.update();
+            }
         }
 
         function renderRiskDashboard() {
